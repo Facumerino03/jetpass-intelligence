@@ -1,1 +1,1 @@
-from .health_schema import HealthResponse
+"""Schemas package."""

@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     )
     debug: bool = Field(default=False, alias="DEBUG")
     database_url: str | None = Field(default=None, alias="DATABASE_URL")
+    redis_url: str | None = Field(default=None, alias="REDIS_URL")
 
     model_config = SettingsConfigDict(
         env_file=".env",
