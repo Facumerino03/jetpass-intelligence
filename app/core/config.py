@@ -13,6 +13,21 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, alias="DEBUG")
     database_url: str | None = Field(default=None, alias="DATABASE_URL")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
+    openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
+    openrouter_model: str = Field(
+        default="openai/gpt-4o-mini", alias="OPENROUTER_MODEL"
+    )
+    aip_parser_docling_quality_threshold: float = Field(
+        default=0.2, alias="AIP_PARSER_DOCLING_QUALITY_THRESHOLD"
+    )
+    aip_parser_ocr_enabled: bool = Field(default=True, alias="AIP_PARSER_OCR_ENABLED")
+    aip_parser_ocr_mode: Literal["document", "page"] = Field(
+        default="page", alias="AIP_PARSER_OCR_MODE"
+    )
+    aip_parser_timeout_seconds: int = Field(
+        default=60, alias="AIP_PARSER_TIMEOUT_SECONDS"
+    )
+    aip_parser_max_pages: int = Field(default=80, alias="AIP_PARSER_MAX_PAGES")
 
     model_config = SettingsConfigDict(
         env_file=".env",

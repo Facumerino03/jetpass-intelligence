@@ -71,7 +71,11 @@ async def test_upsert_creates_new_aerodrome(monkeypatch) -> None:
         latitude=-51.6089,
         longitude=-69.3126,
         elevation_ft=65,
-        runways=[RunwayBase(designator="07/25", length_m=3550, width_m=45, surface_type="ASPH")],
+        runways=[
+            RunwayBase(
+                designator="07/25", length_m=3550, width_m=45, surface_type="ASPH"
+            )
+        ],
     )
 
     monkeypatch.setattr(aerodrome_repo, "get_by_icao", AsyncMock(return_value=None))

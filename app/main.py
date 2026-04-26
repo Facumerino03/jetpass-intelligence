@@ -9,6 +9,7 @@ from app.routers.health_router import router as health_router
 
 settings = get_settings()
 
+
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     yield

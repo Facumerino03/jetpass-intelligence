@@ -15,12 +15,16 @@ class Aerodrome(TimestampedUUIDMixin, Base):
     __tablename__ = "aerodrome"
     __table_args__ = {"schema": "aip"}
 
-    icao_code: Mapped[str] = mapped_column(String(4), unique=True, index=True, nullable=False)
+    icao_code: Mapped[str] = mapped_column(
+        String(4), unique=True, index=True, nullable=False
+    )
     iata_code: Mapped[str | None] = mapped_column(String(3), nullable=True)
     name: Mapped[str] = mapped_column(String(200), nullable=False)
     city: Mapped[str | None] = mapped_column(String(120), nullable=True)
     province: Mapped[str | None] = mapped_column(String(120), nullable=True)
-    country: Mapped[str] = mapped_column(String(120), default="Argentina", nullable=False)
+    country: Mapped[str] = mapped_column(
+        String(120), default="Argentina", nullable=False
+    )
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
     longitude: Mapped[float] = mapped_column(Float, nullable=False)
     elevation_ft: Mapped[int | None] = mapped_column(Integer, nullable=True)

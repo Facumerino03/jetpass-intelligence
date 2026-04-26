@@ -13,7 +13,9 @@ class Base(DeclarativeBase):
 class TimestampedUUIDMixin:
     """Common columns for domain entities."""
 
-    id: Mapped[UUID] = mapped_column(PGUUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: Mapped[UUID] = mapped_column(
+        PGUUID(as_uuid=True), primary_key=True, default=uuid4
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
@@ -25,4 +27,3 @@ class TimestampedUUIDMixin:
         onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
-

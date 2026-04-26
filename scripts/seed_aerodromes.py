@@ -19,8 +19,12 @@ async def seed_samr(db: AsyncSession) -> None:
         longitude=-69.3126,
         elevation_ft=65,
         runways=[
-            RunwayBase(designator="07/25", length_m=3550, width_m=45, surface_type="ASPH"),
-            RunwayBase(designator="01/19", length_m=1750, width_m=30, surface_type="ASPH"),
+            RunwayBase(
+                designator="07/25", length_m=3550, width_m=45, surface_type="ASPH"
+            ),
+            RunwayBase(
+                designator="01/19", length_m=1750, width_m=30, surface_type="ASPH"
+            ),
         ],
     )
     await upsert(db, samr)

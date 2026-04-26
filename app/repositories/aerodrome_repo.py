@@ -19,7 +19,11 @@ async def get_by_icao(db: AsyncSession, icao: str) -> Aerodrome | None:
 
 
 async def get_all(db: AsyncSession) -> list[Aerodrome]:
-    stmt = select(Aerodrome).options(selectinload(Aerodrome.runways)).order_by(Aerodrome.icao_code)
+    stmt = (
+        select(Aerodrome)
+        .options(selectinload(Aerodrome.runways))
+        .order_by(Aerodrome.icao_code)
+    )
     result = await db.execute(stmt)
     return list(result.scalars().all())
 
@@ -51,8 +55,11 @@ async def upsert(db: AsyncSession, data: AerodromeCreate) -> Aerodrome:
         ]
         db.add(aerodrome)
         await db.commit()
-        await db.refresh(aerodrome)
-        return aerodrome
+        loaded = await get_by_icao(db, normalized_icao)
+        if loaded is None:
+            # Defensive fallback: the record was just inserted, so this should never happen.
+            raise RuntimeError(f"Inserted aerodrome '{normalized_icao}' could not be reloaded.")
+        return loaded
 
     existing.iata_code = data.iata_code.strip().upper() if data.iata_code else None
     existing.name = data.name
@@ -73,5 +80,8 @@ async def upsert(db: AsyncSession, data: AerodromeCreate) -> Aerodrome:
     ]
 
     await db.commit()
-    await db.refresh(existing)
-    return existing
+    loaded = await get_by_icao(db, normalized_icao)
+    if loaded is None:
+        # Defensive fallback: the record exists by definition in this branch.
+        raise RuntimeError(f"Updated aerodrome '{normalized_icao}' could not be reloaded.")
+    return loaded

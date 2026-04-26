@@ -1,0 +1,118 @@
+@startuml jetpass_intelligence_domain
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+title Jetpass Intelligence — Dominio AIP (Fase 0–1)
+
+package "aip" #EAF4FB {
+
+  enum TrafficType {
+    IFR
+    VFR
+    IFR_VFR
+  }
+
+  enum RunwaySurface {
+    ASPH
+    CONC
+    GRVL
+    TURF
+    DIRT
+  }
+
+  class AiracCycle {
+    + id : UUID
+    + cycle_number : String
+    + effective_from : Date
+    + effective_to : Date
+    + is_active : Boolean
+    + created_at : Timestamp
+  }
+
+  class Aerodrome {
+    + id : UUID
+    + icao_code : String
+    + iata_code : String
+    + name : String
+    + category : String
+    + city : String
+    + province : String
+    + country : String
+    + arp_lat : Float
+    + arp_lon : Float
+    + elevation_ft : Float
+    + ref_temperature_c : Float
+    + mean_low_temperature_c : Float
+    + gund_ft : Float
+    + mag_var_deg : Float
+    + mag_var_dir : String
+    + mag_var_epoch_year : Integer
+    + traffic_types : TrafficType
+    + belongs_to_sna : Boolean
+    + operator_name : String
+    + ansp_name : String
+    + airac_cycle_id : UUID
+    + last_synced_at : Timestamp
+    + created_at : Timestamp
+    + updated_at : Timestamp
+  }
+
+  class Runway {
+    + id : UUID
+    + aerodrome_id : UUID
+    + runway_designator : String
+    + true_bearing_deg : Float
+    + mag_bearing_deg : Float
+    + length_m : Integer
+    + width_m : Integer
+    + surface : RunwaySurface
+    + pcn_value : Integer
+    + pcn_type : String
+    + pcn_subgrade : String
+    + pcn_tire_pressure : String
+    + pcn_evaluation : String
+    + thr_lat : Float
+    + thr_lon : Float
+    + thr_elev_ft : Float
+    + slope_pct : Float
+    + tora_m : Integer
+    + toda_m : Integer
+    + asda_m : Integer
+    + lda_m : Integer
+    + created_at : Timestamp
+    + updated_at : Timestamp
+  }
+
+  class AipSyncLog {
+    + id : UUID
+    + aerodrome_icao : String
+    + airac_cycle_id : UUID
+    + status : String
+    + source_url : String
+    + parsed_sections : String
+    + errors : String
+    + synced_at : Timestamp
+  }
+
+}
+
+package "core (referencia externa)" #FFF3E0 {
+  class FlightPlan <<external>> {
+    + departure_aerodrome_icao : String
+    + destination_aerodrome_icao : String
+    + alternate1_aerodrome_icao : String
+    + alternate2_aerodrome_icao : String
+  }
+}
+
+' Relaciones internas
+AiracCycle "1" --> "0..*" Aerodrome : versiona
+Aerodrome "1" *-- "1..*" Runway : contiene
+AiracCycle "1" --> "0..*" AipSyncLog : registra
+Aerodrome "1" --> "0..*" AipSyncLog : auditada en
+
+' Referencia lógica cross-servicio
+FlightPlan ..> Aerodrome : icao_code\n(referencia lógica)
+
+@enduml

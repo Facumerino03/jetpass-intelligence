@@ -10,7 +10,9 @@ from app.core.config import get_settings
 def get_engine():
     settings = get_settings()
     if not settings.database_url:
-        raise RuntimeError("DATABASE_URL is required to initialize the database engine.")
+        raise RuntimeError(
+            "DATABASE_URL is required to initialize the database engine."
+        )
     return create_async_engine(settings.database_url, echo=settings.debug, future=True)
 
 

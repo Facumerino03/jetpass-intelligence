@@ -1,10 +1,10 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class RunwayBase(BaseModel):
     designator: str = Field(..., examples=["05", "23"])
-    length_m: int = Field(..., ge=1)
-    width_m: int | None = Field(default=None, ge=1)
+    length_m: int = Field(..., ge=300, le=6000)
+    width_m: int | None = Field(default=None, ge=10, le=100)
     surface_type: str | None = Field(default=None, examples=["ASPH", "CONC"])
 
 
@@ -19,13 +19,20 @@ class AerodromeBase(BaseModel):
     city: str | None = None
     province: str | None = None
     country: str = Field(default="Argentina")
-    latitude: float
-    longitude: float
-    elevation_ft: int | None = None
+    latitude: float = Field(..., ge=-90, le=90)
+    longitude: float = Field(..., ge=-180, le=180)
+    elevation_ft: int | None = Field(default=None, ge=0)
 
 
 class AerodromeCreate(AerodromeBase):
     runways: list[RunwayBase] = Field(default_factory=list)
+
+    @field_validator("icao_code")
+    @classmethod
+    def icao_must_be_argentine(cls, v: str) -> str:
+        if not v.upper().startswith("SA"):
+            raise ValueError('Argentine ICAO codes must start with "SA"')
+        return v.upper()
 
 
 class AerodromeResponse(AerodromeBase):

@@ -21,4 +21,6 @@ async def get_aerodrome_by_icao(icao: str, db: DbSession) -> AerodromeResponse:
     try:
         return await get_aerodrome(db, icao)
     except AerodromeNotFoundError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
