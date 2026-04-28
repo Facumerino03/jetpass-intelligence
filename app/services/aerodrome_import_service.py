@@ -17,6 +17,15 @@ class AipImportError(Exception):
     """Pipeline failure: scraper, parser or persistence raised an error."""
 
 
+def _select_ad20_documents(pdf_paths: list[Path], icao: str) -> list[Path]:
+    ad20_paths = [path for path in pdf_paths if "AD-2.0" in path.name.upper()]
+    if not ad20_paths:
+        raise AipImportError(
+            f"[{icao}] Scraper output does not include required AD-2.0 PDF."
+        )
+    return ad20_paths
+
+
 async def import_aerodrome_from_aip(
     icao: str,
     output_dir: Path | None = None,
@@ -41,9 +50,10 @@ async def import_aerodrome_from_aip(
     except AipScraperError as exc:
         raise AipImportError(f"[{icao}] Scraper failed: {exc}") from exc
 
-    # 2 — Parse all downloaded AIP docs; model decides relevance.
+    # 2 — Parse only AD-2.0 for aerodrome core sections.
     try:
-        aerodrome_data = parse_aerodrome_from_documents(pdf_paths)
+        ad20_paths = _select_ad20_documents(pdf_paths, icao)
+        aerodrome_data = parse_aerodrome_from_documents(ad20_paths, icao=icao)
     except AipParserError as exc:
         raise AipImportError(f"[{icao}] Parser failed for downloaded AIP docs: {exc}") from exc
 

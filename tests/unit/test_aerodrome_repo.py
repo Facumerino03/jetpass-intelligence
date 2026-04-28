@@ -3,6 +3,7 @@
 import pytest
 
 from app.repositories import aerodrome_repo
+from app.models.aerodrome import AerodromeDocument
 from app.schemas.aerodrome import AerodromeCreate, SectionMetaSchema, SectionSchema
 
 
@@ -69,3 +70,22 @@ async def test_get_section_by_icao_returns_expected_section() -> None:
 
     assert section is not None
     assert section.section_id == "AD 2.12"
+
+
+@pytest.mark.asyncio
+async def test_upsert_replaces_legacy_document_without_current() -> None:
+    collection = AerodromeDocument.get_pymongo_collection()
+    await collection.insert_one(
+        {
+            "_id": "SAMR",
+            "icao": "SAMR",
+            "name": "Legacy",
+            "full_name": None,
+            "ad_sections": [],
+        }
+    )
+
+    result = await aerodrome_repo.upsert(_create_payload("2026-03"))
+
+    assert result.current.meta.airac_cycle == "2026-03"
+    assert len(result.current.ad_sections) == 25

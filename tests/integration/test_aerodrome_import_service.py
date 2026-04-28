@@ -62,17 +62,21 @@ def _aerodrome_doc() -> AerodromeDocument:
 @pytest.mark.asyncio
 async def test_import_aerodrome_full_pipeline(tmp_path: Path) -> None:
     ad20_path = tmp_path / "SAMR_AD-2.0.pdf"
+    ad2a_path = tmp_path / "SAMR_AD-2.A.pdf"
     ad20_path.touch()
+    ad2a_path.touch()
+
+    parse_mock = patch(
+        "app.services.aerodrome_import_service.parse_aerodrome_from_documents",
+        return_value=_aerodrome_create(),
+    )
 
     with (
         patch(
             "app.services.aerodrome_import_service.download_aip_pdfs",
-            AsyncMock(return_value=[ad20_path]),
+            AsyncMock(return_value=[ad20_path, ad2a_path]),
         ),
-        patch(
-            "app.services.aerodrome_import_service.parse_aerodrome_from_documents",
-            return_value=_aerodrome_create(),
-        ),
+        parse_mock as parse_call,
         patch(
             "app.services.aerodrome_import_service.aerodrome_repo.upsert",
             AsyncMock(return_value=_aerodrome_doc()),
@@ -82,6 +86,7 @@ async def test_import_aerodrome_full_pipeline(tmp_path: Path) -> None:
 
     assert result.icao == "SAMR"
     assert len(result.current.ad_sections) == 25
+    parse_call.assert_called_once_with([ad20_path], icao="SAMR")
 
 
 @pytest.mark.asyncio
@@ -114,4 +119,17 @@ async def test_import_raises_when_db_fails(tmp_path: Path) -> None:
         ),
     ):
         with pytest.raises(AipImportError, match="Database upsert failed"):
+            await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)
+
+
+@pytest.mark.asyncio
+async def test_import_raises_when_ad20_pdf_missing(tmp_path: Path) -> None:
+    ad2a_path = tmp_path / "SAMR_AD-2.A.pdf"
+    ad2a_path.touch()
+
+    with patch(
+        "app.services.aerodrome_import_service.download_aip_pdfs",
+        AsyncMock(return_value=[ad2a_path]),
+    ):
+        with pytest.raises(AipImportError, match="does not include required AD-2.0"):
             await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)

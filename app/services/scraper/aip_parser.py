@@ -1,69 +1,35 @@
-"""AIP PDF parser — extracts flexible AD 2.0 sections from ANAC AIP PDFs."""
+"""AIP PDF parser — deterministic AD 2.0 extraction and segmentation."""
 
 from __future__ import annotations
 
 import logging
+import re
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
+import json
 from pathlib import Path
 
-import instructor
 import pytesseract
 from docling.document_converter import DocumentConverter
-from openai import OpenAI
 from pdf2image import convert_from_path
 
 from app.core.config import get_settings
-from app.schemas.aerodrome import AerodromeCreate
+from app.schemas.aerodrome import AerodromeCreate, SectionSchema
 
 logger = logging.getLogger(__name__)
 
-_SYSTEM_PROMPT = """\
-You are an aviation AD 2.0 extraction specialist for Argentine AIP documents.
+_HEADER_RE = re.compile(
+    r"(?im)^\s*(?:\|\s*)?(?:#{1,6}\s*)?(?:[A-Z]{4}\s+)?AD\s*2\.(\d{1,2})(?!\d)\b[^\n]*"
+)
 
-Return only valid JSON.
-Do not include markdown, explanations, comments, or code fences.
-Do not invent values.
-Preserve literal published wording whenever possible.
+_SUSPICIOUS_HEADER_RE = re.compile(
+    r"(?im)(?:\bAD2[\.,]?\d{1,2}\b|\bA\s*D\s*2[\.,]\s*\d{1,2}\b|\bAD\s*2,\s*\d{1,2}\b)"
+)
 
-Goal:
-- Build one flexible aerodrome payload with AD 2.0 sections AD 2.1 ... AD 2.25.
-- Keep each section raw text bilingual (ES/EN) exactly as extracted.
-- Add flexible `data` objects for machine use.
-
-Required output shape:
-{
-  "icao_code": "SAMR",
-  "name": "...",
-  "full_name": "... or null",
-  "airac_cycle": "...",
-  "airac_effective_date": "ISO-8601",
-  "airac_expiry_date": "ISO-8601",
-  "source_document": "...",
-  "source_url": "... or null",
-  "downloaded_by": "parser-agent",
-  "ad_sections": [
-    {
-      "section_id": "AD 2.1",
-      "title": "...",
-      "raw_text": "literal bilingual content",
-      "data": {"free": "structure"},
-      "anchors": null,
-      "section_meta": {
-        "airac_cycle": "... or null",
-        "source_page": 1
-      }
-    }
-  ]
-}
-
-Rules:
-- Include exactly AD 2.1 to AD 2.25 in ad_sections.
-- `raw_text` must be non-empty in every section.
-- If a section is NIL, keep that literal value in `raw_text`.
-- `data` can be flexible and partial, but must be an object.
-- `section_meta.airac_cycle` is optional and should be set when page-level AIRAC differs.
-"""
+_AD211_FALLBACK_RE = re.compile(
+    r"(?im)(?:informaci\w*\s+meteoro\w+|meteorological\s+information)"
+)
 
 
 class AipParserError(Exception):
@@ -97,6 +63,16 @@ class ParserConfig:
     ocr_mode: str
     timeout_seconds: int
     max_pages: int
+
+
+class HeaderMatch:
+    """Matched AD 2.x heading with normalized section id and offsets."""
+
+    def __init__(self, section_id: str, matched_text: str, start: int, end: int) -> None:
+        self.section_id = section_id
+        self.matched_text = matched_text
+        self.start = start
+        self.end = end
 
 
 class DoclingOcrParser:
@@ -198,30 +174,25 @@ class DoclingOcrParser:
 
 def parse_aerodrome_from_ad20(pdf_path: Path) -> AerodromeCreate:
     """Backward-compatible single-document entrypoint for AD-2.0 parsing."""
-    return parse_aerodrome_from_documents([pdf_path])
+    inferred_icao = _infer_icao_from_path(pdf_path)
+    if inferred_icao is None:
+        raise PdfFormatError(
+            "Could not infer ICAO from PDF file path. "
+            "Use parse_aerodrome_from_documents(..., icao='SAXX')."
+        )
+    return parse_aerodrome_from_documents([pdf_path], icao=inferred_icao)
 
 
-def parse_aerodrome_from_documents(pdf_paths: list[Path]) -> AerodromeCreate:
-    """Extract a flexible AD 2.0 aerodrome payload from one or more AIP PDFs."""
+def parse_aerodrome_from_documents(pdf_paths: list[Path], icao: str) -> AerodromeCreate:
+    """Extract deterministic AD 2.0 sections from one or more AIP PDFs."""
     if not pdf_paths:
         raise PdfNotReadableError("No AIP PDF documents were provided for parsing.")
 
-    parser = DoclingOcrParser(config=_get_parser_config())
-    assembled_blocks: list[str] = []
-    total_extraction_seconds = 0.0
-    total_ocr_seconds = 0.0
-    any_ocr_triggered = False
-
-    for pdf_path in pdf_paths:
-        text, stats = parser.extract_text(pdf_path)
-        total_extraction_seconds += stats.extraction_seconds
-        total_ocr_seconds += stats.ocr_seconds
-        any_ocr_triggered = any_ocr_triggered or stats.ocr_triggered
-        assembled_blocks.append(f"### DOCUMENT: {pdf_path.name}\n{text}")
-
-    text = "\n\n".join(assembled_blocks)
-    client = _get_llm_client()
-    settings = get_settings()
+    config = _get_parser_config()
+    parser = DoclingOcrParser(config=config)
+    text, total_extraction_seconds, total_ocr_seconds, any_ocr_triggered = _extract_documents_text(
+        parser, pdf_paths
+    )
     logger.info(
         "aip.parser.extraction",
         extra={
@@ -233,26 +204,57 @@ def parse_aerodrome_from_documents(pdf_paths: list[Path]) -> AerodromeCreate:
         },
     )
 
-    structuring_start = time.monotonic()
     try:
-        result: AerodromeCreate = client.create(
-            model=settings.openrouter_model,
-            response_model=AerodromeCreate,
-            max_retries=3,
-            messages=[
-                {"role": "system", "content": _SYSTEM_PROMPT},
-                {"role": "user", "content": text},
-            ],
-        )
-        logger.info(
-            "aip.parser.structuring",
-            extra={"structuring_seconds": round(time.monotonic() - structuring_start, 3)},
-        )
-        return result
+        sections = _segment_ad2_sections(text, pdf_paths[0], icao)
+    except PdfFormatError as first_exc:
+        if not config.ocr_enabled:
+            raise PdfFormatError(
+                f"Deterministic AD 2.0 segmentation failed for '{pdf_paths[0]}': {first_exc}"
+            ) from first_exc
+        forced_config = _forced_document_ocr_config(config)
+        forced_parser = DoclingOcrParser(config=forced_config)
+        try:
+            retry_text, retry_extraction_seconds, retry_ocr_seconds, retry_ocr_triggered = _extract_documents_text(
+                forced_parser, pdf_paths
+            )
+            logger.info(
+                "aip.parser.extraction.retry",
+                extra={
+                    "strategy": "docling_ocr_document_forced",
+                    "ocr_triggered": retry_ocr_triggered,
+                    "documents_count": len(pdf_paths),
+                    "extraction_seconds": round(retry_extraction_seconds, 3),
+                    "ocr_seconds": round(retry_ocr_seconds, 3),
+                },
+            )
+            sections = _segment_ad2_sections(retry_text, pdf_paths[0], icao)
+            text = retry_text
+        except Exception as retry_exc:
+            raise PdfFormatError(
+                f"Deterministic AD 2.0 segmentation failed for '{pdf_paths[0]}': {first_exc} "
+                f"| retry_with_forced_document_ocr_failed: {retry_exc}"
+            ) from retry_exc
     except Exception as exc:
         raise PdfFormatError(
-            f"LLM failed to extract structured data from '{pdf_path}': {exc}"
+            f"Deterministic AD 2.0 segmentation failed for '{pdf_paths[0]}': {exc}"
         ) from exc
+
+    name, full_name = _extract_name_fields(sections)
+    now = datetime.now(timezone.utc)
+    source_document = ", ".join(path.name for path in pdf_paths)
+    airac_cycle = _extract_airac_cycle(text) or "unknown"
+
+    return AerodromeCreate(
+        icao_code=icao.strip().upper(),
+        name=name,
+        full_name=full_name,
+        airac_cycle=airac_cycle,
+        airac_effective_date=now,
+        airac_expiry_date=now,
+        source_document=source_document,
+        downloaded_by="parser-agent",
+        ad_sections=sections,
+    )
 
 
 # ── private helpers ────────────────────────────────────────────────────────────
@@ -270,7 +272,37 @@ def _get_parser_config() -> ParserConfig:
 
 
 def _normalize_text(text: str) -> str:
-    return "\n".join(line.strip() for line in text.splitlines() if line.strip())
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    return normalized.replace("\x00", "")
+
+
+def _extract_documents_text(
+    parser: DoclingOcrParser,
+    pdf_paths: list[Path],
+) -> tuple[str, float, float, bool]:
+    assembled_blocks: list[str] = []
+    total_extraction_seconds = 0.0
+    total_ocr_seconds = 0.0
+    any_ocr_triggered = False
+
+    for pdf_path in pdf_paths:
+        text, stats = parser.extract_text(pdf_path)
+        total_extraction_seconds += stats.extraction_seconds
+        total_ocr_seconds += stats.ocr_seconds
+        any_ocr_triggered = any_ocr_triggered or stats.ocr_triggered
+        assembled_blocks.append(f"### DOCUMENT: {pdf_path.name}\n{text}")
+
+    return "\n\n".join(assembled_blocks), total_extraction_seconds, total_ocr_seconds, any_ocr_triggered
+
+
+def _forced_document_ocr_config(base: ParserConfig) -> ParserConfig:
+    return ParserConfig(
+        quality_threshold=1.1,
+        ocr_enabled=base.ocr_enabled,
+        ocr_mode="document",
+        timeout_seconds=base.timeout_seconds,
+        max_pages=base.max_pages,
+    )
 
 
 def _page_quality(text: str) -> float:
@@ -280,17 +312,188 @@ def _page_quality(text: str) -> float:
     return meaningful_chars / max(len(text), 1)
 
 
-def _get_llm_client() -> instructor.Instructor:
-    """Return an instructor-patched OpenAI client pointed at OpenRouter."""
-    settings = get_settings()
-    if not settings.openrouter_api_key:
-        raise AipParserError(
-            "OPENROUTER_API_KEY is required for LLM-based parsing. "
-            "Set it in your .env file."
+def _expected_section_ids() -> list[str]:
+    return [f"AD 2.{idx}" for idx in range(1, 26)]
+
+
+def _normalize_section_id(section_number: int) -> str | None:
+    if 1 <= section_number <= 25:
+        return f"AD 2.{section_number}"
+    return None
+
+
+def _context_window(text: str, index: int, window: int = 160) -> str:
+    start = max(index - window, 0)
+    end = min(index + window, len(text))
+    return text[start:end]
+
+
+def _segment_ad2_sections(text: str, source_path: Path, icao: str) -> list[SectionSchema]:
+    expected = _expected_section_ids()
+    matches: list[HeaderMatch] = []
+    for match in _HEADER_RE.finditer(text):
+        section_number = int(match.group(1))
+        section_id = _normalize_section_id(section_number)
+        if section_id is None:
+            continue
+        matches.append(
+            HeaderMatch(
+                section_id=section_id,
+                matched_text=match.group(0),
+                start=match.start(),
+                end=match.end(),
+            )
         )
-    return instructor.from_openai(
-        OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=settings.openrouter_api_key,
+
+    seen_counts: dict[str, int] = {}
+    for m in matches:
+        seen_counts[m.section_id] = seen_counts.get(m.section_id, 0) + 1
+
+    missing_sections = [section_id for section_id in expected if seen_counts.get(section_id, 0) == 0]
+    duplicate_sections = [section_id for section_id, count in seen_counts.items() if count > 1]
+
+    recovered_ad211 = _recover_missing_ad211(text, matches)
+    if recovered_ad211 is not None:
+        matches.append(recovered_ad211)
+        seen_counts[recovered_ad211.section_id] = seen_counts.get(recovered_ad211.section_id, 0) + 1
+        missing_sections = [section_id for section_id in expected if seen_counts.get(section_id, 0) == 0]
+        duplicate_sections = [section_id for section_id, count in seen_counts.items() if count > 1]
+
+    if missing_sections or duplicate_sections:
+        found_headers = [
+            {
+                "matched_text": m.matched_text,
+                "normalized_section_id": m.section_id,
+                "offset_start": m.start,
+                "offset_end": m.end,
+                "context": _context_window(text, m.start),
+            }
+            for m in matches
+        ]
+        suspicious_candidates = [
+            {
+                "candidate": candidate.group(0),
+                "offset_start": candidate.start(),
+                "context": _context_window(text, candidate.start()),
+            }
+            for candidate in _SUSPICIOUS_HEADER_RE.finditer(text)
+        ]
+        diagnostics = {
+            "failure_stage": "segment_headers",
+            "icao": icao,
+            "source_document": source_path.name,
+            "expected_sections": expected,
+            "missing_sections": missing_sections,
+            "duplicate_sections": sorted(duplicate_sections),
+            "recovered_sections": [recovered_ad211.section_id] if recovered_ad211 else [],
+            "found_headers": found_headers,
+            "suspicious_candidates": suspicious_candidates,
+        }
+        raise PdfFormatError(f"AD 2.x header validation failed: {json.dumps(diagnostics, ensure_ascii=True)}")
+
+    selected_by_section: dict[str, HeaderMatch] = {}
+    for match in sorted(matches, key=lambda item: item.start):
+        selected_by_section.setdefault(match.section_id, match)
+
+    ordered_for_slicing = sorted(selected_by_section.values(), key=lambda item: item.start)
+    raw_by_section: dict[str, str] = {}
+
+    for idx, match in enumerate(ordered_for_slicing):
+        next_start = (
+            ordered_for_slicing[idx + 1].start if idx + 1 < len(ordered_for_slicing) else len(text)
         )
-    )
+        block = text[match.start:next_start].strip()
+        if not block:
+            raise PdfFormatError(
+                f"AD 2.x section block is empty: {match.section_id} in '{source_path.name}'."
+            )
+        raw_by_section[match.section_id] = block
+
+    sections: list[SectionSchema] = []
+    for section_id in expected:
+        sections.append(
+            SectionSchema(
+                section_id=section_id,
+                title=section_id,
+                raw_text=raw_by_section[section_id],
+                data={},
+            )
+        )
+    return sections
+
+
+def _infer_icao_from_path(pdf_path: Path) -> str | None:
+    candidates = re.findall(r"SA[A-Z0-9]{2}", pdf_path.name.upper())
+    if candidates:
+        return candidates[0]
+    return None
+
+
+def _extract_name_fields(sections: list[SectionSchema]) -> tuple[str, str | None]:
+    ad21 = next((section for section in sections if section.section_id == "AD 2.1"), None)
+    if ad21 is None:
+        return "UNKNOWN", None
+
+    first_line = ad21.raw_text.splitlines()[0].strip() if ad21.raw_text.splitlines() else ""
+
+    # Preferred pattern in AD 2.1 headings:
+    # "... NAME SAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO"
+    icao_name_match = re.search(r"\b([A-Z]{4})\s*-\s*(.+)$", first_line)
+    if icao_name_match:
+        full_name = icao_name_match.group(2).strip(" -:")
+        main_name = full_name.split("/")[0].strip(" -:")
+        if main_name:
+            return main_name.title(), full_name
+        return full_name.title(), full_name
+
+    candidate = re.sub(r"^\s*(?:[A-Z]{4}\s+)?AD\s*2\.1\s*", "", first_line, flags=re.IGNORECASE)
+    candidate = candidate.strip(" -:")
+    if not candidate:
+        return "UNKNOWN", None
+
+    left = candidate.split("/")[0].strip()
+    if left:
+        return left.title(), candidate
+    return candidate.title(), candidate
+
+
+def _extract_airac_cycle(text: str) -> str | None:
+    # Common pattern in AIP pages: "AIRAC AMDT 03/26"
+    match = re.search(r"AIRAC\s+AMDT\s+(\d{1,2}/\d{2})", text, flags=re.IGNORECASE)
+    if not match:
+        return None
+    return match.group(1)
+
+
+def _recover_missing_ad211(text: str, matches: list[HeaderMatch]) -> HeaderMatch | None:
+    has_ad211 = any(m.section_id == "AD 2.11" for m in matches)
+    if has_ad211:
+        return None
+
+    ad210_candidates = sorted((m for m in matches if m.section_id == "AD 2.10"), key=lambda m: m.start)
+    ad212_candidates = sorted((m for m in matches if m.section_id == "AD 2.12"), key=lambda m: m.start)
+    if not ad210_candidates or not ad212_candidates:
+        return None
+
+    ad210_start = ad210_candidates[0].start
+    ad212_start = ad212_candidates[0].start
+    if ad212_start <= ad210_start:
+        return None
+
+    for candidate in _AD211_FALLBACK_RE.finditer(text):
+        if not (ad210_start < candidate.start() < ad212_start):
+            continue
+        line_start = text.rfind("\n", 0, candidate.start()) + 1
+        line_end = text.find("\n", candidate.start())
+        if line_end == -1:
+            line_end = len(text)
+        matched_text = text[line_start:line_end].strip()
+        if not matched_text:
+            matched_text = candidate.group(0)
+        return HeaderMatch(
+            section_id="AD 2.11",
+            matched_text=matched_text,
+            start=line_start,
+            end=line_end,
+        )
+    return None

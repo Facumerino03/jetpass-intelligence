@@ -1,4 +1,4 @@
-"""Unit tests for app.services.scraper.aip_parser."""
+"""Unit tests for deterministic AD 2.0 parsing and segmentation."""
 
 from __future__ import annotations
 
@@ -7,9 +7,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from app.schemas.aerodrome import AerodromeCreate, SectionSchema
+from app.schemas.aerodrome import AerodromeCreate
 from app.services.scraper.aip_parser import (
-    AipParserError,
     DoclingOcrParser,
     ParserConfig,
     ParserExecutionStats,
@@ -18,39 +17,67 @@ from app.services.scraper.aip_parser import (
     PdfOcrError,
     _get_parser_config,
     parse_aerodrome_from_ad20,
+    parse_aerodrome_from_documents,
 )
 
 
-_SAMR_TEXT = "SAMR AD 2.1\nSAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO"
-
-
-def _sections() -> list[SectionSchema]:
-    return [
-        SectionSchema(
-            section_id=f"AD 2.{idx}",
-            title=f"Section {idx}",
-            raw_text=f"Raw text {idx}",
-            data={"idx": idx},
+def _ad2_text(*, missing: str | None = None, duplicate: str | None = None) -> str:
+    chunks: list[str] = []
+    for idx in range(1, 26):
+        section_id = f"AD 2.{idx}"
+        if section_id == missing:
+            continue
+        chunks.append(
+            f"SAMR {section_id} SECTION {idx}\n"
+            f"Contenido ES/EN {idx}\n"
+            f"Linea\n\n"
         )
-        for idx in range(1, 26)
-    ]
+        if section_id == duplicate:
+            chunks.append(
+                f"SAMR {section_id} SECTION DUP\n"
+                f"Contenido duplicado {idx}\n\n"
+            )
+    return "".join(chunks)
 
 
-_SAMR_AERODROME = AerodromeCreate(
-    icao_code="SAMR",
-    name="San Rafael",
-    full_name="S. A. Santiago Germano",
-    airac_cycle="2026-01",
-    source_document="SAMR_AD-2.0.pdf",
-    downloaded_by="parser-agent",
-    ad_sections=_sections(),
-)
+def _ad2_text_missing_211_with_meteo_hint() -> str:
+    chunks: list[str] = []
+    for idx in range(1, 26):
+        if idx == 11:
+            chunks.append("| 9 | Informacion meteorologica suministrada / Meteorological information provided | TWR |\n\n")
+            continue
+        chunks.append(
+            f"SAMR AD 2.{idx} SECTION {idx}\n"
+            f"Contenido ES/EN {idx}\n\n"
+        )
+    return "".join(chunks)
 
 
-def _mock_llm_client(return_value: AerodromeCreate) -> MagicMock:
-    client = MagicMock()
-    client.create.return_value = return_value
-    return client
+def _ad2_text_with_real_ad21_heading() -> str:
+    chunks: list[str] = []
+    for idx in range(1, 26):
+        if idx == 1:
+            chunks.append(
+                "## AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERODROMO / "
+                "AERODROME LOCATION INDICATOR AND NAME SAMR - SAN RAFAEL / "
+                "S. A. SANTIAGO GERMANO\n\n"
+                "AEROPUERTO NACIONAL / NATIONAL AIRPORT\n\n"
+            )
+            continue
+        chunks.append(
+            f"SAMR AD 2.{idx} SECTION {idx}\n"
+            f"Contenido ES/EN {idx}\n\n"
+        )
+    return "".join(chunks)
+
+
+def _stats() -> ParserExecutionStats:
+    return ParserExecutionStats(
+        extraction_seconds=0.01,
+        ocr_seconds=0.0,
+        ocr_triggered=False,
+        parser_strategy="docling_ocr",
+    )
 
 
 def _docling_parser_config(*, ocr_enabled: bool = True, ocr_mode: str = "page") -> ParserConfig:
@@ -63,87 +90,128 @@ def _docling_parser_config(*, ocr_enabled: bool = True, ocr_mode: str = "page") 
     )
 
 
-def _stats() -> ParserExecutionStats:
-    return ParserExecutionStats(
-        extraction_seconds=0.01,
-        ocr_seconds=0.0,
-        ocr_triggered=False,
-        parser_strategy="docling_ocr",
-    )
-
-
-@patch("app.services.scraper.aip_parser._get_llm_client")
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_from_ad20_returns_aerodrome_create(
-    mock_extract_text: MagicMock, mock_get_client: MagicMock, tmp_path: Path
+def test_parse_aerodrome_from_documents_returns_structured_sections(
+    mock_extract_text: MagicMock, tmp_path: Path
 ) -> None:
-    mock_extract_text.return_value = (_SAMR_TEXT, _stats())
-    mock_get_client.return_value = _mock_llm_client(_SAMR_AERODROME)
+    mock_extract_text.return_value = (_ad2_text(), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+    assert isinstance(result, AerodromeCreate)
+    assert result.icao_code == "SAMR"
+    assert len(result.ad_sections) == 25
+    assert result.ad_sections[0].section_id == "AD 2.1"
+    assert result.ad_sections[-1].section_id == "AD 2.25"
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_extracts_name_from_ad21_heading(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text_with_real_ad21_heading(), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+    assert result.name == "San Rafael"
+    assert result.full_name == "SAN RAFAEL / S. A. SANTIAGO GERMANO"
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_from_documents_preserves_multiline_raw_text(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    text = _ad2_text().replace("Contenido ES/EN 5\nLinea", "Contenido ES/EN 5\n\nLinea")
+    mock_extract_text.return_value = (text, _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+    section_5 = next(s for s in result.ad_sections if s.section_id == "AD 2.5")
+    assert "\n\n" in section_5.raw_text
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_distinguishes_ad21_from_ad210(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text(), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+    section_1 = next(s for s in result.ad_sections if s.section_id == "AD 2.1")
+    section_10 = next(s for s in result.ad_sections if s.section_id == "AD 2.10")
+    assert "AD 2.10" not in section_1.raw_text.splitlines()[0]
+    assert "AD 2.10" in section_10.raw_text.splitlines()[0]
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_raises_with_missing_section_diagnostics(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text(missing="AD 2.12"), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    with pytest.raises(PdfFormatError, match=r'"missing_sections": \["AD 2.12"\]'):
+        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_recovers_ad211_from_meteorological_hint(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text_missing_211_with_meteo_hint(), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+    assert len(result.ad_sections) == 25
+    section_11 = next(s for s in result.ad_sections if s.section_id == "AD 2.11")
+    assert "meteorological" in section_11.raw_text.lower() or "meteorologica" in section_11.raw_text.lower()
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_raises_with_duplicate_section_diagnostics(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text(duplicate="AD 2.19"), _stats())
+    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+    pdf_path.touch()
+
+    with pytest.raises(PdfFormatError, match=r'"duplicate_sections": \["AD 2.19"\]'):
+        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+
+
+@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
+def test_parse_aerodrome_from_ad20_infers_icao_from_filename(
+    mock_extract_text: MagicMock, tmp_path: Path
+) -> None:
+    mock_extract_text.return_value = (_ad2_text(), _stats())
     pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
     pdf_path.touch()
 
     result = parse_aerodrome_from_ad20(pdf_path)
 
-    assert isinstance(result, AerodromeCreate)
     assert result.icao_code == "SAMR"
-    assert len(result.ad_sections) == 25
-
-
-@patch("app.services.scraper.aip_parser._get_llm_client")
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_calls_llm_with_extracted_text(
-    mock_extract_text: MagicMock, mock_get_client: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_SAMR_TEXT, _stats())
-    mock_client = _mock_llm_client(_SAMR_AERODROME)
-    mock_get_client.return_value = mock_client
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    parse_aerodrome_from_ad20(pdf_path)
-
-    call_kwargs = mock_client.create.call_args.kwargs
-    assert call_kwargs["response_model"] is AerodromeCreate
-    messages = call_kwargs["messages"]
-    assert any(_SAMR_TEXT in msg["content"] for msg in messages)
-
-
-@patch("app.services.scraper.aip_parser._get_llm_client")
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_raises_pdf_format_error_when_llm_fails(
-    mock_extract_text: MagicMock, mock_get_client: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_SAMR_TEXT, _stats())
-    mock_client = MagicMock()
-    mock_client.create.side_effect = ValueError("LLM validation error")
-    mock_get_client.return_value = mock_client
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    with pytest.raises(PdfFormatError, match="LLM failed"):
-        parse_aerodrome_from_ad20(pdf_path)
 
 
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
 def test_parse_aerodrome_raises_on_empty_pdf(mock_extract_text: MagicMock, tmp_path: Path) -> None:
     mock_extract_text.side_effect = PdfNotReadableError("unreadable")
-    pdf_path = tmp_path / "empty.pdf"
+    pdf_path = tmp_path / "SAMR_empty.pdf"
     pdf_path.touch()
 
     with pytest.raises(PdfNotReadableError):
-        parse_aerodrome_from_ad20(pdf_path)
-
-
-def test_get_llm_client_raises_when_api_key_missing() -> None:
-    from app.services.scraper.aip_parser import _get_llm_client
-    from unittest.mock import patch as _patch
-
-    with _patch(
-        "app.services.scraper.aip_parser.get_settings",
-        return_value=MagicMock(openrouter_api_key=None),
-    ):
-        with pytest.raises(AipParserError, match="OPENROUTER_API_KEY"):
-            _get_llm_client()
+        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
 
 
 def test_get_parser_config_from_settings() -> None:

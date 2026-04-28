@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from pydantic import ValidationError
 
 from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot, SectionMeta
 from app.models.meta import ChangeLogEntry, DocumentMeta, MetaSource
@@ -92,7 +93,11 @@ def _superseded_snapshot(snapshot: AerodromeSnapshot) -> AerodromeSnapshot:
 
 async def get_by_icao(icao: str) -> AerodromeDocument | None:
     normalized = icao.strip().upper()
-    return await AerodromeDocument.get(normalized)
+    try:
+        return await AerodromeDocument.get(normalized)
+    except ValidationError:
+        # Legacy records might not match the current schema.
+        return None
 
 
 async def get_all() -> list[AerodromeDocument]:
@@ -115,7 +120,42 @@ async def upsert(data: AerodromeCreate) -> AerodromeDocument:
     _validate_sections(data.ad_sections)
 
     icao = data.icao_code.strip().upper()
+    collection = AerodromeDocument.get_pymongo_collection()
+    raw_existing = await collection.find_one({"_id": icao})
+
+    if raw_existing is not None and "current" not in raw_existing:
+        migrated = AerodromeDocument(
+            id=icao,
+            icao=icao,
+            name=data.name,
+            full_name=data.full_name,
+            current=_build_snapshot(data, version=1, replaces=None),
+            history=[],
+        )
+        await collection.replace_one(
+            {"_id": icao},
+            migrated.model_dump(by_alias=True),
+            upsert=True,
+        )
+        return migrated
+
     existing = await get_by_icao(icao)
+
+    if raw_existing is not None and existing is None:
+        repaired = AerodromeDocument(
+            id=icao,
+            icao=icao,
+            name=data.name,
+            full_name=data.full_name,
+            current=_build_snapshot(data, version=1, replaces=None),
+            history=[],
+        )
+        await collection.replace_one(
+            {"_id": icao},
+            repaired.model_dump(by_alias=True),
+            upsert=True,
+        )
+        return repaired
 
     if existing is None:
         doc = AerodromeDocument(
