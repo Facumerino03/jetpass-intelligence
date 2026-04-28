@@ -81,12 +81,17 @@ async def test_import_aerodrome_full_pipeline(tmp_path: Path) -> None:
             "app.services.aerodrome_import_service.aerodrome_repo.upsert",
             AsyncMock(return_value=_aerodrome_doc()),
         ),
+        patch(
+            "app.services.aerodrome_import_service.enrich_aerodrome_document",
+            AsyncMock(side_effect=lambda doc: doc),
+        ) as enrich_call,
     ):
         result = await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)
 
     assert result.icao == "SAMR"
     assert len(result.current.ad_sections) == 25
     parse_call.assert_called_once_with([ad20_path], icao="SAMR")
+    enrich_call.assert_called_once()
 
 
 @pytest.mark.asyncio
@@ -117,6 +122,10 @@ async def test_import_raises_when_db_fails(tmp_path: Path) -> None:
             "app.services.aerodrome_import_service.aerodrome_repo.upsert",
             AsyncMock(side_effect=RuntimeError("DB down")),
         ),
+        patch(
+            "app.services.aerodrome_import_service.enrich_aerodrome_document",
+            AsyncMock(side_effect=lambda doc: doc),
+        ),
     ):
         with pytest.raises(AipImportError, match="Database upsert failed"):
             await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)
@@ -133,3 +142,32 @@ async def test_import_raises_when_ad20_pdf_missing(tmp_path: Path) -> None:
     ):
         with pytest.raises(AipImportError, match="does not include required AD-2.0"):
             await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)
+
+
+@pytest.mark.asyncio
+async def test_import_can_skip_enrichment(tmp_path: Path) -> None:
+    ad20_path = tmp_path / "SAMR_AD-2.0.pdf"
+    ad20_path.touch()
+
+    with (
+        patch(
+            "app.services.aerodrome_import_service.download_aip_pdfs",
+            AsyncMock(return_value=[ad20_path]),
+        ),
+        patch(
+            "app.services.aerodrome_import_service.parse_aerodrome_from_documents",
+            return_value=_aerodrome_create(),
+        ),
+        patch(
+            "app.services.aerodrome_import_service.aerodrome_repo.upsert",
+            AsyncMock(return_value=_aerodrome_doc()),
+        ),
+        patch(
+            "app.services.aerodrome_import_service.enrich_aerodrome_document",
+            AsyncMock(side_effect=lambda doc: doc),
+        ) as enrich_call,
+    ):
+        result = await import_aerodrome_from_aip("SAMR", output_dir=tmp_path, enrich=False)
+
+    assert result.icao == "SAMR"
+    enrich_call.assert_not_called()

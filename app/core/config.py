@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     openrouter_model: str = Field(
         default="openai/gpt-4o-mini", alias="OPENROUTER_MODEL"
     )
+    ollama_host: str = Field(default="http://localhost:11434", alias="OLLAMA_HOST")
+    ollama_model: str = Field(default="llama3.1:8b", alias="OLLAMA_MODEL")
+    ollama_temperature: float = Field(default=0.0, alias="OLLAMA_TEMPERATURE")
     aip_parser_docling_quality_threshold: float = Field(
         default=0.2, alias="AIP_PARSER_DOCLING_QUALITY_THRESHOLD"
     )

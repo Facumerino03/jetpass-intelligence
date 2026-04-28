@@ -59,6 +59,11 @@ def _parse_args() -> argparse.Namespace:
         default=None,
         help="Override quality threshold that triggers OCR fallback.",
     )
+    parser.add_argument(
+        "--skip-enrichment",
+        action="store_true",
+        help="Persist parsed AD-2.0 data without running LLM enrichment.",
+    )
     return parser.parse_args()
 
 
@@ -83,14 +88,14 @@ def _apply_parser_overrides(args: argparse.Namespace) -> None:
     get_settings.cache_clear()
 
 
-async def _run(icao: str, output_dir: Path | None) -> None:
+async def _run(icao: str, output_dir: Path | None, enrich: bool) -> None:
     settings = get_settings()
     if not settings.mongodb_url:
         raise SystemExit(
             "MONGODB_URL is not configured. Set it in your .env file."
         )
     await init_mongodb(settings.mongodb_url, settings.mongodb_db_name)
-    aerodrome = await import_aerodrome_from_aip(icao, output_dir=output_dir)
+    aerodrome = await import_aerodrome_from_aip(icao, output_dir=output_dir, enrich=enrich)
     _print_summary(aerodrome)
 
 
@@ -98,7 +103,7 @@ def main() -> None:
     args = _parse_args()
     _apply_parser_overrides(args)
     try:
-        asyncio.run(_run(args.icao, args.output_dir))
+        asyncio.run(_run(args.icao, args.output_dir, enrich=not args.skip_enrichment))
     except AipImportError as exc:
         print(f"\n✗ Import failed: {exc}")
         raise SystemExit(1) from exc
