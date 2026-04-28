@@ -1,87 +1,144 @@
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+"""Aerodrome repository — data access via Beanie (no business logic here)."""
 
-from app.models.aerodrome import Aerodrome
-from app.models.runway import Runway
-from app.schemas.aerodrome import AerodromeCreate
+from __future__ import annotations
+
+from datetime import datetime, timezone
+
+from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot, SectionMeta
+from app.models.meta import ChangeLogEntry, DocumentMeta, MetaSource
+from app.schemas.aerodrome import AerodromeCreate, SectionSchema
 
 
-async def get_by_icao(db: AsyncSession, icao: str) -> Aerodrome | None:
-    normalized_icao = icao.strip().upper()
-    stmt = (
-        select(Aerodrome)
-        .options(selectinload(Aerodrome.runways))
-        .where(Aerodrome.icao_code == normalized_icao)
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _normalize_section_id(section_id: str) -> str:
+    return " ".join(section_id.upper().split())
+
+
+def _validate_sections(sections: list[SectionSchema]) -> None:
+    if len(sections) != 25:
+        raise ValueError(f"Expected 25 AD 2.x sections, got {len(sections)}")
+    for section in sections:
+        if not section.raw_text.strip():
+            raise ValueError(f"Section '{section.section_id}' has empty raw_text")
+
+
+def _to_model_section(section: SectionSchema) -> AdSection:
+    return AdSection(
+        section_id=section.section_id,
+        title=section.title,
+        raw_text=section.raw_text,
+        data=section.data,
+        anchors=section.anchors,
+        section_meta=SectionMeta(
+            airac_cycle=section.section_meta.airac_cycle,
+            source_page=section.section_meta.source_page,
+        ) if section.section_meta else None,
     )
-    result = await db.execute(stmt)
-    return result.scalar_one_or_none()
 
 
-async def get_all(db: AsyncSession) -> list[Aerodrome]:
-    stmt = (
-        select(Aerodrome)
-        .options(selectinload(Aerodrome.runways))
-        .order_by(Aerodrome.icao_code)
+def _build_meta(data: AerodromeCreate, version: int, replaces: str | None) -> DocumentMeta:
+    now = _utcnow()
+    return DocumentMeta(
+        airac_cycle=data.airac_cycle,
+        airac_effective_date=data.airac_effective_date,
+        airac_expiry_date=data.airac_expiry_date,
+        source=MetaSource(
+            type="AIP",
+            document=data.source_document,
+            url=data.source_url,
+            downloaded_at=now,
+            downloaded_by=data.downloaded_by,
+        ),
+        status="active",
+        version=version,
+        replaces=replaces,
+        replaced_by=None,
+        valid_from=data.airac_effective_date,
+        valid_to=None,
+        created_at=now,
+        updated_at=now,
+        change_log=[
+            ChangeLogEntry(
+                airac_cycle=data.airac_cycle,
+                changed_by=data.downloaded_by or "aip-parser",
+                changed_fields=["current.ad_sections", "current._meta"],
+                notes="Upsert AD 2.0 snapshot",
+            )
+        ],
     )
-    result = await db.execute(stmt)
-    return list(result.scalars().all())
 
 
-async def upsert(db: AsyncSession, data: AerodromeCreate) -> Aerodrome:
-    existing = await get_by_icao(db, data.icao_code)
-    normalized_icao = data.icao_code.strip().upper()
+def _build_snapshot(data: AerodromeCreate, version: int, replaces: str | None) -> AerodromeSnapshot:
+    return AerodromeSnapshot(
+        ad_sections=[_to_model_section(section) for section in data.ad_sections],
+        _meta=_build_meta(data, version=version, replaces=replaces),
+    )
+
+
+def _superseded_snapshot(snapshot: AerodromeSnapshot) -> AerodromeSnapshot:
+    now = _utcnow()
+    superseded_meta = snapshot.meta.model_copy(
+        update={
+            "status": "superseded",
+            "valid_to": now,
+            "updated_at": now,
+        }
+    )
+    return snapshot.model_copy(update={"meta": superseded_meta})
+
+
+async def get_by_icao(icao: str) -> AerodromeDocument | None:
+    normalized = icao.strip().upper()
+    return await AerodromeDocument.get(normalized)
+
+
+async def get_all() -> list[AerodromeDocument]:
+    return await AerodromeDocument.find_all().sort("+icao").to_list()
+
+
+async def get_section_by_icao(icao: str, section_id: str) -> AdSection | None:
+    aerodrome = await get_by_icao(icao)
+    if aerodrome is None:
+        return None
+    normalized = _normalize_section_id(section_id)
+    for section in aerodrome.current.ad_sections:
+        if _normalize_section_id(section.section_id) == normalized:
+            return section
+    return None
+
+
+async def upsert(data: AerodromeCreate) -> AerodromeDocument:
+    """Create or update aerodrome snapshot with internal AIRAC versioning."""
+    _validate_sections(data.ad_sections)
+
+    icao = data.icao_code.strip().upper()
+    existing = await get_by_icao(icao)
 
     if existing is None:
-        aerodrome = Aerodrome(
-            icao_code=normalized_icao,
-            iata_code=data.iata_code.strip().upper() if data.iata_code else None,
+        doc = AerodromeDocument(
+            id=icao,
+            icao=icao,
             name=data.name,
-            city=data.city,
-            province=data.province,
-            country=data.country,
-            latitude=data.latitude,
-            longitude=data.longitude,
-            elevation_ft=data.elevation_ft,
+            full_name=data.full_name,
+            current=_build_snapshot(data, version=1, replaces=None),
+            history=[],
         )
-        aerodrome.runways = [
-            Runway(
-                designator=runway.designator,
-                length_m=runway.length_m,
-                width_m=runway.width_m,
-                surface_type=runway.surface_type,
-            )
-            for runway in data.runways
-        ]
-        db.add(aerodrome)
-        await db.commit()
-        loaded = await get_by_icao(db, normalized_icao)
-        if loaded is None:
-            # Defensive fallback: the record was just inserted, so this should never happen.
-            raise RuntimeError(f"Inserted aerodrome '{normalized_icao}' could not be reloaded.")
-        return loaded
+        await doc.insert()
+        return doc
 
-    existing.iata_code = data.iata_code.strip().upper() if data.iata_code else None
+    current_meta = existing.current.meta
+    next_version = current_meta.version + 1
+    replaces = f"{icao}-v{current_meta.version}"
+    new_snapshot = _build_snapshot(data, version=next_version, replaces=replaces)
+
+    if current_meta.airac_cycle != data.airac_cycle:
+        existing.history.append(_superseded_snapshot(existing.current))
+
     existing.name = data.name
-    existing.city = data.city
-    existing.province = data.province
-    existing.country = data.country
-    existing.latitude = data.latitude
-    existing.longitude = data.longitude
-    existing.elevation_ft = data.elevation_ft
-    existing.runways = [
-        Runway(
-            designator=runway.designator,
-            length_m=runway.length_m,
-            width_m=runway.width_m,
-            surface_type=runway.surface_type,
-        )
-        for runway in data.runways
-    ]
-
-    await db.commit()
-    loaded = await get_by_icao(db, normalized_icao)
-    if loaded is None:
-        # Defensive fallback: the record exists by definition in this branch.
-        raise RuntimeError(f"Updated aerodrome '{normalized_icao}' could not be reloaded.")
-    return loaded
+    existing.full_name = data.full_name
+    existing.current = new_snapshot
+    await existing.save()
+    return existing

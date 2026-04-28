@@ -5,8 +5,6 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.repositories import aerodrome_repo
 from app.schemas.aerodrome import AerodromeResponse
 from app.services.scraper.aip_parser import AipParserError, parse_aerodrome_from_documents
@@ -21,14 +19,12 @@ class AipImportError(Exception):
 
 async def import_aerodrome_from_aip(
     icao: str,
-    db: AsyncSession,
     output_dir: Path | None = None,
 ) -> AerodromeResponse:
-    """Download AIP PDFs, parse them and upsert the aerodrome in the database.
+    """Download AIP PDFs, parse them and upsert the aerodrome in MongoDB.
 
     Args:
         icao: Four-letter ICAO aerodrome code (e.g. ``"SAMR"``).
-        db: Active async SQLAlchemy session.
         output_dir: Override for the PDF download directory.
 
     Returns:
@@ -51,17 +47,16 @@ async def import_aerodrome_from_aip(
     except AipParserError as exc:
         raise AipImportError(f"[{icao}] Parser failed for downloaded AIP docs: {exc}") from exc
 
-    # 3 — Persist
+    # 3 — Persist with Beanie (upsert + AIRAC versioning)
     try:
-        aerodrome = await aerodrome_repo.upsert(db, aerodrome_data)
+        aerodrome_doc = await aerodrome_repo.upsert(aerodrome_data)
     except Exception as exc:
         raise AipImportError(f"[{icao}] Database upsert failed: {exc}") from exc
 
     logger.info(
-        "[%s] Import complete — %d runway(s) persisted.",
+        "[%s] Import complete — %d section(s) persisted. AIRAC: %s",
         icao,
-        len(aerodrome.runways),
+        len(aerodrome_doc.current.ad_sections),
+        aerodrome_doc.current.meta.airac_cycle,
     )
-    return AerodromeResponse.model_validate(aerodrome)
-
-
+    return AerodromeResponse.from_document(aerodrome_doc)

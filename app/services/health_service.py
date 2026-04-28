@@ -1,9 +1,9 @@
-from app.core.config import Settings
-from app.core.database import get_engine
-from sqlalchemy import text
-from sqlalchemy.exc import SQLAlchemyError
+"""Health and readiness checks for MongoDB + Redis."""
+
 from redis.asyncio import Redis
 from redis.exceptions import RedisError
+from pymongo import AsyncMongoClient
+from app.core.config import Settings
 
 
 def health_status(settings: Settings) -> dict[str, str]:
@@ -15,13 +15,12 @@ async def readiness_status(settings: Settings, redis: Redis | None) -> dict[str,
     database_status = "not_configured"
     redis_status = "not_configured"
 
-    if settings.database_url:
+    if settings.mongodb_url:
         try:
-            engine = get_engine()
-            async with engine.connect() as connection:
-                await connection.execute(text("SELECT 1"))
+            client = AsyncMongoClient(settings.mongodb_url)
+            await client.admin.command("ping")
             database_status = "ok"
-        except SQLAlchemyError:
+        except Exception:
             database_status = "error"
 
     if settings.redis_url and redis is not None:

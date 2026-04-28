@@ -1,36 +1,57 @@
-from __future__ import annotations
+"""Flexible aerodrome document model for AD 2.0 storage."""
 
-from typing import TYPE_CHECKING
+from typing import Any
 
-from sqlalchemy import Float, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from beanie import Document
+from pydantic import BaseModel, ConfigDict, Field
+from pymongo import ASCENDING, IndexModel
 
-from app.models.base import Base, TimestampedUUIDMixin
-
-if TYPE_CHECKING:
-    from app.models.runway import Runway
+from app.models.meta import DocumentMeta
 
 
-class Aerodrome(TimestampedUUIDMixin, Base):
-    __tablename__ = "aerodrome"
-    __table_args__ = {"schema": "aip"}
+class SectionMeta(BaseModel):
+    """Optional metadata at section level (for mixed AIRAC pages)."""
 
-    icao_code: Mapped[str] = mapped_column(
-        String(4), unique=True, index=True, nullable=False
-    )
-    iata_code: Mapped[str | None] = mapped_column(String(3), nullable=True)
-    name: Mapped[str] = mapped_column(String(200), nullable=False)
-    city: Mapped[str | None] = mapped_column(String(120), nullable=True)
-    province: Mapped[str | None] = mapped_column(String(120), nullable=True)
-    country: Mapped[str] = mapped_column(
-        String(120), default="Argentina", nullable=False
-    )
-    latitude: Mapped[float] = mapped_column(Float, nullable=False)
-    longitude: Mapped[float] = mapped_column(Float, nullable=False)
-    elevation_ft: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    airac_cycle: str | None = None
+    source_page: int | None = None
 
-    runways: Mapped[list["Runway"]] = relationship(
-        back_populates="aerodrome",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
+
+class AdSection(BaseModel):
+    """One AD 2.x section with literal text and flexible structured data."""
+
+    section_id: str
+    title: str
+    raw_text: str
+    data: dict[str, Any] = Field(default_factory=dict)
+    anchors: dict[str, Any] | None = None
+    section_meta: SectionMeta | None = None
+
+
+class AerodromeSnapshot(BaseModel):
+    """Versioned payload for one AIRAC snapshot."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    ad_sections: list[AdSection] = Field(default_factory=list)
+    meta: DocumentMeta = Field(alias="_meta", default_factory=DocumentMeta)
+
+
+class AerodromeDocument(Document):
+    """Single-document AD 2.0 store with current + history snapshots."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    id: str  # ICAO code -> _id in MongoDB
+    icao: str
+    name: str
+    full_name: str | None = None
+
+    current: AerodromeSnapshot
+    history: list[AerodromeSnapshot] = Field(default_factory=list)
+
+    class Settings:
+        name = "aerodromes"
+        indexes = [
+            IndexModel([("icao", ASCENDING)], unique=True),
+            IndexModel([("current._meta.airac_cycle", ASCENDING)]),
+        ]

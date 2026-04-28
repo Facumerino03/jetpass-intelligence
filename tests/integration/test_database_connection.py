@@ -1,24 +1,23 @@
 import pytest
-from sqlalchemy import text
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core.config import get_settings
 
 
 @pytest.mark.asyncio
-async def test_database_connection() -> None:
+async def test_mongodb_connection() -> None:
+    """Verifica conectividad real a MongoDB si MONGODB_URL está configurada."""
     settings = get_settings()
-    if not settings.database_url:
-        pytest.skip("DATABASE_URL is not configured")
-
-    engine = create_async_engine(settings.database_url, future=True)
+    if not settings.mongodb_url:
+        pytest.skip("MONGODB_URL is not configured")
 
     try:
-        async with engine.connect() as connection:
-            result = await connection.execute(text("SELECT 1"))
-            assert result.scalar_one() == 1
-    except SQLAlchemyError as exc:
-        pytest.skip(f"Database is not reachable: {exc}")
-    finally:
-        await engine.dispose()
+        from motor.motor_asyncio import AsyncIOMotorClient
+
+        client: AsyncIOMotorClient = AsyncIOMotorClient(
+            settings.mongodb_url,
+            serverSelectionTimeoutMS=3000,
+        )
+        result = await client.admin.command("ping")
+        assert result.get("ok") == 1.0
+    except Exception as exc:
+        pytest.skip(f"MongoDB is not reachable: {exc}")

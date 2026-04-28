@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 from app.core.config import get_settings
-from app.core.database import get_session_maker
+from app.core.database import init_mongodb
 from app.schemas.aerodrome import AerodromeResponse
 from app.services.aerodrome_import_service import (
     AipImportError,
@@ -26,7 +26,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(messag
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Import aerodrome data from AIP ANAC into the database."
+        description="Import aerodrome data from AIP ANAC into MongoDB."
     )
     parser.add_argument(
         "--icao",
@@ -63,18 +63,14 @@ def _parse_args() -> argparse.Namespace:
 
 
 def _print_summary(aerodrome: AerodromeResponse) -> None:
-    print(f"\n✓ Imported: {aerodrome.icao_code} — {aerodrome.name}")
-    print(
-        f"  City      : {aerodrome.city or '—'}, {aerodrome.province or '—'}, {aerodrome.country}"
-    )
-    print(f"  Coords    : {aerodrome.latitude}, {aerodrome.longitude}")
-    elev = f"{aerodrome.elevation_ft} ft" if aerodrome.elevation_ft is not None else "—"
-    print(f"  Elevation : {elev}")
-    print(f"  Runways   : {len(aerodrome.runways)}")
-    for rwy in aerodrome.runways:
-        width = rwy.width_m or "?"
-        surface = rwy.surface_type or "?"
-        print(f"    - {rwy.designator}: {rwy.length_m} m × {width} m ({surface})")
+    print(f"\n✓ Imported: {aerodrome.icao} — {aerodrome.name}")
+    if aerodrome.full_name:
+        print(f"  Full name : {aerodrome.full_name}")
+    print(f"  AIRAC     : {aerodrome.current.meta.airac_cycle}")
+    print(f"  Sections  : {len(aerodrome.current.ad_sections)}")
+    if aerodrome.current.ad_sections:
+        print("  IDs       : " + ", ".join(s.section_id for s in aerodrome.current.ad_sections))
+    print(f"  History   : {len(aerodrome.history)} version(es)")
 
 
 def _apply_parser_overrides(args: argparse.Namespace) -> None:
@@ -88,9 +84,13 @@ def _apply_parser_overrides(args: argparse.Namespace) -> None:
 
 
 async def _run(icao: str, output_dir: Path | None) -> None:
-    session_maker = get_session_maker()
-    async with session_maker() as db:
-        aerodrome = await import_aerodrome_from_aip(icao, db, output_dir=output_dir)
+    settings = get_settings()
+    if not settings.mongodb_url:
+        raise SystemExit(
+            "MONGODB_URL is not configured. Set it in your .env file."
+        )
+    await init_mongodb(settings.mongodb_url, settings.mongodb_db_name)
+    aerodrome = await import_aerodrome_from_aip(icao, output_dir=output_dir)
     _print_summary(aerodrome)
 
 

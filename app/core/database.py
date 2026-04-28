@@ -1,29 +1,14 @@
-from collections.abc import AsyncGenerator
-from functools import lru_cache
+"""MongoDB connection and Beanie initialisation."""
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-
-from app.core.config import get_settings
-
-
-@lru_cache
-def get_engine():
-    settings = get_settings()
-    if not settings.database_url:
-        raise RuntimeError(
-            "DATABASE_URL is required to initialize the database engine."
-        )
-    return create_async_engine(settings.database_url, echo=settings.debug, future=True)
+from beanie import init_beanie
+from pymongo import AsyncMongoClient
+from app.models import ALL_DOCUMENTS
 
 
-@lru_cache
-def get_session_maker() -> async_sessionmaker[AsyncSession]:
-    return async_sessionmaker(
-        bind=get_engine(), class_=AsyncSession, expire_on_commit=False
+async def init_mongodb(mongodb_url: str, db_name: str) -> None:
+    """Connect to MongoDB and register all Beanie Document classes."""
+    client = AsyncMongoClient(mongodb_url)
+    await init_beanie(
+        database=client[db_name],
+        document_models=ALL_DOCUMENTS,  # type: ignore[arg-type]
     )
-
-
-async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
-    session_maker = get_session_maker()
-    async with session_maker() as session:
-        yield session

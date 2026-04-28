@@ -11,7 +11,8 @@ class Settings(BaseSettings):
         default="development", alias="ENVIRONMENT"
     )
     debug: bool = Field(default=False, alias="DEBUG")
-    database_url: str | None = Field(default=None, alias="DATABASE_URL")
+    mongodb_url: str | None = Field(default=None, alias="MONGODB_URL")
+    mongodb_db_name: str = Field(default="jetpass_aeronautical", alias="MONGODB_DB_NAME")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
     openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(

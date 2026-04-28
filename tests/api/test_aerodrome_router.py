@@ -1,78 +1,100 @@
 from fastapi.testclient import TestClient
 
-from app.schemas.aerodrome import AerodromeResponse, RunwayResponse
-from app.services.aerodrome_service import AerodromeNotFoundError
+from app.schemas.aerodrome import (
+    AerodromeResponse,
+    SectionMetaSchema,
+    SectionResponse,
+    SectionSchema,
+    SnapshotResponse,
+)
+from app.models.meta import DocumentMeta
+from app.services.aerodrome_service import AerodromeNotFoundError, AerodromeSectionNotFoundError
+
+
+def _snapshot() -> SnapshotResponse:
+    return SnapshotResponse(
+        ad_sections=[
+            SectionSchema(
+                section_id="AD 2.1",
+                title="AD 2.1",
+                raw_text="SAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO",
+                data={"indicator": "SAMR"},
+                section_meta=SectionMetaSchema(airac_cycle="2026-01", source_page=1),
+            )
+        ],
+        _meta=DocumentMeta(airac_cycle="2026-01", version=1),
+    )
 
 
 def test_list_aerodromes(client: TestClient, monkeypatch) -> None:
-    async def fake_list_aerodromes(_db):
+    async def fake_list_aerodromes():
         return [
             AerodromeResponse(
-                icao_code="SAMR",
-                iata_code="RGL",
-                name="Rio Gallegos",
-                city="Río Gallegos",
-                province="Santa Cruz",
-                country="Argentina",
-                latitude=-51.6089,
-                longitude=-69.3126,
-                elevation_ft=65,
-                runways=[
-                    RunwayResponse(
-                        designator="07/25",
-                        length_m=3550,
-                        width_m=45,
-                        surface_type="ASPH",
-                    )
-                ],
+                icao="SAMR",
+                name="San Rafael",
+                full_name="S. A. Santiago Germano",
+                current=_snapshot(),
+                history=[],
             )
         ]
 
-    monkeypatch.setattr(
-        "app.routers.aerodrome_router.list_aerodromes",
-        fake_list_aerodromes,
-    )
+    monkeypatch.setattr("app.routers.aerodrome_router.list_aerodromes", fake_list_aerodromes)
 
     response = client.get("/api/v1/aerodromes")
     assert response.status_code == 200
     payload = response.json()
-    assert len(payload) == 1
-    assert payload[0]["icao_code"] == "SAMR"
+    assert payload[0]["icao"] == "SAMR"
+    assert payload[0]["current"]["ad_sections"][0]["section_id"] == "AD 2.1"
 
 
 def test_get_aerodrome_by_icao(client: TestClient, monkeypatch) -> None:
-    async def fake_get_aerodrome(_db, icao: str):
+    async def fake_get_aerodrome(_icao: str):
         return AerodromeResponse(
-            icao_code=icao.upper(),
-            iata_code="RGL",
-            name="Rio Gallegos",
-            city="Río Gallegos",
-            province="Santa Cruz",
-            country="Argentina",
-            latitude=-51.6089,
-            longitude=-69.3126,
-            elevation_ft=65,
-            runways=[],
+            icao="SAMR",
+            name="San Rafael",
+            full_name="S. A. Santiago Germano",
+            current=_snapshot(),
+            history=[],
         )
 
-    monkeypatch.setattr(
-        "app.routers.aerodrome_router.get_aerodrome",
-        fake_get_aerodrome,
-    )
+    monkeypatch.setattr("app.routers.aerodrome_router.get_aerodrome", fake_get_aerodrome)
 
     response = client.get("/api/v1/aerodromes/samr")
     assert response.status_code == 200
-    assert response.json()["icao_code"] == "SAMR"
+    assert response.json()["icao"] == "SAMR"
+
+
+def test_get_aerodrome_section(client: TestClient, monkeypatch) -> None:
+    async def fake_get_section(_icao: str, _section_id: str):
+        return SectionResponse(
+            section_id="AD 2.12",
+            title="CARACTERISTICAS FISICAS",
+            raw_text="RWY 11 ...",
+            data={"runways": [{"rwy_designator": "11"}]},
+        )
+
+    monkeypatch.setattr("app.routers.aerodrome_router.get_aerodrome_section", fake_get_section)
+
+    response = client.get("/api/v1/aerodromes/samr/sections/AD%202.12")
+    assert response.status_code == 200
+    assert response.json()["section_id"] == "AD 2.12"
 
 
 def test_get_aerodrome_by_icao_returns_404(client: TestClient, monkeypatch) -> None:
-    async def fake_get_aerodrome(_db, _icao: str):
+    async def fake_get_aerodrome(_icao: str):
         raise AerodromeNotFoundError("not found")
 
-    monkeypatch.setattr(
-        "app.routers.aerodrome_router.get_aerodrome",
-        fake_get_aerodrome,
-    )
+    monkeypatch.setattr("app.routers.aerodrome_router.get_aerodrome", fake_get_aerodrome)
 
     response = client.get("/api/v1/aerodromes/xxxx")
+    assert response.status_code == 404
+
+
+def test_get_aerodrome_section_returns_404(client: TestClient, monkeypatch) -> None:
+    async def fake_get_section(_icao: str, _section_id: str):
+        raise AerodromeSectionNotFoundError("section not found")
+
+    monkeypatch.setattr("app.routers.aerodrome_router.get_aerodrome_section", fake_get_section)
+
+    response = client.get("/api/v1/aerodromes/samr/sections/AD%202.99")
     assert response.status_code == 404

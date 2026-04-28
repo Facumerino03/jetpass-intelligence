@@ -1,41 +1,115 @@
+"""Schemas for flexible AD 2.0 aerodrome storage and API responses."""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-
-class RunwayBase(BaseModel):
-    designator: str = Field(..., examples=["05", "23"])
-    length_m: int = Field(..., ge=300, le=6000)
-    width_m: int | None = Field(default=None, ge=10, le=100)
-    surface_type: str | None = Field(default=None, examples=["ASPH", "CONC"])
+from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot, SectionMeta
+from app.models.meta import DocumentMeta
 
 
-class RunwayResponse(RunwayBase):
-    model_config = ConfigDict(from_attributes=True)
+class SectionMetaSchema(BaseModel):
+    airac_cycle: str | None = None
+    source_page: int | None = None
 
 
-class AerodromeBase(BaseModel):
-    icao_code: str = Field(..., min_length=4, max_length=4, examples=["SAMR"])
-    iata_code: str | None = Field(default=None, min_length=3, max_length=3)
-    name: str = Field(..., min_length=1)
-    city: str | None = None
-    province: str | None = None
-    country: str = Field(default="Argentina")
-    latitude: float = Field(..., ge=-90, le=90)
-    longitude: float = Field(..., ge=-180, le=180)
-    elevation_ft: int | None = Field(default=None, ge=0)
+class SectionSchema(BaseModel):
+    section_id: str
+    title: str
+    raw_text: str
+    data: dict[str, Any] = Field(default_factory=dict)
+    anchors: dict[str, Any] | None = None
+    section_meta: SectionMetaSchema | None = None
+
+    @field_validator("raw_text")
+    @classmethod
+    def raw_text_must_not_be_empty(cls, v: str) -> str:
+        text = v.strip()
+        if not text:
+            raise ValueError("raw_text must not be empty")
+        return text
 
 
-class AerodromeCreate(AerodromeBase):
-    runways: list[RunwayBase] = Field(default_factory=list)
+class AerodromeCreate(BaseModel):
+    """Parser output DTO consumed by repository upsert."""
+
+    icao_code: str
+    name: str
+    full_name: str | None = None
+    airac_cycle: str = "unknown"
+    airac_effective_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    airac_expiry_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    source_document: str | None = None
+    source_url: str | None = None
+    downloaded_by: str | None = None
+    ad_sections: list[SectionSchema] = Field(default_factory=list)
 
     @field_validator("icao_code")
     @classmethod
     def icao_must_be_argentine(cls, v: str) -> str:
-        if not v.upper().startswith("SA"):
-            raise ValueError('Argentine ICAO codes must start with "SA"')
-        return v.upper()
+        code = v.strip().upper()
+        if not code.startswith("SA"):
+            raise ValueError(f'icao_code must start with "SA" for Argentine aerodromes (got "{v}")')
+        return code
 
 
-class AerodromeResponse(AerodromeBase):
-    model_config = ConfigDict(from_attributes=True)
+class SnapshotResponse(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
 
-    runways: list[RunwayResponse] = Field(default_factory=list)
+    ad_sections: list[SectionSchema] = Field(default_factory=list)
+    meta: DocumentMeta = Field(alias="_meta")
+
+    @classmethod
+    def from_snapshot(cls, snapshot: AerodromeSnapshot) -> "SnapshotResponse":
+        sections = [
+            SectionSchema(
+                section_id=s.section_id,
+                title=s.title,
+                raw_text=s.raw_text,
+                data=s.data,
+                anchors=s.anchors,
+                section_meta=SectionMetaSchema(
+                    airac_cycle=s.section_meta.airac_cycle if s.section_meta else None,
+                    source_page=s.section_meta.source_page if s.section_meta else None,
+                ) if s.section_meta else None,
+            )
+            for s in snapshot.ad_sections
+        ]
+        return cls(ad_sections=sections, _meta=snapshot.meta)
+
+
+class AerodromeResponse(BaseModel):
+    icao: str
+    name: str
+    full_name: str | None = None
+    current: SnapshotResponse
+    history: list[SnapshotResponse] = Field(default_factory=list)
+
+    @classmethod
+    def from_document(cls, doc: AerodromeDocument) -> "AerodromeResponse":
+        return cls(
+            icao=doc.icao,
+            name=doc.name,
+            full_name=doc.full_name,
+            current=SnapshotResponse.from_snapshot(doc.current),
+            history=[SnapshotResponse.from_snapshot(s) for s in doc.history],
+        )
+
+
+class SectionResponse(SectionSchema):
+    @classmethod
+    def from_model(cls, section: AdSection) -> "SectionResponse":
+        return cls(
+            section_id=section.section_id,
+            title=section.title,
+            raw_text=section.raw_text,
+            data=section.data,
+            anchors=section.anchors,
+            section_meta=SectionMetaSchema(
+                airac_cycle=section.section_meta.airac_cycle if section.section_meta else None,
+                source_page=section.section_meta.source_page if section.section_meta else None,
+            ) if section.section_meta else None,
+        )

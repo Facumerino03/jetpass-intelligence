@@ -1,4 +1,4 @@
-"""AIP PDF parser — extracts aerodrome and runway data from ANAC AIP PDFs."""
+"""AIP PDF parser — extracts flexible AD 2.0 sections from ANAC AIP PDFs."""
 
 from __future__ import annotations
 
@@ -14,38 +14,55 @@ from openai import OpenAI
 from pdf2image import convert_from_path
 
 from app.core.config import get_settings
-from app.schemas.aerodrome import AerodromeCreate, RunwayBase
+from app.schemas.aerodrome import AerodromeCreate
 
 logger = logging.getLogger(__name__)
 
 _SYSTEM_PROMPT = """\
-You are an aviation data specialist. The following text was extracted from an \
-official ANAC AIP package for an Argentine aerodrome.
+You are an aviation AD 2.0 extraction specialist for Argentine AIP documents.
 
-You may receive multiple documents (e.g. AD-2.0, AD-2.A, AD-2.B, AD-2.M).
-Prioritize textual/tabular data from AD-2.0 when available, and use the
-remaining sections only when they provide additional reliable information.
+Return only valid JSON.
+Do not include markdown, explanations, comments, or code fences.
+Do not invent values.
+Preserve literal published wording whenever possible.
 
-Extract the following fields and return them as structured data:
-- icao_code: 4-letter ICAO designator (must start with "SA")
-- name: official aerodrome name
-- city: city or locality where the aerodrome is located
-- province: Argentine province
-- country: always "Argentina"
-- latitude: decimal degrees (negative = South)
-- longitude: decimal degrees (negative = West)
-- elevation_ft: elevation above mean sea level in feet (integer, non-negative)
-- runways: list of runways with:
-    - designator: e.g. "07/25" or "11R/29L"
-    - length_m: length in metres (integer, 300–6000)
-    - width_m: width in metres (integer, 10–100; null if not available)
-    - surface_type: surface material code (e.g. "ASPH", "CONC"; null if not available)
+Goal:
+- Build one flexible aerodrome payload with AD 2.0 sections AD 2.1 ... AD 2.25.
+- Keep each section raw text bilingual (ES/EN) exactly as extracted.
+- Add flexible `data` objects for machine use.
+
+Required output shape:
+{
+  "icao_code": "SAMR",
+  "name": "...",
+  "full_name": "... or null",
+  "airac_cycle": "...",
+  "airac_effective_date": "ISO-8601",
+  "airac_expiry_date": "ISO-8601",
+  "source_document": "...",
+  "source_url": "... or null",
+  "downloaded_by": "parser-agent",
+  "ad_sections": [
+    {
+      "section_id": "AD 2.1",
+      "title": "...",
+      "raw_text": "literal bilingual content",
+      "data": {"free": "structure"},
+      "anchors": null,
+      "section_meta": {
+        "airac_cycle": "... or null",
+        "source_page": 1
+      }
+    }
+  ]
+}
 
 Rules:
-- Coordinates must be in decimal degrees.
-- Only include runways with a valid numeric designator pair (e.g. "07/25").
-- If a field is not found in the text, use null for optional fields.
-- Do not invent data; extract only what is explicitly stated in the text.
+- Include exactly AD 2.1 to AD 2.25 in ad_sections.
+- `raw_text` must be non-empty in every section.
+- If a section is NIL, keep that literal value in `raw_text`.
+- `data` can be flexible and partial, but must be an object.
+- `section_meta.airac_cycle` is optional and should be set when page-level AIRAC differs.
 """
 
 
@@ -185,7 +202,7 @@ def parse_aerodrome_from_ad20(pdf_path: Path) -> AerodromeCreate:
 
 
 def parse_aerodrome_from_documents(pdf_paths: list[Path]) -> AerodromeCreate:
-    """Extract aerodrome and runway data from one or more AIP section PDFs."""
+    """Extract a flexible AD 2.0 aerodrome payload from one or more AIP PDFs."""
     if not pdf_paths:
         raise PdfNotReadableError("No AIP PDF documents were provided for parsing.")
 
@@ -236,24 +253,6 @@ def parse_aerodrome_from_documents(pdf_paths: list[Path]) -> AerodromeCreate:
         raise PdfFormatError(
             f"LLM failed to extract structured data from '{pdf_path}': {exc}"
         ) from exc
-
-
-def parse_runways_from_ad20(pdf_path: Path) -> list[RunwayBase]:
-    """Extract runway data from an AD-2.0 section PDF.
-
-    Delegates to :func:`parse_aerodrome_from_ad20` and returns its runways field.
-
-    Args:
-        pdf_path: Local path to the AD-2.0 PDF file.
-
-    Returns:
-        List of :class:`~app.schemas.aerodrome.RunwayBase` instances.
-
-    Raises:
-        PdfNotReadableError: PDF cannot be opened.
-        PdfFormatError: LLM failed to extract valid data.
-    """
-    return parse_aerodrome_from_ad20(pdf_path).runways
 
 
 # ── private helpers ────────────────────────────────────────────────────────────
