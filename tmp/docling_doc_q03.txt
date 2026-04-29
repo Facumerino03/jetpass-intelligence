@@ -1,0 +1,64 @@
+AIP ARGENTINA
+
+SAMR AD 2.1
+
+AD 2. AERODROMOS / AERODROMES
+
+AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERODRO
+
+MO / AERODROME LOCATION INDICATOR AND NAME
+
+SAMR — SAN RAFAEL / S. A. SANTIAGO GERMANO
+
+AEROPUERTO NACIONAL / NATIONAL AIRPORT
+
+AD 2.2 DATOS GEOGRAFICOS Y ADMINISTRATIVOS DEL AERODROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA
+1 COORD GEO del ARP y emplazamiento en el AD / 343516S 0682413W Centro geométrico de pista /
+ARP GEO COORD and location in the AD 3435165 0682413W Geometric center of runway
+2 Direccién y distancia desde la ciudad / 8 km al NW de la ciudad de San Rafael /
+Direction and distance from city 8 km NW of the city of San Rafael
+3 ELEV, temperatura de referencia y temperatura minima media / | 754.75 m (2.476 ft), 31.8°C - 0.8°C
+ELEV, reference temperature and mean low temperature
+4 GUND en la posicién de la elevacién del AD / 23 m (75 ft)
+GUND at AD ELEV PSN
+5 | VAR, cambio anual / VAR, annual change 1° W/ 11’ W (Afio / year 2025)
+Jefatura de aerédromo, direccién, teléfono, FAX, AFS, correo ADMINISTRACION NACIONAL DE AVIACION CIVIL, RP 143, Las
+electrénico y sitio web / Paredes, CP 5601, San Rafael, Pcia. de Mendoza.
+AD Head Office, Address, telephone, FAX, AFS, e-mail and (+54 260) 4421693, ydSRA@anac.gob.ar /
+website NATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las
+Paredes, Zip Code 5601, San Rafael, Province of Mendoza.
+(+54 260) 4421693, ydSRA@anac.gob.ar
+Explotador, teléfono, FAX, AFS, correo electrénico y sitio web / | Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de
+AD operator, Telephone, FAX, AFS, e-mail and website Mendoza
+(+54 260) 4427103, Dmerino@aeropuertosargentina.com,
+6 www.aeropuertosargentina.com /
+Aeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,
+Province of Mendoza
+(+54 260) 4427103, Dmerino@aeropuertosargentina.com,
+www.aeropuertosargentina.com
+Prestador de los Servicios de Navegacién Aérea (ANSP), | Empresa Argentina de Navegacion Aérea (EANA SA), ARO-AIS (+54
+teléfono, FAX, AFS, correo electrénico y sitio web / 260) 4430703, acsra@eana.com.ar, www.eana.com.ar /
+Air Navigation Service Provider (ANSP), Telephone, FAX, AFS, e- Argentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)
+mail and website 4430703, acsra@eana.com.ar, www.eana.com.ar
+7 Tipos de transito permitido (IFR/VFR) / IFR/VFR
+Types of traffic permitted (IFR/VFR)
+8 | Observaciones / Remarks NIL
+AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS
+1 | Explotador del AD / AD operator 11:00-19:00 UTC (Administracién / Administration)
+2 Aduanas / Customs No
+Inmigraciones / Inmigration No
+3 Servicios médicos y de sanidad / Health and sanitation services | Solo vuelo comercial regular. Resto O/R 4 HR antelacién /
+Only regular commercial flights / Rest O/R 4 HR in advance
+4 | Oficina de informacién AIS / AIS Briefing Office 10:00-23:59 UTC y / and O/R
+5 | Oficina de notificaci6n ATS (ARO) / ATS Reporting Office (ARO) | 10:00-23:59 UTC y / and O/R
+6 | Oficina de informacién MET / MET Briefing Office H24
+7 | ATS 10:00-23:59 UTC y / and O/R
+8 | Abastecimiento de combustible / Fuelling 10:00-23:59 UTC y/and O/R (*)
+9 | Servicios de escala / Handling No
+10 | Servicios de seguridad de la aviacion (proteccién) / Security 10:00-23:59 UTC y /and O/R
+11 | Deshielo / De-icing No
+12 | Observaciones / Remarks (*) COOR (+54 260) 4824047
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 1/2026 11 JUNIO 2026

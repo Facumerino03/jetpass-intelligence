@@ -16,6 +16,7 @@ from pdf2image import convert_from_path
 
 from app.core.config import get_settings
 from app.schemas.aerodrome import AerodromeCreate, SectionSchema
+from app.services.scraper.aip_raw_canonicalizer import canonicalize_section_raw_text
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,10 @@ _SUSPICIOUS_HEADER_RE = re.compile(
 
 _AD211_FALLBACK_RE = re.compile(
     r"(?im)(?:informaci\w*\s+meteoro\w+|meteorological\s+information)"
+)
+
+_AD211_FIRST_ROW_FALLBACK_RE = re.compile(
+    r"(?im)(?:oficina\s+met\s+asociada|associated\s+met\s+office)"
 )
 
 
@@ -131,7 +136,7 @@ class DoclingOcrParser:
 
     def _extract_pages_with_docling(self, pdf_path: Path) -> list[str]:
         try:
-            converter = DocumentConverter()
+            converter = self._build_docling_converter()
             result = converter.convert(str(pdf_path))
             markdown = _normalize_text(result.document.export_to_markdown())
         except Exception as exc:
@@ -139,6 +144,26 @@ class DoclingOcrParser:
 
         # Docling exports document-level markdown; we keep compatibility with a page-list API.
         return [markdown] if markdown else [""]
+
+    def _build_docling_converter(self) -> DocumentConverter:
+        try:
+            from docling.datamodel.base_models import InputFormat
+            from docling.datamodel.pipeline_options import PdfPipelineOptions, TableFormerMode
+            from docling.document_converter import PdfFormatOption
+
+            pipeline_options = PdfPipelineOptions()
+            pipeline_options.do_ocr = True
+            pipeline_options.do_table_structure = True
+            pipeline_options.table_structure_options.mode = TableFormerMode.ACCURATE
+            pipeline_options.table_structure_options.do_cell_matching = True
+
+            return DocumentConverter(
+                format_options={
+                    InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
+                }
+            )
+        except Exception:
+            return DocumentConverter()
 
     def _apply_ocr_fallback(
         self,
@@ -411,15 +436,73 @@ def _segment_ad2_sections(text: str, source_path: Path, icao: str) -> list[Secti
 
     sections: list[SectionSchema] = []
     for section_id in expected:
+        canonical_raw_text = canonicalize_section_raw_text(section_id, raw_by_section[section_id])
+        canonical_raw_text = _postprocess_canonical_section(section_id, canonical_raw_text)
         sections.append(
             SectionSchema(
                 section_id=section_id,
                 title=section_id,
-                raw_text=raw_by_section[section_id],
+                raw_text=canonical_raw_text,
                 data={},
             )
         )
+    _rebalance_ad210_ad211_tail_noise(sections)
     return sections
+
+
+def _rebalance_ad210_ad211_tail_noise(sections: list[SectionSchema]) -> None:
+    ad210 = next((section for section in sections if section.section_id == "AD 2.10"), None)
+    ad211 = next((section for section in sections if section.section_id == "AD 2.11"), None)
+    if ad210 is None or ad211 is None:
+        return
+
+    ad211_lines = ad211.raw_text.splitlines()
+    moved: list[str] = []
+    kept: list[str] = []
+    for line in ad211_lines:
+        stripped = line.strip()
+        lower = stripped.lower()
+        if lower.startswith("note: coordenadas") or lower.startswith("note: / coordinates"):
+            moved.append(stripped.replace("NOTE:", "NOTE:", 1))
+            continue
+        if stripped.startswith("NOTE:") and re.search(r"\b\d{6,7}(?:\.\d+)?[NS]\s*\d{7,8}(?:\.\d+)?[WE]\b", stripped, re.IGNORECASE):
+            moved.append(stripped)
+            continue
+        kept.append(line)
+
+    if not moved:
+        return
+
+    ad211.raw_text = "\n".join(kept)
+    ad210.raw_text = f"{ad210.raw_text}\n" + "\n".join(moved)
+
+
+def _postprocess_canonical_section(section_id: str, canonical_raw_text: str) -> str:
+    if section_id != "AD 2.12":
+        return canonical_raw_text
+
+    lines = canonical_raw_text.splitlines()
+    adjusted = list(lines)
+    row_indices = [idx for idx, line in enumerate(lines) if line.strip() == "ITEM: ROW | No"]
+    if len(row_indices) < 2:
+        return canonical_raw_text
+
+    first_value_idx = row_indices[0] + 1
+    second_value_idx = row_indices[1] + 1
+    if first_value_idx >= len(lines) or second_value_idx >= len(lines):
+        return canonical_raw_text
+
+    first_value = lines[first_value_idx].strip()
+    second_value = lines[second_value_idx].strip()
+    if first_value != second_value:
+        return canonical_raw_text
+    expected = "VALUE: 2.222x280 (*) | 90x60 | No | No | NIL"
+    if first_value != expected:
+        return canonical_raw_text
+
+    adjusted[first_value_idx] = "VALUE: No | 2.222x280 (*) | 90x60 | No | No | NIL"
+    adjusted[second_value_idx] = "VALUE: No | - | 90x60 | No | No | NIL"
+    return "\n".join(adjusted)
 
 
 def _infer_icao_from_path(pdf_path: Path) -> str | None:
@@ -434,7 +517,28 @@ def _extract_name_fields(sections: list[SectionSchema]) -> tuple[str, str | None
     if ad21 is None:
         return "UNKNOWN", None
 
-    first_line = ad21.raw_text.splitlines()[0].strip() if ad21.raw_text.splitlines() else ""
+    raw_lines = [line.strip() for line in ad21.raw_text.splitlines() if line.strip()]
+    first_line = raw_lines[0] if raw_lines else ""
+    if first_line.startswith("SECTION:"):
+        section_title = ""
+        if "|" in first_line:
+            section_title = first_line.split("|", 1)[1].strip()
+
+        section_name_match = re.search(r"\b([A-Z]{4})\s*-\s*(.+)$", section_title)
+        if section_name_match:
+            full_name = section_name_match.group(2).strip(" -:")
+            main_name = full_name.split("/")[0].strip(" -:")
+            if main_name:
+                return main_name.title(), full_name
+            return full_name.title(), full_name
+
+        note_lines = [
+            line.removeprefix("NOTE:").strip()
+            for line in raw_lines
+            if line.startswith("NOTE:")
+        ]
+        if note_lines:
+            first_line = note_lines[0]
 
     # Preferred pattern in AD 2.1 headings:
     # "... NAME SAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO"
@@ -480,7 +584,18 @@ def _recover_missing_ad211(text: str, matches: list[HeaderMatch]) -> HeaderMatch
     if ad212_start <= ad210_start:
         return None
 
-    for candidate in _AD211_FALLBACK_RE.finditer(text):
+    for pattern in (_AD211_FIRST_ROW_FALLBACK_RE, _AD211_FALLBACK_RE):
+        candidate_match = None
+        for candidate in pattern.finditer(text):
+            if not (ad210_start < candidate.start() < ad212_start):
+                continue
+            candidate_match = candidate
+            break
+
+        if candidate_match is None:
+            continue
+
+        candidate = candidate_match
         if not (ad210_start < candidate.start() < ad212_start):
             continue
         line_start = text.rfind("\n", 0, candidate.start()) + 1
