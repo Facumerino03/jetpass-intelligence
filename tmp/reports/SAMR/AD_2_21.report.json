@@ -1,0 +1,31 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.21",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "Se aplicaran los procedimientos generales de atenuacion de ruido establecidos en la Parte 2  ENR 1.5 / The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+      "actual": "Se aplicar\u00e1n los procedimientos generales de atenuaci\u00f3n de ruido establecidos en la Parte 2 - ENR 1.5 /- The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+      "normalized_expected": "Se aplicaran los procedimientos generales de atenuacion de ruido establecidos en la Parte 2 ENR 1.5 / The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+      "normalized_actual": "Se aplicar\u00e1n los procedimientos generales de atenuaci\u00f3n de ruido establecidos en la Parte 2 - ENR 1.5 /- The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    }
+  ]
+}

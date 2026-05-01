@@ -1,0 +1,31 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.10",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "NIL",
+      "actual": "NIL",
+      "normalized_expected": "NIL",
+      "normalized_actual": "NIL",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

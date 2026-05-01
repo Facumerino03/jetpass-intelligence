@@ -1,0 +1,44 @@
+{
+  "section_id": "AD 2.20",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "REGLAMENTO LOCAL DEL AERODROMO / LOCAL AERODROME REGULATIONS",
+      "type": "text",
+      "expected": "Las OPS VFR deberan ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft. / VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "REGLAMENTO LOCAL DEL AERODROMO / LOCAL AERODROME REGULATIONS",
+      "type": "text",
+      "expected": "En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, debera coordinar previamente con el Jefe de Aerodromo y/o Explotador de Aerodromo la asignacion de PSN para estacionamiento, tambien con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. / In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}

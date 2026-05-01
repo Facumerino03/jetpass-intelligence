@@ -1,0 +1,44 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.20",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "Las OPS VFR deberan ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft. / VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.",
+      "actual": "Las OPS VFR deber\u00e1n ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft. / VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.",
+      "normalized_expected": "Las OPS VFR deberan ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft. / VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.",
+      "normalized_actual": "Las OPS VFR deber\u00e1n ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft. / VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, debera coordinar previamente con el Jefe de Aerodromo y/o Explotador de Aerodromo la asignacion de PSN para estacionamiento, tambien con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. / In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination",
+      "actual": "En las circunstancias detalladas en el ENR 1.4 , el piloto que decida realizar vuelos VFR, deber\u00e1 coordinar previamente con el Jefe de Aer\u00f3dromo y/o Explotador de Aer\u00f3dromo la asignaci\u00f3n de PSN para estacionamiento, tambi\u00e9n con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. / In the circumstances detailed in ENR 1.4 , the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination",
+      "normalized_expected": "En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, debera coordinar previamente con el Jefe de Aerodromo y/o Explotador de Aerodromo la asignacion de PSN para estacionamiento, tambien con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. / In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination",
+      "normalized_actual": "En las circunstancias detalladas en el ENR 1.4 , el piloto que decida realizar vuelos VFR, deber\u00e1 coordinar previamente con el Jefe de Aer\u00f3dromo y/o Explotador de Aer\u00f3dromo la asignaci\u00f3n de PSN para estacionamiento, tambi\u00e9n con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. / In the circumstances detailed in ENR 1.4 , the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    }
+  ]
+}

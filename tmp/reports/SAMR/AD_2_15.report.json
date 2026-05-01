@@ -1,0 +1,109 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.15",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "Si, verde, blanco / No / Yes, green, white / No",
+      "actual": "S\u00ed, verde, blanco / No / Yes, green, white / No",
+      "normalized_expected": "Si, verde, blanco / No / Yes, green, white / No",
+      "normalized_actual": "S\u00ed, verde, blanco / No / Yes, green, white / No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "Si, No / Yes, No",
+      "actual": "S\u00ed, No / Yes, No",
+      "normalized_expected": "Si, No / Yes, No",
+      "normalized_actual": "S\u00ed, No / Yes, No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_5",
+      "status": "pass",
+      "expected": "Si / Yes",
+      "actual": "S\u00ed / Yes",
+      "normalized_expected": "Si / Yes",
+      "normalized_actual": "S\u00ed / Yes",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_6",
+      "status": "pass",
+      "expected": "6 (seis/six) SEC",
+      "actual": "6 (seis/six) SEC",
+      "normalized_expected": "6 (seis/six) SEC",
+      "normalized_actual": "6 (seis/six) SEC",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_7",
+      "status": "pass",
+      "expected": "Posee LGT WDI (2), TWY y APN / It has LGT WDI (2), TWY and APN",
+      "actual": "Posee LGT WDI (2), TWY y APN / It has LGT WDI (2), TWY and APN",
+      "normalized_expected": "Posee LGT WDI (2), TWY y APN / It has LGT WDI (2), TWY and APN",
+      "normalized_actual": "Posee LGT WDI (2), TWY y APN / It has LGT WDI (2), TWY and APN",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

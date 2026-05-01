@@ -1,0 +1,156 @@
+{
+  "section_id": "AD 2.16",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "COORD GEO y GUND del centro geometrico de la TLOF / TLOF geometric center GEO COORD and GUND",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "COORD GEO y GUND THR de cada FATO / Each FATO GEO COORD and GUND",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_3",
+      "label": "Elevacion del area TLOF / TLOF elevation area",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_4",
+      "label": "Elevacion del area FATO / FATO elevation area",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_5",
+      "label": "Dimensiones de las areas TLOF y FATO, su tipo de superficie, carga admisible y senales / TLOF and FATO area dimensions, Surface type, bearing strength and markings",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_6",
+      "label": "BRG GEO de la FATO / BRG GEO of the FATO",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_7",
+      "label": "Distancias declaradas disponibles / Declared distances available",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_8",
+      "label": "LGT de aproximacion / Approach LGT",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_9",
+      "label": "LGT de la FATO / FATO LGT",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_10",
+      "label": "Observaciones / Remarks",
+      "type": "text",
+      "expected": "Los helicopteros operan segun instrucciones del ATS / Helicopters operate according to ATS instructions",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}

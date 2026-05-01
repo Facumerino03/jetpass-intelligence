@@ -1,0 +1,114 @@
+{
+  "section_id": "AD 2.4",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Elementos disponibles para el manejo de carga / Cargo-handling facilities",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "Tipos de combustible, lubricantes / Fuel and oil types",
+      "type": "text",
+      "expected": "JET A-1",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_3",
+      "label": "Instalaciones y capacidad de abastecimiento de combustible / Fuelling facilities and capacity",
+      "type": "text",
+      "expected": "80.000 litros JET-A1 a traves de AEROPIT (1 Camion abastecedor) / 80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_4",
+      "label": "Servicios e instalaciones de deshielo / De-icing facilities",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_5",
+      "label": "Espacio de hangar para aeronaves de paso / Hangar space for visiting aircraft",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_6",
+      "label": "Instalaciones para reparaciones de aeronaves de paso / Repair facilities for visiting aircraft",
+      "type": "text",
+      "expected": "Si / Yes",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_7",
+      "label": "Observaciones / Remarks",
+      "type": "text",
+      "expected": "En aeroclub San Rafael, existe taller habilitado para aeronaves livianas / San Rafael aeroclub has an authorized workshop for light aircraft",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}

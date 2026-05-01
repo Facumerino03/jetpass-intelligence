@@ -1,0 +1,73 @@
+{
+  "section_id": "AD 2.24",
+  "version": "3.1",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [],
+  "tables": [
+    {
+      "name": "table_1",
+      "label": "CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+      "columns": [
+        "Carta / Chart",
+        "Codigo / Code"
+      ],
+      "min_rows": 2,
+      "expected_rows": [
+        {
+          "Carta / Chart": "Plano de aerodromo - OACI / Aerodrome Chart - ICAO",
+          "Codigo / Code": "SAMR AD 2.A1"
+        },
+        {
+          "Carta / Chart": "Plano de estacionamiento y atraque de aeronaves - OACI / Aircraft Parking/Docking Chart - ICAO",
+          "Codigo / Code": "SAMR AD 2.B1-B2-B3-B4"
+        }
+      ],
+      "match": "ordered",
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "name": "table_2",
+      "label": "Cartas de aproximacion por instrumentos - OACI / Instrument Approach Chart - ICAO",
+      "columns": [
+        "Procedimiento / Procedure",
+        "Pista / RWY",
+        "Codigo / Code"
+      ],
+      "min_rows": 2,
+      "expected_rows": [
+        {
+          "Procedimiento / Procedure": "VOR Z",
+          "Pista / RWY": "PISTA/RWY 29",
+          "Codigo / Code": "SAMR AD 2.M1"
+        },
+        {
+          "Procedimiento / Procedure": "VOR",
+          "Pista / RWY": "PISTA/RWY 11",
+          "Codigo / Code": "SAMR AD 2.M2"
+        }
+      ],
+      "match": "ordered",
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ]
+}

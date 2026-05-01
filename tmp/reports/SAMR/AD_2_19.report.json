@@ -1,0 +1,109 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.19",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "tables[0].rows[0].Tipo de ayuda, MAG VAR, Tipo de operacion apoyada para ILS/GNSS, CAT ILS, declinacion para VOR/ILS / Type of aid, MAG VAR, Type of supported operation for ILS/GNSS, ILS CAT, declination for VOR/ILS",
+      "status": "pass",
+      "expected": "VOR/DME",
+      "actual": "VOR/DME",
+      "normalized_expected": "VOR/DME",
+      "normalized_actual": "VOR/DME",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].ID",
+      "status": "pass",
+      "expected": "SRA",
+      "actual": "SRA",
+      "normalized_expected": "SRA",
+      "normalized_actual": "SRA",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].Frecuencia y Canal / Frequency and channel",
+      "status": "pass",
+      "expected": "116.9 MHz",
+      "actual": "116.9 MHz",
+      "normalized_expected": "116.9 MHz",
+      "normalized_actual": "116.9 MHz",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].Horas de operacion / Hours of operation",
+      "status": "pass",
+      "expected": "H24",
+      "actual": "H24",
+      "normalized_expected": "H24",
+      "normalized_actual": "H24",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].COORD GEO del emplazamiento de la antena transmisora / Position of transmitting antenna coordinates",
+      "status": "pass",
+      "expected": "343522.00S 0682341.00W",
+      "actual": "343522.00S 0682341.00W",
+      "normalized_expected": "343522.00S 0682341.00W",
+      "normalized_actual": "343522.00S 0682341.00W",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].Elevacion de la antena transmisora del DME / Elevation of DME transmitting antenna",
+      "status": "pass",
+      "expected": "747.5 m 2.452 ft",
+      "actual": "747.50 m 2.452 ft",
+      "normalized_expected": "747.5 m 2.452 ft",
+      "normalized_actual": "747.50 m 2.452 ft",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "tables[0].rows[0].Observaciones / Remarks (*)",
+      "status": "pass",
+      "expected": "DME CH 116X (330 km). Restricciones: Ver ENR 4.1. / Restrictions: See ENR 4.1.",
+      "actual": "DME CH 116X (330 km). Restricciones: Ver ENR 4.1. / Restrictions: See ENR 4.1.",
+      "normalized_expected": "DME CH 116X (330 km). Restricciones: Ver ENR 4.1. / Restrictions: See ENR 4.1.",
+      "normalized_actual": "DME CH 116X (330 km). Restricciones: Ver ENR 4.1. / Restrictions: See ENR 4.1.",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

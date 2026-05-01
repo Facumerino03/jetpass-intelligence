@@ -1,0 +1,100 @@
+{
+  "section_id": "AD 2.8",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Designacion, superficie y resistencia APN / Designation surface and strength of aprons",
+      "type": "text",
+      "expected": "CONC - PCR 550/R/B/W/T  ELEV 746 m (2448 ft)",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "Designacion, ancho, superficie y resistencia TWY / Designation, width, surface and strength of taxiways",
+      "type": "text",
+      "expected": "A, 18 m, ASPH, PCR 430/F/B/X/T",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_3",
+      "label": "Emplazamiento y elevacion ACL / Location and elevation of altimenter checkpoints",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_4",
+      "label": "Emplazamiento de los puntos de verificacion VOR / Location of VOR checkpoints",
+      "type": "text",
+      "expected": "Si en TWY A, RDL 255, distancia 0.29 NM  540 m / Yes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_5",
+      "label": "Posicion de los puntos de verificacion INS / Position of INS checkpoints",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_6",
+      "label": "Observaciones / Remarks",
+      "type": "text",
+      "expected": "NIL",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}

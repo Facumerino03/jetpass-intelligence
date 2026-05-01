@@ -1,0 +1,57 @@
+{
+  "section_id": "AD 2.2",
+  "schema": "generic-field-value-v1",
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "COORD GEO del ARP y emplazamiento en el AD / ARP GEO COORD and location in the AD",
+      "value": "343516S 0682413W Centro geometrico de pista / 343516S 0682413W Geometric center of runway"
+    },
+    {
+      "field": "item_2",
+      "label": "Direccion y distancia desde la ciudad / Direction and distance from city",
+      "value": "8 km al NW de la ciudad de San Rafael / 8 km NW of the city of San Rafael"
+    },
+    {
+      "field": "item_3",
+      "label": "ELEV, temperatura de referencia y temperatura minima media / ELEV, reference temperature and mean low temperature",
+      "value": "754.75 m (2.476 ft), 31.8 deg C - 0.8 deg C"
+    },
+    {
+      "field": "item_4",
+      "label": "GUND en la posicion de la elevacion del AD / GUND at AD ELEV PSN",
+      "value": "23 m (75 ft)"
+    },
+    {
+      "field": "item_5",
+      "label": "VAR, cambio anual / VAR, annual change",
+      "value": "1 deg W / 11' W (Año / year 2025)"
+    },
+    {
+      "field": "item_6",
+      "label": "Jefatura de aerodromo, direccion, telefono, FAX, AFS, correo electronico y sitio web / AD Head Office, Address, telephone, FAX, AFS, e-mail and website",
+      "value": "ADMINISTRACION NACIONAL DE AVIACION CIVIL, RP 143, Las Paredes, CP 5601, San Rafael, Pcia. de Mendoza. (+54 260) 4421693, ydSRA@anac.gob.ar / NATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las Paredes, Zip Code 5601, San Rafael, Province of Mendoza. (+54 260) 4421693, ydSRA@anac.gob.ar"
+    },
+    {
+      "field": "item_7",
+      "label": "Explotador, telefono, FAX, AFS, correo electronico y sitio web / AD operator, Telephone, FAX, AFS, e-mail and website",
+      "value": "Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de Mendoza (+54 260) 4427103, Dmerino@aeropuertosargentina.com, www.aeropuertosargentina.com / Aeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael, Province of Mendoza (+54 260) 4427103, Dmerino@aeropuertosargentina.com, www.aeropuertosargentina.com"
+    },
+    {
+      "field": "item_8",
+      "label": "Prestador de los Servicios de Navegacion Area (ANSP), telefono, FAX, AFS, correo electronico y sitio web / Air Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-mail and website",
+      "value": "Empresa Argentina de Navegacion Area (EANA SA), ARO-AIS (+54 260) 4430703, acsra@eana.com.ar, www.eana.com.ar / Argentine Air Navigation Company (EANA SA), ARO-AIS (+54 260) 4430703, acsra@eana.com.ar, www.eana.com.ar"
+    },
+    {
+      "field": "item_9",
+      "label": "Tipos de transito permitido (IFR/VFR) / Types of traffic permitted (IFR/VFR)",
+      "value": "IFR/VFR"
+    },
+    {
+      "field": "item_10",
+      "label": "Observaciones / Remarks",
+      "value": "NIL"
+    }
+  ],
+  "tables": []
+}

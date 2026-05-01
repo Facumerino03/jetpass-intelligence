@@ -1,0 +1,55 @@
+{
+  "section_id": "AD 2.13",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [],
+  "tables": [
+    {
+      "name": "table_1",
+      "label": "DISTANCIAS DECLARADAS / DECLARED DISTANCES",
+      "columns": [
+        "Designador RWY / RWY designator",
+        "TORA (m)",
+        "TODA (m)",
+        "ASDA (m)",
+        "LDA (m)",
+        "Observaciones / Remarks"
+      ],
+      "min_rows": 2,
+      "expected_rows": [
+        {
+          "Designador RWY / RWY designator": "11",
+          "TORA (m)": "2.102",
+          "TODA (m)": "2.102",
+          "ASDA (m)": "2.102",
+          "LDA (m)": "2.102",
+          "Observaciones / Remarks": "NIL"
+        },
+        {
+          "Designador RWY / RWY designator": "29",
+          "TORA (m)": "2.102",
+          "TODA (m)": "2.102",
+          "ASDA (m)": "2.102",
+          "LDA (m)": "2.102",
+          "Observaciones / Remarks": "NIL"
+        }
+      ],
+      "match": "ordered",
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "section_id": "AD 2.21",
+  "schema": "generic-field-value-v1",
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "PROCEDIMIENTOS DE ATENUACION DEL RUIDO / NOISE ABATEMENT PROCEDURES",
+      "value": "Se aplicaran los procedimientos generales de atenuacion de ruido establecidos en la Parte 2  ENR 1.5 / The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply"
+    }
+  ],
+  "tables": []
+}

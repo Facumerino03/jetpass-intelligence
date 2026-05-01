@@ -1,0 +1,569 @@
+AIP ARGENTINA
+
+SAMR AD 2.1
+
+AD 2. AERODROMOS / AERODROMES
+
+AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERODRO
+
+MO / AERODROME LOCATION INDICATOR AND NAME
+
+SAMR — SAN RAFAEL / S. A. SANTIAGO GERMANO
+
+AEROPUERTO NACIONAL / NATIONAL AIRPORT
+
+AD 2.2 DATOS GEOGRAFICOS Y ADMINISTRATIVOS DEL AERODROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA
+1 COORD GEO del ARP y emplazamiento en el AD / 343516S 0682413W Centro geométrico de pista /
+ARP GEO COORD and location in the AD 3435165 0682413W Geometric center of runway
+2 Direccién y distancia desde la ciudad / 8 km al NW de la ciudad de San Rafael /
+Direction and distance from city 8 km NW of the city of San Rafael
+3 ELEV, temperatura de referencia y temperatura minima media / | 754.75 m (2.476 ft), 31.8°C - 0.8°C
+ELEV, reference temperature and mean low temperature
+4 GUND en la posicién de la elevacién del AD / 23 m (75 ft)
+GUND at AD ELEV PSN
+5 | VAR, cambio anual / VAR, annual change 1° W/ 11’ W (Afio / year 2025)
+Jefatura de aerédromo, direccién, teléfono, FAX, AFS, correo ADMINISTRACION NACIONAL DE AVIACION CIVIL, RP 143, Las
+electrénico y sitio web / Paredes, CP 5601, San Rafael, Pcia. de Mendoza.
+AD Head Office, Address, telephone, FAX, AFS, e-mail and (+54 260) 4421693, ydSRA@anac.gob.ar /
+website NATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las
+Paredes, Zip Code 5601, San Rafael, Province of Mendoza.
+(+54 260) 4421693, ydSRA@anac.gob.ar
+Explotador, teléfono, FAX, AFS, correo electrénico y sitio web / | Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de
+AD operator, Telephone, FAX, AFS, e-mail and website Mendoza
+(+54 260) 4427103, Dmerino@aeropuertosargentina.com,
+6 www.aeropuertosargentina.com /
+Aeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,
+Province of Mendoza
+(+54 260) 4427103, Dmerino@aeropuertosargentina.com,
+www.aeropuertosargentina.com
+Prestador de los Servicios de Navegacién Aérea (ANSP), | Empresa Argentina de Navegacion Aérea (EANA SA), ARO-AIS (+54
+teléfono, FAX, AFS, correo electrénico y sitio web / 260) 4430703, acsra@eana.com.ar, www.eana.com.ar /
+Air Navigation Service Provider (ANSP), Telephone, FAX, AFS, e- Argentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)
+mail and website 4430703, acsra@eana.com.ar, www.eana.com.ar
+7 Tipos de transito permitido (IFR/VFR) / IFR/VFR
+Types of traffic permitted (IFR/VFR)
+8 | Observaciones / Remarks NIL
+AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS
+1 | Explotador del AD / AD operator 11:00-19:00 UTC (Administracién / Administration)
+2 Aduanas / Customs No
+Inmigraciones / Inmigration No
+3 Servicios médicos y de sanidad / Health and sanitation services | Solo vuelo comercial regular. Resto O/R 4 HR antelacién /
+Only regular commercial flights / Rest O/R 4 HR in advance
+4 | Oficina de informacién AIS / AIS Briefing Office 10:00-23:59 UTC y / and O/R
+5 | Oficina de notificaci6n ATS (ARO) / ATS Reporting Office (ARO) | 10:00-23:59 UTC y / and O/R
+6 | Oficina de informacién MET / MET Briefing Office H24
+7 | ATS 10:00-23:59 UTC y / and O/R
+8 | Abastecimiento de combustible / Fuelling 10:00-23:59 UTC y/and O/R (*)
+9 | Servicios de escala / Handling No
+10 | Servicios de seguridad de la aviacion (proteccién) / Security 10:00-23:59 UTC y /and O/R
+11 | Deshielo / De-icing No
+12 | Observaciones / Remarks (*) COOR (+54 260) 4824047
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 1/2026 11 JUNIO 2026
+
+AIP ARGENTINA
+
+SAMR AD 2.2
+
+AD 2.4 SERVICIOS E INSTALACIONES DE ESCALA / HANDLING SERVICES AND FACILITIES
+
+1 Elementos disponibles para el manejo de carga / No
+Cargo-handling facilities
+
+2 | Tipos de combustible, lubricantes / Fuel and oil types JET A-1
+
+Instalaciones y capacidad de abastecimiento de combustible /
+Fuelling facilities and capacity
+
+80.000 litros JET-A1 a través de AEROPIT (1 Camion abastecedor)
+80,000 liters JET-A1 through AEROPIT (1 supplying truck)
+
+4 | Servicios e instalaciones de deshielo / De-icing facilities
+
+No
+
+5 Espacio de hangar para aeronaves de paso / No
+
+Hangar space for visiting aircraft
+6 Instalaciones para reparaciones de aeronaves de paso / Si / Yes
+
+Repair facilities for visiting aircraft
+
+Observaciones / Remarks En aeroclub San Rafael, existe taller habilitado para aeronaves
+7 livianas /
+
+San Rafael aeroclub has an authorized workshop for light aircraft
+
+AD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES
+1 Hoteles en el aerédromo o en sus proximidades / Si / Yes
+
+Hotel(s) at or in the vicinity of AD
+2 Restaurantes en el aerddromo o en sus proximidades / Si / Yes
+
+Restaurant(s) at or in the vicinity of AD
+3 | Transporte / Transportation possibilities si / Yes
+4 Instalaciones y servicios médicos / Si (*) / Yes (*)
+
+Medical facilities
+5 Banco / Bank at or in the vicinity of AD No
+
+Oficina de correo / Post offices at or in the vicinity of AD No
+6 | Oficina de turismo / Tourist office No
+
+Observaciones / Remarks
+
+(*) Solo disponible durante vuelo comercial /
+
+7
+(*) Only available during commercial flights
+AD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCION DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES
+1 Categoria del AD para la extincién de incendios / 5 (cinco / five)
+AD category for firefighting
+Equipo de salvamento / Rescue equipment 1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg
+2 de polvo quimico seco
+1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120
+kg of dry chemical powder
+Capacidad para retirar aeronaves inutilizadas / Recursos disponibles en el entorno del aeropuerto: Grulas 70 t y
+3 Capability for removal of disabled aircraft Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101
+Resources available around the airport: 70 t cranes and 120 t
+carts - Operator: (+54 2604) 427103 - Extension: 101
+4 Observaciones / Remarks Prestador del servicio SEI: ANAC
+
+SEI Service Provider: ANAC
+
+AD 2.7 DISPONIBILIDAD SEGUN LA ESTACION DEL ANO - REMOCION DE OBSTACULOS EN SUPERFICIE /
+
+SEASONAL AVAILABILITY — CLEARING
+
+1 Tipos de equipo de remocién de obstaculos / No
+Types of clearing equipment
+
+2 | Prioridades de remocién de obstaculos / Clearance priorities No
+
+3 | Observaciones / Remarks NIL
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 2/2025 27 NOVIEMBRE 2025
+
+AIP ARGENTINA
+
+SAMR AD 2.3
+
+AD 2.8 DATOS SOBRE PLATAFORMAS, CALLES DE RODAJE Y EMPLAZAMIENTOS/POSICIONES DE VERIFICACION DE EQUIPO /
+APRONS, TAXIWAYS AND CHECK LOCATIONS/POSITIONS DATA
+
+Designacién, superficie y resistencia APN /
+
+CONC - PCR 550/R/B/W/T — ELEV 746 m (2448 ft)
+
+1
+Designation surface and strength of aprons
+2 Designacién, ancho, superficie y resistencia TWY / “AX”, 18m, ASPH, PCR 430/F/B/X/T
+Designation, width, surface and strength of taxiways
+3 Emplazamiento y elevacién ACL / No
+Location and elevation of altimenter checkpoints
+4 Emplazamiento de los puntos de verificacién VOR / Si en TWY “A”, RDL 255, distancia 0.29 NM —540 m/
+Location of VOR checkpoints Yes in TWY "A", RDL 255, distance 0.29 NM - 540m
+5 Posicién de los puntos de verificacién INS / No
+
+Position of INS checkpoints
+
+6 | Observaciones / Remarks
+
+NIL
+
+AD 2.9
+
+SISTEMA DE GUIA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SENALES /
+SURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM A
+
+IND MARKINGS
+
+Uso de sefiales ID de puestos de estacionamiento de
+aeronaves, lineas de guia TWY y sistema de guia visual a
+1 | estacionamiento en los puestos de aeronaves /
+
+Use of aircraft stand ID signs, TWY guide lines and visual
+docking/parking guidance system at aircraft stands
+
+Si, Si/ Yes, Yes
+
+Sefiales y LGT de RWY y TWY /
+RWY and TWY markings and LGT
+
+Si, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,
+TDZ. Sefiales de Eje de TWY, borde TWY /
+
+2
+Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY
+Axis signals, TWY edge
+3 Barras de parada y luces de proteccién de RWY / No
+Stop bars and RWY guard lights
+4 Otras medidas de proteccién de RWY / No
+Other runway protection measures
+5 | Observaciones / Remarks NIL
+
+AD 2.10 OBSTACULOS DEL AERODROMO / AERODROME OBSTACLES
+
+En las areas de aproximacién y despegue / In approach/TKOF areas
+
+RWY - Area afectada / Tipo de obstaculo, Elevacién, Sefiales y LGT / Coordenadas /
+RWY - Area affected Obstacle type, Elevation, Markings and LGT Coordinates
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 800.0 m (2.625 ft) 343445.2S 0682551.1W
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 795.5 m (2.610 ft) 343440.8S 0682548.1W
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 800.5 m (2.626 ft) 343451.7S 0682546.0W
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 794.0 m (2.605 ft) 343500.9S 0682530.7W
+RWY 29 - Ascenso en el despegue / takeoff climb Mastil bandera/Flag mast, 776.5 m (2.548 ft) 343501.7S 0682525.7W
+RWY 29 - Ascenso en el despegue / takeoff climb Construccién/Construction (Bianchi), 777.5 m (2.551 ft) 343459.0S 0682527.1W
+RWY 29 - Ascenso en el despegue / takeoff climb Tanques blancos/White tanks, 774.0 m (2.539 ft) 343456.1S 0682527.1W
+RWY 29 - Ascenso en el despegue / takeoff climb Chimenea de casa/House fireplace, 772.5 m (2.534 ft) 343454.3S 0682520.6W
+RWY 29 - Ascenso en el despegue / takeoff climb | Arbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft) 343459.2S 0682525.4W
+RWY 29 - Ascenso en el despegue / takeoff climb Construccién/Construction (Bianchi), 771.0 m (2.530 ft) 343458.9S 0682524.0W
+RWY 29 - Ascenso en el despegue / takeoff climb Construccién/Construction (Bianchi), 777.5 m (2.551 ft) 343458.0S 0682522.8W
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 771.5 m (2.531 ft) 343457.4S 0682516.2W
+RWY 29 - Ascenso en el despegue / takeoff climb Arboleda/Grove, 769.5 m (2.525 ft) 343456.9S 0682515.2W
+RWY 29 - Ascenso en el despegue / takeoff climb Arbol/Tree, 772.5 m (2.534 ft) 343456.6S 0682521.6W
+RWY 11 - Transicién / Transition Arboleda/Grove, 788.0 m (2.585 ft) 343506.1S 0682515.7W
+RWY 29 - Transicion / Transition Arboleda/Grove (ruta / route), 776.5 m (2.548 ft) 343512.6S 0682456.7W.
+RWY 29 - Transicién / Transition Arboleda/Grove (ruta / route), 780.0 m (2.559 ft) 343515.1S 0682449.8W
+RWY 29 - Transicién / Transition WDI, 759.0 m (2.490 ft) 343513.5S 0682441.6W
+RWY 29 - Transicién / Transition Arboleda/Grove (ruta/route), 779.0 m (2.556 ft) 343518.9S 0682438.8W
+RWY 29 - Transicién / Transition Arboleda/Grove, 770.5 m (2.528 ft) 343503.7S 0682431.7W
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 2/2025
+
+27 NOVIEMBRE 2025
+
+AIP ARGENTINA SAMR AD 2.4
+RWY 29 - Transicién / Transition Arboleda/Grove (ruta/route), 779.5 m (2.557 ft) 343526.5S 0682415.9W
+RWY 29 - Transicién / Transition Faro de AD (TWR)/AD lighthouse (TWR), 765.5 m (2.511 ft) 343527.8S 0682403.6W
+RWY 29 - Transicién / Transition Tanque de agua / Water tank, 774.1 m (2.540 ft) 343530.3S 0682402.0W
+RWY 29 - Transicién / Transition Arboleda/Grove, 746.5 m (2.449 ft) 343519.8S 0682341.0W
+RWY 29 - Transicién / Transition Arboleda/Grove, 749.0 m (2.457 ft) 343523.9S 0682331.2W
+RWY 29 - Transicién / Transition Arboleda/Grove, 748.0 m (2.454 ft) 343525.4S 0682326.5W
+RWY 29 Aproximacién / Approach Arboleda/Grove, 754.0 m (2.474 ft) 343535.9S 0682324.3W
+RWY 29 - Transicién / Transition Arboleda/Grove, 760.5 m (2.495 ft) 343537.8S 0682322.7W
+RWY 11-Ascenso en el despegue / Takeoff climb
+RWY 29 - Aproximacién / Approach Arboleda/Grove, 751.0 m (2.464 ft) 343533.0S 0682320.3W
+RWY 11-Ascenso en el despegue / Takeoff climb
+RWY 29 - Aproximacién / Approach Arboleda/Grove, 749.0 m (2.457 ft) 343532.1S 0682320.0W
+RWY 11- Ascenso en el Despegue / Takeoff climb
+RWY 29 - Aproximacién / Approach Arboleda/Grove, 752.5 m (2.469 ft) 343529.4S 0682318.6W
+RWY 11-Ascenso en el despegue / takeoff climb . .
+
+RWY 29 - Aproximacién / Approach Arboleda/Grove (Pinos/Pine-tree), 752.0 m (2.467 ft) 343527.6S 0682317.7W
+RWY 29 - Horizontal interna / Internal horizontal Antena/Antenna, 785.5 m (2.577 ft) 343634.8S 0682201.5W
+RWY 29 - Horizontal Interna / Internal horizontal Antena/Antenna, 796.0 m (2.612 ft) 343635.9S 0682203.8W
+
+En el area de circuito y en el AD / In circling area and at AD
+
+Tipo de obstaculo, Elevacién, Sefiales y LGT /
+Obstacle type, Elevation, Markings and LGT
+
+Coordenadas / Coordinates
+
+Antena/Antenna, 790.75 m (2.594 ft)
+
+343510.2S 0682717.9W
+
+Observaciones / Remarks: NIL
+
+Additional information (limitation of service, etc.)
+
+AD 2.11 INFORMACION METEOROLOGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED
+1 | Oficina MET asociada / Associated MET office EMA SAN RAFAEL, OMA/OVM MENDOZA
+2 Horas de servicio / Hours of service H24
+Oficina MET fuera de horario / MET office out of service hours OMA/OVM CORDOBA
+Oficina responsable de la preparacién TAF / OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CORDOBA
+3 | Office responsible for preparation of TAFs (06/06)
+Periodos de validez / Periods of validity 24 HR: 00/00, 06/06, 12/12, 18/18
+Disponibilidad de pronésticos de tendencias para el AD / No
+a Availability of the trend forecasts for the AD
+Intervalos de expedicién de pronésticos / No
+Interval of issuance of the forecasts
+Informacién sobre cémo se hacen las exposiciones verbales y No
+5 | las consultas /
+Information on how briefing and/or consultation is provided
+Documentacién de vuelo suministrada / No
+6 | Flight documentation supplied
+Idioma(s) utilizado(s) / Language(s) used No
+Las cartas y otra informacién expuesta o a disposicién para No
+7 exposiciones verbales o consultas /
+Charts and other information displayed or available for briefing
+or consultation
+Equipo suplementario disponible para proporcionar CADAS, telefénico / CADAS, by phone
+8 | informacién /
+Supplementary equipment available for providing information
+Dependencias ATS a las cuales se suministra informacién TWR
+9 | meteoroldgica /
+The ATS units provided with meteorological information
+10 Informaci6n adicional (limitacién de servicio, etc.) / Oficina / Office Mendoza — HO9/03 - (+54 261) 4487468
+
+Oficina / Office Cordoba - H24 - (+54 351) 4753882
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 1/2026 11 JUNIO 2026
+
+
+AIP ARGENTINA
+
+SAMR AD 2.5
+
+AD 2.12 CARACTERISTICAS FISICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS
+
+BRG GEO,
+
+Observaciones / Remarks: (*) Sector derecho reducida 75 m entre T!
+
+BRG MAG Resistencia Miao tora.
+: (Centésimas . . (PCR) y COORD GEO THR, .
+Designador Dimensiones oe RWY para APP Pendiente de
+de grado) / superficie de extremo RWY, GUND aun
+Rwy / BRG GEO, de RWY (m) / RWY y SWY / THR / precision / RWY-SWY /
+, P P
+dese nation BRG MAG (to ony tm) °f | Rwyandswy | THR GEO COORD, RWY highest ELEV of Slop cork Whe
+9 one- strength (PCR) | end COORD, THR GUND eZ 7
+hundredth of and surface pe zoi precision
+APP RWY
+a degree)
+1 2 3 4 5 6 7
+rl 108.46°, 343505.34S 754.25 m 07%
+109° 2. 102%30 430/F/B/X/T 0682452.04W 2.475 ft “ae
+29 288.46°, : ASPH 343526.95S 739.5m 40.7%
+289° 0682333.81W 2.426 ft ae
+Ubicaci6n (en qué
+Dimensiones | Dimensiones Dimensiones Decniniey oe Pista)
+SWY (m) / CWY (m) / de franja (m) / P Observaciones /
+. . . . . . RESA (m) de parada / OFZ
+Dimensions Dimensions Dimensions of 5 5 Remarks
+of SWY (m) of CWY (m) aars(ta) Location (which RWY
+P: end) and Description of
+arresting system
+8 9 10 11 12 13 14
+No No 90x60 No No NIL
+*
+No No 2.222x280 (*) 90x60 No No NIL
+HR 29 y progresiva 200 m/
+
+(*) Right sector reduced 75 m between THR 29 and progressive 200 m
+
+2,102 m, 60 m, white, LIH
+Last 600 m yellow
+
+AD 2.13 DISTANCIAS DECLARADAS / DECLARED DISTANCES
+Designador RWY / Observaciones /
+RWY designator TORA (m) TODA (m) ASDA (m) LDA (m) Remarks
+1 2 3 4 5 6
+11 2.102 2.102 2.102 2.102 NIL
+29 2.102 2.102 2.102 2.102 NIL
+AD 2.14 LUCES DE APROXIMACION Y DE PISTA / APPROACH AND RUNWAY LIGHTING
+Tipo, LEN e INTST del LEN
+Designador RWY / sistema de LGT de APCH/ |LGT THR Color WBAR / PAPI, VASIS LeT
+RWY designator APCH LGT system type, LEN | THRLGT Color WBAR , Tz
+and INTST
+1 2 3 4 5
+14 No Si. 3° - HGT de cruce en THR 16.75 m/ No
+Verde, No / Green, No | yes 3°_ Crossing HGT at THR 16,75 m
+29 No Verde, No / Green, No Si, 3° / Yes, 3° No
+LEN, Separaci6n, LEN, Separaci6n, Color,
+Color, INTST RCLL / INTST REDL / oe a eo, Wear / LEN y Color STWL/ Observaciones /
+RCLL LEN, Spacing, REDL LEN, Spacing, Color, WBAR STWL LEN and Color Remarks
+Color, INTST INSTS
+6 7 8 9 10
+2.102 m, 60 m, blanco, LIH
+N Ultimos 600 m amarillas / N NIL
+jo j o
+2,102 m, 60 m, white, LIH Rojo, No / Red, No
+Last 600 m yellow
+2.102 m, 60 m, blanco, LIH
+Ultimos 600 m amarillas /
+No Rojo, No / Red, No No NIL
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 2/2025
+
+27 NOVIEMBRE 2025
+
+AIP ARGENTINA
+
+SAMR AD 2.6
+
+OTHER LIGHTING AND SECONDARY POWER SUPPLY
+
+AD 2.15 OTROS SISTEMAS DE ILUMINACION Y FUENTE SECUNDARIA DE ENERGIA ELECTRICA /
+
+ABN location, characteristics and hours of operation
+
+Emplazamiento, caracteristicas y horas de funcionamiento ABN /|
+
+Si, verde, blanco / No / Yes, green, white / No
+
+1
+Emplazamiento, caracteristicas y horas de funcionamiento IBN / | No
+IBN location, characteristics and hours of operation
+
+2.| Emplazamiento y LGT en LDI / LDI location and LGT No
+
+Luces de borde y eje de TWY /
+TWY edge and centre line lighting
+
+Si, No / Yes, No
+
+Fuente secundaria de energia eléctrica /
+4 | Secondary power supply
+
+Si / Yes
+
+Tiempo de conmutacién / Switch-over time
+
+6 (seis/six) SEC
+
+5 Observaciones / Remarks
+
+Posee LGT WDI (2), TWY y APN /
+It has LGT WD! (2), TWY and APN
+
+AD 2.16 ZONA DE ATERRIZAJE PARA HELICOPTEROS / HELICOPTER LANDING AREA
+COORD GEO y GUND del centro geométrico de la TLOF / No
+1 TLOF geometric center GEO COORD and GUND
+COORD GEO y GUND THR de cada FATO / No
+Each FATO GEO COORD and GUND
+Elevacién del drea TLOF / TLOF elevation area No
+2 Elevacién del drea FATO / FATO elevation area No
+Dimensiones de las areas TLOF y FATO, su tipo de superficie, No
+3 carga admisible y sefiales /
+TLOF and FATO area dimensions, Surface type, bearing strength
+and markings
+4 | BRG GEO de la FATO / BRG GEO of the FATO No
+5 Distancias declaradas disponibles / No
+Declared distances available
+6 LGT de aproximacién / Approach LGT No
+LGT de la FATO / FATO LGT No
+7 Observaciones / Remarks Los helicépteros operan segun instrucciones del ATS /
+Helicopters operate according to ATS instructions
+AD 2.17 ESPACIO AEREO DE LOS ATS / ATS AIRSPACE
+Designacién y limites laterales / CTR SAN RAFAEL
+Designation and lateral limits Circulo de 10 NM de RDO con centro en VOR SRA (3435225 -
+1 0682341W) /
+SAN RAFAEL CTR
+10 NM circle of RDO with center at SRA VOR (3435228 -
+0682341W)
+2 Limites verticales / Vertical limits FL55
+GND
+3 | Clasificacién del espacio aéreo / Airspace classification Cc
+
+Distintivo de llamada de la dependencia ATS /
+4 | ATS unit callsign
+
+SAN RAFAEL TORRE / SAN RAFAEL TOWER
+
+Idioma(s) / language(s)
+
+Espafiol / Spanish
+
+Altitud de transicién / Transition altitude
+
+5.000 ft
+
+Horas de aplicacién / Hours of applicability
+
+LUN — VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC
+
+Observaciones / Remarks
+
+Se adoptard la clasificacion “G” en las circunstancias que se
+detallan en ENR 1.4/
+
+The "G" classification shall be adopted in the circumstances
+detailed in ENR 1.4
+
+DEPARTAMENTO INFORMACION AERONAUTICA
+
+AMDT AIRAC 2/2025 27 NOVIEMBRE 2025
+
+AIP ARGENTINA SAMR AD 2.7
+
+AD 2.18 INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES
+
+Designacion del
+
+Servicio / Distintivo de llamada /| Canales / Frecuencia / Horas de operacién / Hours of Observaciones /
+Service Call sign Channels Frequency operation Remarks
+designation
+1 2 3 4 5 6
+TMIATAPP/TWR | Son Rafe! Tower xO | 815 We
+LUN — VIE 10:00-23:59 UTC resto
+CPPL 118.10 MHz rest O/R /
+SMC San Rafael GND CAUX 119.15 MHz MON and FRI 10:00-23:59 UTC
+EMERG 121.50 MHz resto / rest O/R Ver / See GEN 3.4
+
+ATIS - - -
+
+AD 2.21 PROCEDIMIENTOS DE ATENUACION DEL RUIDO / NOISE ABATEMENT PROCEDURES
+
+- Se aplicaran los procedimientos generales de atenuacién de ruido establecidos en la Parte 2—ENR1.5/
+- The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply
+
+AD 2.19 RADIOAYUDAS PARA LA NAVEGACION Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS
+
+Tipo de ayuda, We) VAR, COORD GEO del Elevaci6n de la
+ppc io pe Leclonenovada Frecuencia emplazamiento de cui
+para ILS/GNSS, CAT ILS, y Canal / HEEB de la antena transmisora del Observaciones /
+declinacién para VOR/ILS / operaci6n / . DME /
+A ID | Frequency transmisora / A Remarks
+Type of aid, MAG VAR, Type Hours of mA Elevation of
+A and . Position of (*)
+of supported operation for channel operation eoapoaitiin DME
+ILS / GNSS, ILS CAT, antenna coon ‘tina tes| transmitting
+declination for VOL/ILS antenna
+1 2 3 4 5 6 7
+DME CH 116X (330 km).
+VOR/DME sra | 116.9 MHz H24 343522.00S 747.50 m Restricciones: Ver ENR
+0682341.00W 2.452 ft 4.1./
+Restrictions: See ENR 4.1.
+AD 2.20 REGLAMENTO LOCAL DEL AERODROMO / LOCAL AERODROME REGULATIONS
+- Las OPS VFR deberan ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft.
+
+- En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, debera coordinar previamente con el Jefe de
+Aerédromo y/o Explotador de Aerédromo la asignacién de PSN para estacionamiento, también con el Proveedor de Combustible (en
+caso de necesitarlo) y otras coordinaciones operativas necesarias. /
+
+- VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.
+
+- In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome
+Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary
+operational coordination
+
+AD 2.22 PROCEDIMIENTOS DE VUELO / FLIGHT PROCEDURES
+
+NIL
+
+AD 2.23 INFORMACION SUPLEMENTARIA / ADDITIONAL INFORMATION
+
+Pertenece al SNA / It belongs to the SNA
+
+DEPARTAMENTO INFORMACION AERONAUTICA AMDT AIRAC 1/2026 11 JUNIO 2026
+
+AIP ARGENTINA SAMR AD 2.8
+AD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME
+
+Plano de aerédromo — OACI / Aerodrome Chart - ICAO SAMR AD 2.A1
+
+Plano de estacionamiento y atraque de aeronaves — OACI / Aircraft Parking/Docking Chart - ICAO SAMR AD 2.B1-B2-B3-B4
+Cartas de aproximacién por instrumentos — OACI / Instrument Approach Chart - ICAO
+
+VOR Z PISTA/RWY 29 SAMR AD 2.M1
+
+VOR PISTA/RWY 11 SAMR AD 2.M2
+
+AD 2.25 PENETRACION DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION
+No
+
+DEPARTAMENTO INFORMACION AERONAUTICA AMDT AIRAC 2/2025 27 NOVIEMBRE 2025

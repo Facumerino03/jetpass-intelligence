@@ -1,0 +1,83 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.9",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "Si, Si / Yes, Yes",
+      "actual": "S\u00ed, S\u00ed / Yes, Yes",
+      "normalized_expected": "Si, Si / Yes, Yes",
+      "normalized_actual": "S\u00ed, S\u00ed / Yes, Yes",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "Si, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY, TDZ. Senales de Eje de TWY, borde TWY / Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY Axis signals, TWY edge",
+      "actual": "S\u00ed, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY, TDZ. Se\u00f1ales de Eje de TWY, borde TWY / Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY Axis signals, TWY edge",
+      "normalized_expected": "Si, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY, TDZ. Senales de Eje de TWY, borde TWY / Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY Axis signals, TWY edge",
+      "normalized_actual": "S\u00ed, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY, TDZ. Se\u00f1ales de Eje de TWY, borde TWY / Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY Axis signals, TWY edge",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_5",
+      "status": "pass",
+      "expected": "NIL",
+      "actual": "NIL",
+      "normalized_expected": "NIL",
+      "normalized_actual": "NIL",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

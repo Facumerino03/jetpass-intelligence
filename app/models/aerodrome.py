@@ -21,6 +21,7 @@ class AdSection(BaseModel):
 
     section_id: str
     title: str
+    section_title: str | None = None
     raw_text: str
     data: dict[str, Any] = Field(default_factory=dict)
     anchors: dict[str, Any] | None = None

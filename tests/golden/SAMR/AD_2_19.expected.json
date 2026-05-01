@@ -1,0 +1,31 @@
+{
+  "section_id": "AD 2.19",
+  "schema": "generic-field-value-v1",
+  "fields": [],
+  "tables": [
+    {
+      "name": "table_1",
+      "label": "RADIOAYUDAS PARA LA NAVEGACION Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS",
+      "columns": [
+        "Tipo de ayuda, MAG VAR, Tipo de operacion apoyada para ILS/GNSS, CAT ILS, declinacion para VOR/ILS / Type of aid, MAG VAR, Type of supported operation for ILS/GNSS, ILS CAT, declination for VOR/ILS",
+        "ID",
+        "Frecuencia y Canal / Frequency and channel",
+        "Horas de operacion / Hours of operation",
+        "COORD GEO del emplazamiento de la antena transmisora / Position of transmitting antenna coordinates",
+        "Elevacion de la antena transmisora del DME / Elevation of DME transmitting antenna",
+        "Observaciones / Remarks (*)"
+      ],
+      "rows": [
+        {
+          "Tipo de ayuda, MAG VAR, Tipo de operacion apoyada para ILS/GNSS, CAT ILS, declinacion para VOR/ILS / Type of aid, MAG VAR, Type of supported operation for ILS/GNSS, ILS CAT, declination for VOR/ILS": "VOR/DME",
+          "ID": "SRA",
+          "Frecuencia y Canal / Frequency and channel": "116.9 MHz",
+          "Horas de operacion / Hours of operation": "H24",
+          "COORD GEO del emplazamiento de la antena transmisora / Position of transmitting antenna coordinates": "343522.00S 0682341.00W",
+          "Elevacion de la antena transmisora del DME / Elevation of DME transmitting antenna": "747.5 m 2.452 ft",
+          "Observaciones / Remarks (*)": "DME CH 116X (330 km). Restricciones: Ver ENR 4.1. / Restrictions: See ENR 4.1."
+        }
+      ]
+    }
+  ]
+}

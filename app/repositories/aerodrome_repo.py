@@ -30,6 +30,7 @@ def _to_model_section(section: SectionSchema) -> AdSection:
     return AdSection(
         section_id=section.section_id,
         title=section.title,
+        section_title=section.section_title,
         raw_text=section.raw_text,
         data=section.data,
         anchors=section.anchors,

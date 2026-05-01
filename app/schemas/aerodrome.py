@@ -19,6 +19,7 @@ class SectionMetaSchema(BaseModel):
 class SectionSchema(BaseModel):
     section_id: str
     title: str
+    section_title: str | None = None
     raw_text: str
     data: dict[str, Any] = Field(default_factory=dict)
     anchors: dict[str, Any] | None = None
@@ -68,6 +69,7 @@ class SnapshotResponse(BaseModel):
             SectionSchema(
                 section_id=s.section_id,
                 title=s.title,
+                section_title=s.section_title,
                 raw_text=s.raw_text,
                 data=s.data,
                 anchors=s.anchors,
@@ -105,6 +107,7 @@ class SectionResponse(SectionSchema):
         return cls(
             section_id=section.section_id,
             title=section.title,
+            section_title=section.section_title,
             raw_text=section.raw_text,
             data=section.data,
             anchors=section.anchors,

@@ -1,0 +1,198 @@
+{
+  "section_id": "AD 2.3",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Explotador del AD / AD operator",
+      "type": "text",
+      "expected": "11:00-19:00 UTC (Administracion / Administration)",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "Aduanas / Customs",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_3",
+      "label": "Inmigraciones / Inmigration",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_4",
+      "label": "Servicios medicos y de sanidad / Health and sanitation services",
+      "type": "text",
+      "expected": "Solo vuelo comercial regular. Resto O/R 4 HR antelacion / Only regular commercial flights / Rest O/R 4 HR in advance",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_5",
+      "label": "Oficina de informacion AIS / AIS Briefing Office",
+      "type": "text",
+      "expected": "10:00-23:59 UTC y / and O/R",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_6",
+      "label": "Oficina de notificacion ATS (ARO) / ATS Reporting Office (ARO)",
+      "type": "text",
+      "expected": "10:00-23:59 UTC y / and O/R",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_7",
+      "label": "Oficina de informacion MET / MET Briefing Office",
+      "type": "text",
+      "expected": "H24",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_8",
+      "label": "ATS",
+      "type": "text",
+      "expected": "10:00-23:59 UTC y / and O/R",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_9",
+      "label": "Abastecimiento de combustible / Fuelling",
+      "type": "text",
+      "expected": "10:00-23:59 UTC y / and O/R (*)",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_10",
+      "label": "Servicios de escala / Handling",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_11",
+      "label": "Servicios de seguridad de la aviacion (proteccion) / Security",
+      "type": "text",
+      "expected": "10:00-23:59 UTC y / and O/R",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_12",
+      "label": "Deshielo / De-icing",
+      "type": "text",
+      "expected": "No",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_13",
+      "label": "Observaciones / Remarks",
+      "type": "text",
+      "expected": "(*) COOR (+54 260) 4824047",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}

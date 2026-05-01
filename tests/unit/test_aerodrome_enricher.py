@@ -8,7 +8,7 @@ import pytest
 
 from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot
 from app.models.meta import DocumentMeta
-from app.services.enrichment.aerodrome_enricher import enrich_aerodrome_document
+from app.services.enrichment.aerodrome_enricher import _coerce_json_payload, enrich_aerodrome_document
 
 
 def _doc() -> AerodromeDocument:
@@ -37,7 +37,12 @@ async def test_enricher_writes_data_for_target_section() -> None:
     doc = _doc()
 
     def fake_extract(*_args, **_kwargs):
-        return "runways", {"runways": [{"designator": "09/27", "length_m": 2300}]}
+        return "__self__", {
+            "section_id": "AD 2.12",
+            "schema": "generic-field-value-v1",
+            "fields": [{"field": "item_1", "label": "Label", "value": "Value"}],
+            "tables": [],
+        }
 
     with patch(
         "app.services.enrichment.aerodrome_enricher._extract_for_section",
@@ -46,8 +51,8 @@ async def test_enricher_writes_data_for_target_section() -> None:
         updated = await enrich_aerodrome_document(doc, section_ids=["AD 2.12"])
 
     section = next(s for s in updated.current.ad_sections if s.section_id == "AD 2.12")
-    assert "runways" in section.data
-    assert section.data["runways"]["runways"][0]["designator"] == "09/27"
+    assert section.data["section_id"] == "AD 2.12"
+    assert section.data["fields"][0]["field"] == "item_1"
     assert section.data["_extraction"]["status"] == "ok"
 
 
@@ -56,7 +61,10 @@ async def test_enricher_skips_section_when_hash_matches() -> None:
     doc = _doc()
     target = next(s for s in doc.current.ad_sections if s.section_id == "AD 2.12")
     target.data = {
-        "runways": {"runways": [{"designator": "old"}]},
+        "section_id": "AD 2.12",
+        "schema": "generic-field-value-v1",
+        "fields": [{"field": "item_1", "label": "Label", "value": "old"}],
+        "tables": [],
         "_extraction": {
             "status": "ok",
             "raw_text_sha256": "",
@@ -72,7 +80,7 @@ async def test_enricher_skips_section_when_hash_matches() -> None:
 
     extract_call.assert_not_called()
     section = next(s for s in updated.current.ad_sections if s.section_id == "AD 2.12")
-    assert section.data["runways"]["runways"][0]["designator"] == "old"
+    assert section.data["fields"][0]["value"] == "old"
 
 
 @pytest.mark.asyncio
@@ -88,3 +96,21 @@ async def test_enricher_records_error_without_raising() -> None:
     section = next(s for s in updated.current.ad_sections if s.section_id == "AD 2.19")
     assert section.data["_extraction"]["status"] == "error"
     assert "model not found" in section.data["_extraction"]["error"]
+
+
+def test_coerce_json_payload_strips_markdown_fence() -> None:
+    raw = """```json
+{"location_indicator":"SAMR","aerodrome_name":"San Rafael"}
+```"""
+
+    payload = _coerce_json_payload(raw)
+
+    assert payload == '{"location_indicator":"SAMR","aerodrome_name":"San Rafael"}'
+
+
+def test_coerce_json_payload_extracts_json_from_preamble() -> None:
+    raw = "Here is the extracted data:\n```json\n{\"served_city\":\"San Rafael\"}\n```"
+
+    payload = _coerce_json_payload(raw)
+
+    assert payload == '{"served_city":"San Rafael"}'

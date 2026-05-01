@@ -1,4 +1,4 @@
-"""Unit tests for deterministic AD 2.0 parsing and segmentation."""
+"""Unit tests for AD 2.0 parsing and raw section segmentation."""
 
 from __future__ import annotations
 
@@ -16,7 +16,6 @@ from app.services.scraper.aip_parser import (
     PdfNotReadableError,
     PdfOcrError,
     _get_parser_config,
-    _postprocess_canonical_section,
     parse_aerodrome_from_ad20,
     parse_aerodrome_from_documents,
 )
@@ -41,37 +40,6 @@ def _ad2_text(*, missing: str | None = None, duplicate: str | None = None) -> st
     return "".join(chunks)
 
 
-def _ad2_text_missing_211_with_meteo_hint() -> str:
-    chunks: list[str] = []
-    for idx in range(1, 26):
-        if idx == 11:
-            chunks.append("| 9 | Informacion meteorologica suministrada / Meteorological information provided | TWR |\n\n")
-            continue
-        chunks.append(
-            f"SAMR AD 2.{idx} SECTION {idx}\n"
-            f"Contenido ES/EN {idx}\n\n"
-        )
-    return "".join(chunks)
-
-
-def _ad2_text_missing_211_with_full_meteo_block() -> str:
-    chunks: list[str] = []
-    for idx in range(1, 26):
-        if idx == 11:
-            chunks.append(
-                "1 Oficina MET asociada / Associated MET office EMA SAN RAFAEL, OMA/OVM MENDOZA\n"
-                "2 Horas de servicio / Hours of service H24\n"
-                "9 Dependencias ATS a las cuales se suministra información meteorológica / "
-                "The ATS units provided with meteorological information TWR\n\n"
-            )
-            continue
-        chunks.append(
-            f"SAMR AD 2.{idx} SECTION {idx}\n"
-            f"Contenido ES/EN {idx}\n\n"
-        )
-    return "".join(chunks)
-
-
 def _ad2_text_with_real_ad21_heading() -> str:
     chunks: list[str] = []
     for idx in range(1, 26):
@@ -90,21 +58,28 @@ def _ad2_text_with_real_ad21_heading() -> str:
     return "".join(chunks)
 
 
-def _ad2_text_with_ad210_and_ad211_boundary_noise() -> str:
+def _ad2_text_with_orphan_coordinates_between_210_211() -> str:
     chunks: list[str] = []
     for idx in range(1, 26):
         if idx == 10:
             chunks.append(
-                "SAMR AD 2.10 OBSTACULOS DEL AERODROMO / AERODROME OBSTACLES\n"
-                "Antena/Antenna, 790.75 m (2.594 ft) 343510.2S 0682717.9W\n"
+                "SAMR AD 2.10 OBSTACLES\n"
+                "En el área de circuito y en el AD / In circling area and at AD\n"
+                "Tipo de obstáculo, Elevación\n"
+                "Antena/\n"
+                "Antenna, Markings and LGT\n"
+                "790.75 m (2.594 ft)\n"
                 "Observaciones / Remarks: NIL\n\n"
             )
             continue
         if idx == 11:
             chunks.append(
-                "SAMR AD 2.11 INFORMACION METEOROLOGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED\n"
-                "1 Oficina MET asociada / Associated MET office EMA SAN RAFAEL\n"
-                "2 Horas de servicio / Hours of service H24\n\n"
+                "SAMR AD 2.11 METEOROLOGICAL INFORMATION\n"
+                "Coordenadas\n\n"
+                "/ Coordinates\n\n"
+                "343510.2S 0682717.9W\n\n"
+                "1 Oficina MET asociada / Associated MET office\n"
+                "EMA SAN RAFAEL\n\n"
             )
             continue
         chunks.append(
@@ -130,6 +105,14 @@ def _docling_parser_config(*, ocr_enabled: bool = True, ocr_mode: str = "page") 
         ocr_mode=ocr_mode,
         timeout_seconds=60,
         max_pages=20,
+        docling_do_ocr=False,
+        docling_ocr_languages=("es", "en"),
+        docling_force_full_page_ocr=True,
+        tesseract_lang="spa+eng",
+        tesseract_psm=6,
+        docling_do_table_structure=False,
+        docling_table_mode="fast",
+        docling_table_cell_matching=False,
     )
 
 
@@ -148,7 +131,7 @@ def test_parse_aerodrome_from_documents_returns_structured_sections(
     assert len(result.ad_sections) == 25
     assert result.ad_sections[0].section_id == "AD 2.1"
     assert result.ad_sections[-1].section_id == "AD 2.25"
-    assert result.ad_sections[0].raw_text.startswith("SECTION: AD 2.1 |")
+    assert result.ad_sections[0].raw_text.startswith("SAMR AD 2.1")
 
 
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
@@ -205,45 +188,30 @@ def test_parse_aerodrome_raises_with_missing_section_diagnostics(
     pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
     pdf_path.touch()
 
-    with pytest.raises(PdfFormatError, match=r'"missing_sections": \["AD 2.12"\]'):
+    with pytest.raises(PdfFormatError, match=r"missing=\['AD 2.12'\]"):
         parse_aerodrome_from_documents([pdf_path], icao="SAMR")
 
 
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_recovers_ad211_from_meteorological_hint(
+def test_parse_aerodrome_tolerates_duplicate_headers_using_first_match(
     mock_extract_text: MagicMock, tmp_path: Path
 ) -> None:
-    mock_extract_text.return_value = (_ad2_text_missing_211_with_meteo_hint(), _stats())
+    mock_extract_text.return_value = (_ad2_text(duplicate="AD 2.19"), _stats())
     pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
     pdf_path.touch()
 
     result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
     assert len(result.ad_sections) == 25
-    section_11 = next(s for s in result.ad_sections if s.section_id == "AD 2.11")
-    assert "meteorological" in section_11.raw_text.lower() or "meteorologica" in section_11.raw_text.lower()
+    section_19 = next(s for s in result.ad_sections if s.section_id == "AD 2.19")
+    assert section_19.raw_text.startswith("SAMR AD 2.19 SECTION 19")
+    assert "Contenido duplicado 19" in section_19.raw_text
 
 
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_recovers_ad211_from_first_meteo_row(
+def test_parse_aerodrome_rebalances_orphan_coordinates_between_sections(
     mock_extract_text: MagicMock, tmp_path: Path
 ) -> None:
-    mock_extract_text.return_value = (_ad2_text_missing_211_with_full_meteo_block(), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
-    section_11 = next(s for s in result.ad_sections if s.section_id == "AD 2.11")
-    assert "Oficina MET asociada" in section_11.raw_text
-    assert "Dependencias ATS" in section_11.raw_text
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_keeps_ad210_coordinates_out_of_ad211(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text_with_ad210_and_ad211_boundary_noise(), _stats())
+    mock_extract_text.return_value = (_ad2_text_with_orphan_coordinates_between_210_211(), _stats())
     pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
     pdf_path.touch()
 
@@ -251,20 +219,9 @@ def test_parse_aerodrome_keeps_ad210_coordinates_out_of_ad211(
 
     section_10 = next(s for s in result.ad_sections if s.section_id == "AD 2.10")
     section_11 = next(s for s in result.ad_sections if s.section_id == "AD 2.11")
-    assert "343510.2S 0682717.9W" in section_10.raw_text
+    assert "Antena/Antenna 790.75 m (2.594 ft) 343510.2S 0682717.9W" in section_10.raw_text
+    assert "Coordenadas" not in section_11.raw_text
     assert "343510.2S 0682717.9W" not in section_11.raw_text
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_raises_with_duplicate_section_diagnostics(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(duplicate="AD 2.19"), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    with pytest.raises(PdfFormatError, match=r'"duplicate_sections": \["AD 2.19"\]'):
-        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
 
 
 @patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
@@ -299,12 +256,24 @@ def test_get_parser_config_from_settings() -> None:
             aip_parser_ocr_mode="page",
             aip_parser_timeout_seconds=60,
             aip_parser_max_pages=20,
+            aip_parser_docling_do_ocr=False,
+            aip_parser_docling_ocr_languages="es,en",
+            aip_parser_docling_force_full_page_ocr=True,
+            aip_parser_tesseract_lang="spa+eng",
+            aip_parser_tesseract_psm=6,
+            aip_parser_docling_do_table_structure=False,
+            aip_parser_docling_table_mode="fast",
+            aip_parser_docling_table_cell_matching=False,
         ),
     ):
         config = _get_parser_config()
         assert config.quality_threshold == 0.2
         assert config.ocr_enabled is True
         assert config.ocr_mode == "page"
+        assert config.docling_do_ocr is False
+        assert config.docling_ocr_languages == ("es", "en")
+        assert config.tesseract_lang == "spa+eng"
+        assert config.docling_do_table_structure is False
 
 
 def test_docling_parser_uses_ocr_for_low_quality_pages(tmp_path: Path) -> None:
@@ -336,17 +305,37 @@ def test_docling_parser_raises_when_ocr_disabled_and_needed(tmp_path: Path) -> N
             parser.extract_text(pdf_path)
 
 
-def test_postprocess_ad212_fixes_duplicated_second_no_row() -> None:
-    raw = "\n".join(
-        [
-            "SECTION: AD 2.12 | CARACTERISTICAS",
-            "ITEM: ROW | No",
-            "VALUE: 2.222x280 (*) | 90x60 | No | No | NIL",
-            "ITEM: ROW | No",
-            "VALUE: 2.222x280 (*) | 90x60 | No | No | NIL",
-        ]
-    )
+def test_apply_ocr_fallback_document_mode_ocrs_all_rendered_pages(tmp_path: Path) -> None:
+    pdf_path = tmp_path / "scan.pdf"
+    pdf_path.touch()
+    parser = DoclingOcrParser(_docling_parser_config(ocr_enabled=True, ocr_mode="document"))
 
-    out = _postprocess_canonical_section("AD 2.12", raw)
-    assert "VALUE: No | 2.222x280 (*) | 90x60 | No | No | NIL" in out
-    assert "VALUE: No | - | 90x60 | No | No | NIL" in out
+    with (
+        patch("app.services.scraper.aip_parser.convert_from_path", return_value=[object(), object()]),
+        patch(
+            "app.services.scraper.aip_parser.pytesseract.image_to_string",
+            side_effect=["first page text", "second page text"],
+        ),
+    ):
+        pages = parser._apply_ocr_fallback(pdf_path, pages=[""], low_quality_indexes=[0])
+
+    assert pages == ["first page text", "second page text"]
+
+
+def test_apply_ocr_fallback_uses_configured_tesseract_language_and_psm(tmp_path: Path) -> None:
+    pdf_path = tmp_path / "scan.pdf"
+    pdf_path.touch()
+    parser = DoclingOcrParser(_docling_parser_config(ocr_enabled=True, ocr_mode="page"))
+    image = object()
+
+    with (
+        patch("app.services.scraper.aip_parser.convert_from_path", return_value=[image]),
+        patch(
+            "app.services.scraper.aip_parser.pytesseract.image_to_string",
+            return_value="texto con acentos",
+        ) as mock_ocr,
+    ):
+        pages = parser._apply_ocr_fallback(pdf_path, pages=[""], low_quality_indexes=[0])
+
+    assert pages == ["texto con acentos"]
+    mock_ocr.assert_called_once_with(image, lang="spa+eng", config="--psm 6")

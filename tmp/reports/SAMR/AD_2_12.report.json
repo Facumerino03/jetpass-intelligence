@@ -1,0 +1,31 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.12",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "(*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m",
+      "actual": "(*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m",
+      "normalized_expected": "(*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m",
+      "normalized_actual": "(*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

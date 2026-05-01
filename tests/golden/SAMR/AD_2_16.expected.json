@@ -1,0 +1,57 @@
+{
+  "section_id": "AD 2.16",
+  "schema": "generic-field-value-v1",
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "COORD GEO y GUND del centro geometrico de la TLOF / TLOF geometric center GEO COORD and GUND",
+      "value": "No"
+    },
+    {
+      "field": "item_2",
+      "label": "COORD GEO y GUND THR de cada FATO / Each FATO GEO COORD and GUND",
+      "value": "No"
+    },
+    {
+      "field": "item_3",
+      "label": "Elevacion del area TLOF / TLOF elevation area",
+      "value": "No"
+    },
+    {
+      "field": "item_4",
+      "label": "Elevacion del area FATO / FATO elevation area",
+      "value": "No"
+    },
+    {
+      "field": "item_5",
+      "label": "Dimensiones de las areas TLOF y FATO, su tipo de superficie, carga admisible y senales / TLOF and FATO area dimensions, Surface type, bearing strength and markings",
+      "value": "No"
+    },
+    {
+      "field": "item_6",
+      "label": "BRG GEO de la FATO / BRG GEO of the FATO",
+      "value": "No"
+    },
+    {
+      "field": "item_7",
+      "label": "Distancias declaradas disponibles / Declared distances available",
+      "value": "No"
+    },
+    {
+      "field": "item_8",
+      "label": "LGT de aproximacion / Approach LGT",
+      "value": "No"
+    },
+    {
+      "field": "item_9",
+      "label": "LGT de la FATO / FATO LGT",
+      "value": "No"
+    },
+    {
+      "field": "item_10",
+      "label": "Observaciones / Remarks",
+      "value": "Los helicopteros operan segun instrucciones del ATS / Helicopters operate according to ATS instructions"
+    }
+  ],
+  "tables": []
+}

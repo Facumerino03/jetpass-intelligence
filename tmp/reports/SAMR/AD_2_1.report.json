@@ -1,0 +1,44 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.1",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "SAMR  SAN RAFAEL / S. A. SANTIAGO GERMANO",
+      "actual": "SAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO",
+      "normalized_expected": "SAMR SAN RAFAEL / S. A. SANTIAGO GERMANO",
+      "normalized_actual": "SAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "AEROPUERTO NACIONAL / NATIONAL AIRPORT",
+      "actual": "AEROPUERTO NACIONAL / NATIONAL AIRPORT",
+      "normalized_expected": "AEROPUERTO NACIONAL / NATIONAL AIRPORT",
+      "normalized_actual": "AEROPUERTO NACIONAL / NATIONAL AIRPORT",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

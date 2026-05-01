@@ -1,0 +1,77 @@
+{
+  "section_id": "AD 2.11",
+  "schema": "generic-field-value-v1",
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Oficina MET asociada / Associated MET office",
+      "value": "EMA SAN RAFAEL, OMA/OVM MENDOZA"
+    },
+    {
+      "field": "item_2",
+      "label": "Horas de servicio / Hours of service",
+      "value": "H24"
+    },
+    {
+      "field": "item_3",
+      "label": "Oficina MET fuera de horario / MET office out of service hours",
+      "value": "OMA/OVM CORDOBA"
+    },
+    {
+      "field": "item_4",
+      "label": "Oficina responsable de la preparacion TAF / Office responsible for preparation of TAFs",
+      "value": "OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CORDOBA (06/06)"
+    },
+    {
+      "field": "item_5",
+      "label": "Periodos de validez / Periods of validity",
+      "value": "24 HR: 00/00, 06/06, 12/12, 18/18"
+    },
+    {
+      "field": "item_6",
+      "label": "Disponibilidad de pronosticos de tendencias para el AD / Availability of the trend forecasts for the AD",
+      "value": "No"
+    },
+    {
+      "field": "item_7",
+      "label": "Intervalos de expedicion de pronosticos / Interval of issuance of the forecasts",
+      "value": "No"
+    },
+    {
+      "field": "item_8",
+      "label": "Informacion sobre como se hacen las exposiciones verbales y las consultas / Information on how briefing and/or consultation is provided",
+      "value": "No"
+    },
+    {
+      "field": "item_9",
+      "label": "Documentacion de vuelo suministrada / Flight documentation supplied",
+      "value": "No"
+    },
+    {
+      "field": "item_10",
+      "label": "Idioma(s) utilizado(s) / Language(s) used",
+      "value": "No"
+    },
+    {
+      "field": "item_11",
+      "label": "Las cartas y otra informacion expuesta o a disposicion para exposiciones verbales o consultas / Charts and other information displayed or available for briefing or consultation",
+      "value": "No"
+    },
+    {
+      "field": "item_12",
+      "label": "Equipo suplementario disponible para proporcionar informacion / Supplementary equipment available for providing information",
+      "value": "CADAS, telefonico / CADAS, by phone"
+    },
+    {
+      "field": "item_13",
+      "label": "Dependencias ATS a las cuales se suministra informacion meteorologica / The ATS units provided with meteorological information",
+      "value": "TWR"
+    },
+    {
+      "field": "item_14",
+      "label": "Informacion adicional (limitacion de servicio, etc.) / Additional information (limitation of service, etc.)",
+      "value": "Oficina / Office Mendoza - H09/03 - (+54 261) 4487468 Oficina / Office Cordoba - H24 - (+54 351) 4753882"
+    }
+  ],
+  "tables": []
+}

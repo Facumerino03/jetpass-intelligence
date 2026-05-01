@@ -1,0 +1,32 @@
+{
+  "section_id": "AD 2.9",
+  "schema": "generic-field-value-v1",
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Uso de senales ID de puestos de estacionamiento de aeronaves, lineas de guia TWY y sistema de guia visual a estacionamiento en los puestos de aeronaves / Use of aircraft stand ID signs, TWY guide lines and visual docking/parking guidance system at aircraft stands",
+      "value": "Si, Si / Yes, Yes"
+    },
+    {
+      "field": "item_2",
+      "label": "Senales y LGT de RWY y TWY / RWY and TWY markings and LGT",
+      "value": "Si, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY, TDZ. Senales de Eje de TWY, borde TWY / Yes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY Axis signals, TWY edge"
+    },
+    {
+      "field": "item_3",
+      "label": "Barras de parada y luces de proteccion de RWY / Stop bars and RWY guard lights",
+      "value": "No"
+    },
+    {
+      "field": "item_4",
+      "label": "Otras medidas de proteccion de RWY / Other runway protection measures",
+      "value": "No"
+    },
+    {
+      "field": "item_5",
+      "label": "Observaciones / Remarks",
+      "value": "NIL"
+    }
+  ],
+  "tables": []
+}

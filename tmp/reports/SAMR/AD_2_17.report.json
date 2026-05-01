@@ -1,0 +1,122 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.17",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "CTR SAN RAFAEL Circulo de 10 NM de RDO con centro en VOR SRA (343522S - 0682341W) / SAN RAFAEL CTR 10 NM circle of RDO with center at SRA VOR (343522S - 0682341W)",
+      "actual": "CTR SAN RAFAEL C\u00edrculo de 10 NM de RDO con centro en VOR SRA (343522S - 0682341W) / SAN RAFAEL CTR 10 NM circle of RDO with center at SRA VOR (343522S - 0682341W)",
+      "normalized_expected": "CTR SAN RAFAEL Circulo de 10 NM de RDO con centro en VOR SRA (343522S - 0682341W) / SAN RAFAEL CTR 10 NM circle of RDO with center at SRA VOR (343522S - 0682341W)",
+      "normalized_actual": "CTR SAN RAFAEL C\u00edrculo de 10 NM de RDO con centro en VOR SRA (343522S - 0682341W) / SAN RAFAEL CTR 10 NM circle of RDO with center at SRA VOR (343522S - 0682341W)",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "FL 55 GND",
+      "actual": "FL 55 GND",
+      "normalized_expected": "FL 55 GND",
+      "normalized_actual": "FL 55 GND",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "C",
+      "actual": "C",
+      "normalized_expected": "C",
+      "normalized_actual": "C",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "SAN RAFAEL TORRE / SAN RAFAEL TOWER",
+      "actual": "SAN RAFAEL TORRE / SAN RAFAEL TOWER",
+      "normalized_expected": "SAN RAFAEL TORRE / SAN RAFAEL TOWER",
+      "normalized_actual": "SAN RAFAEL TORRE / SAN RAFAEL TOWER",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_5",
+      "status": "pass",
+      "expected": "Espanol / Spanish",
+      "actual": "Espa\u00f1ol / Spanish",
+      "normalized_expected": "Espanol / Spanish",
+      "normalized_actual": "Espa\u00f1ol / Spanish",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_6",
+      "status": "pass",
+      "expected": "5.000 ft",
+      "actual": "5.000 ft",
+      "normalized_expected": "5.000 ft",
+      "normalized_actual": "5.000 ft",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_7",
+      "status": "pass",
+      "expected": "LUN  VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC",
+      "actual": "LUN - VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC",
+      "normalized_expected": "LUN VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC",
+      "normalized_actual": "LUN - VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_8",
+      "status": "pass",
+      "expected": "Se adoptara la clasificacion G en las circunstancias que se detallan en ENR 1.4 / The \"G\" classification shall be adopted in the circumstances detailed in ENR 1.4",
+      "actual": "Se adoptar\u00e1 la clasificaci\u00f3n 'G' en las circunstancias que se detallan en ENR 1.4 / The \"G\" classification shall be adopted in the circumstances detailed in ENR 1.4",
+      "normalized_expected": "Se adoptara la clasificacion G en las circunstancias que se detallan en ENR 1.4 / The \"G\" classification shall be adopted in the circumstances detailed in ENR 1.4",
+      "normalized_actual": "Se adoptar\u00e1 la clasificaci\u00f3n 'G' en las circunstancias que se detallan en ENR 1.4 / The \"G\" classification shall be adopted in the circumstances detailed in ENR 1.4",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    }
+  ]
+}

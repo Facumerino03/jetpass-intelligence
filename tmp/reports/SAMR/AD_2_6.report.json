@@ -1,0 +1,70 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.6",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "5 (cinco / five)",
+      "actual": "5 (cinco / five)",
+      "normalized_expected": "5 (cinco / five)",
+      "normalized_actual": "5 (cinco / five)",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg de polvo quimico seco / 1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120 kg of dry chemical powder",
+      "actual": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg de polvo qu\u00edmico seco / 1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120 kg of dry chemical powder",
+      "normalized_expected": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg de polvo quimico seco / 1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120 kg of dry chemical powder",
+      "normalized_actual": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg de polvo qu\u00edmico seco / 1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120 kg of dry chemical powder",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "Recursos disponibles en el entorno del aeropuerto: Gruas 70 t y Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101 / Resources available around the airport: 70 t cranes and 120 t carts - Operator: (+54 2604) 427103 - Extension: 101",
+      "actual": "Recursos disponibles en el entorno del aeropuerto: Gr\u00faas 70 t y Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101 / Resources available around the airport: 70 t cranes and 120 t carts - Operator: (+54 2604) 427103 - Extension: 101",
+      "normalized_expected": "Recursos disponibles en el entorno del aeropuerto: Gruas 70 t y Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101 / Resources available around the airport: 70 t cranes and 120 t carts - Operator: (+54 2604) 427103 - Extension: 101",
+      "normalized_actual": "Recursos disponibles en el entorno del aeropuerto: Gr\u00faas 70 t y Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101 / Resources available around the airport: 70 t cranes and 120 t carts - Operator: (+54 2604) 427103 - Extension: 101",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "Prestador del servicio SEI: ANAC / SEI Service Provider: ANAC",
+      "actual": "Prestador del servicio SEI: ANAC / SEI Service Provider: ANAC",
+      "normalized_expected": "Prestador del servicio SEI: ANAC / SEI Service Provider: ANAC",
+      "normalized_actual": "Prestador del servicio SEI: ANAC / SEI Service Provider: ANAC",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    }
+  ]
+}

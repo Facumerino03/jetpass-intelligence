@@ -1,0 +1,109 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.4",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "JET A-1",
+      "actual": "JET A-1",
+      "normalized_expected": "JET A-1",
+      "normalized_actual": "JET A-1",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "80.000 litros JET-A1 a traves de AEROPIT (1 Camion abastecedor) / 80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+      "actual": "80.000 litros JET-A1 a trav\u00e9s de AEROPIT (1 Cami\u00f3n abastecedor) / 80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+      "normalized_expected": "80.000 litros JET-A1 a traves de AEROPIT (1 Camion abastecedor) / 80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+      "normalized_actual": "80.000 litros JET-A1 a trav\u00e9s de AEROPIT (1 Cami\u00f3n abastecedor) / 80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_5",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_6",
+      "status": "pass",
+      "expected": "Si / Yes",
+      "actual": "S\u00ed / Yes",
+      "normalized_expected": "Si / Yes",
+      "normalized_actual": "S\u00ed / Yes",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_7",
+      "status": "pass",
+      "expected": "En aeroclub San Rafael, existe taller habilitado para aeronaves livianas / San Rafael aeroclub has an authorized workshop for light aircraft",
+      "actual": "En aeroclub San Rafael, existe taller habilitado para aeronaves livianas / San Rafael aeroclub has an authorized workshop for light aircraft",
+      "normalized_expected": "En aeroclub San Rafael, existe taller habilitado para aeronaves livianas / San Rafael aeroclub has an authorized workshop for light aircraft",
+      "normalized_actual": "En aeroclub San Rafael, existe taller habilitado para aeronaves livianas / San Rafael aeroclub has an authorized workshop for light aircraft",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

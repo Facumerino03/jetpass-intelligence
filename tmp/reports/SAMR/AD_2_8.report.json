@@ -1,0 +1,96 @@
+{
+  "icao": "SAMR",
+  "section_id": "AD 2.8",
+  "rules_version": "3.0",
+  "status": "pass",
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "warnings": 0,
+    "errors": 0,
+    "high_failed": 0,
+    "medium_failed": 0,
+    "low_failed": 0
+  },
+  "results": [
+    {
+      "field": "item_1",
+      "status": "pass",
+      "expected": "CONC - PCR 550/R/B/W/T  ELEV 746 m (2448 ft)",
+      "actual": "CONC - PCR 550/R/B/W/T - ELEV 746 m (2448 ft)",
+      "normalized_expected": "CONC - PCR 550/R/B/W/T ELEV 746 m (2448 ft)",
+      "normalized_actual": "CONC - PCR 550/R/B/W/T - ELEV 746 m (2448 ft)",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_2",
+      "status": "pass",
+      "expected": "A, 18 m, ASPH, PCR 430/F/B/X/T",
+      "actual": "'A', 18 m, ASPH, PCR 430/F/B/X/T",
+      "normalized_expected": "A, 18 m, ASPH, PCR 430/F/B/X/T",
+      "normalized_actual": "'A', 18 m, ASPH, PCR 430/F/B/X/T",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_3",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_4",
+      "status": "pass",
+      "expected": "Si en TWY A, RDL 255, distancia 0.29 NM  540 m / Yes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+      "actual": "S\u00ed en TWY 'A', RDL 255, distancia 0.29 NM - 540 m / Yes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+      "normalized_expected": "Si en TWY A, RDL 255, distancia 0.29 NM 540 m / Yes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+      "normalized_actual": "S\u00ed en TWY 'A', RDL 255, distancia 0.29 NM - 540 m / Yes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": false,
+      "message": "Values match."
+    },
+    {
+      "field": "item_5",
+      "status": "pass",
+      "expected": "No",
+      "actual": "No",
+      "normalized_expected": "No",
+      "normalized_actual": "No",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    },
+    {
+      "field": "item_6",
+      "status": "pass",
+      "expected": "NIL",
+      "actual": "NIL",
+      "normalized_expected": "NIL",
+      "normalized_actual": "NIL",
+      "type": "text",
+      "criticality": "high",
+      "probable_cause": "ok",
+      "evidence_in_raw_text": true,
+      "message": "Values match."
+    }
+  ]
+}

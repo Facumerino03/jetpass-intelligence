@@ -1,0 +1,69 @@
+{
+  "section_id": "AD 2.18",
+  "schema": "generic-field-value-v1",
+  "fields": [],
+  "tables": [
+    {
+      "name": "table_1",
+      "label": "INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+      "columns": [
+        "Designacion del Servicio / Service designation",
+        "Distintivo de llamada / Call sign",
+        "Canales / Channels",
+        "Frecuencia / Frequency",
+        "Horas de operacion / Hours of operation",
+        "Observaciones / Remarks"
+      ],
+      "rows": [
+        {
+          "Designacion del Servicio / Service designation": "TMA/APP/TWR",
+          "Distintivo de llamada / Call sign": "San Rafael Torre / San Rafael Tower",
+          "Canales / Channels": "CPPL",
+          "Frecuencia / Frequency": "118.10 MHz",
+          "Horas de operacion / Hours of operation": "LUN – VIE 10:00-23:59 UTC resto / rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R",
+          "Observaciones / Remarks": null
+        },
+        {
+          "Designacion del Servicio / Service designation": "TMA/APP/TWR",
+          "Distintivo de llamada / Call sign": "San Rafael Torre / San Rafael Tower",
+          "Canales / Channels": "CAUX",
+          "Frecuencia / Frequency": "119.15 MHz",
+          "Horas de operacion / Hours of operation": "LUN – VIE 10:00-23:59 UTC resto / rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R",
+          "Observaciones / Remarks": null
+        },
+        {
+          "Designacion del Servicio / Service designation": "SMC",
+          "Distintivo de llamada / Call sign": "San Rafael GND",
+          "Canales / Channels": "CPPL",
+          "Frecuencia / Frequency": "118.10 MHz",
+          "Horas de operacion / Hours of operation": "LUN – VIE 10:00-23:59 UTC resto / rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R",
+          "Observaciones / Remarks": null
+        },
+        {
+          "Designacion del Servicio / Service designation": "SMC",
+          "Distintivo de llamada / Call sign": "San Rafael GND",
+          "Canales / Channels": "CAUX",
+          "Frecuencia / Frequency": "119.15 MHz",
+          "Horas de operacion / Hours of operation": "LUN – VIE 10:00-23:59 UTC resto / rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R",
+          "Observaciones / Remarks": null
+        },
+        {
+          "Designacion del Servicio / Service designation": "SMC",
+          "Distintivo de llamada / Call sign": "San Rafael GND",
+          "Canales / Channels": "EMERG",
+          "Frecuencia / Frequency": "121.50 MHz",
+          "Horas de operacion / Hours of operation": "LUN – VIE 10:00-23:59 UTC resto / rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R",
+          "Observaciones / Remarks": "Ver / See GEN 3.4"
+        },
+        {
+          "Designacion del Servicio / Service designation": "ATIS",
+          "Distintivo de llamada / Call sign": "-",
+          "Canales / Channels": "-",
+          "Frecuencia / Frequency": "-",
+          "Horas de operacion / Hours of operation": null,
+          "Observaciones / Remarks": null
+        }
+      ]
+    }
+  ]
+}

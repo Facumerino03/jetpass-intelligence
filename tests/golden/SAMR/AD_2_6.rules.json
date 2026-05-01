@@ -1,0 +1,72 @@
+{
+  "section_id": "AD 2.6",
+  "version": "3.0",
+  "schema": "generic-field-value-v1",
+  "source": "AIP-SAMR.pdf",
+  "extraction_contract": [
+    "Use the PDF/AIP section as the source of truth for expected values.",
+    "Extract field-value pairs exactly at the documentary field level shown by the AIP.",
+    "Do not split a documented field into semantic subfields such as meters/feet, Spanish/English variants, coordinates, phones or temperatures unless the source presents them as separate fields.",
+    "Use tables[] only when the source presents repeated rows/columns; table columns must be the documentary column headings.",
+    "Preserve NIL, No, blank/null cells and bilingual values as the cell or field value."
+  ],
+  "fields": [
+    {
+      "field": "item_1",
+      "label": "Categoria del AD para la extincion de incendios / AD category for firefighting",
+      "type": "text",
+      "expected": "5 (cinco / five)",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_2",
+      "label": "Equipo de salvamento / Rescue equipment",
+      "type": "text",
+      "expected": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg de polvo quimico seco / 1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120 kg of dry chemical powder",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_3",
+      "label": "Capacidad para retirar aeronaves inutilizadas / Capability for removal of disabled aircraft",
+      "type": "text",
+      "expected": "Recursos disponibles en el entorno del aeropuerto: Gruas 70 t y Carretones 120 t- Explotador: (+54 2604) 427103 - Int: 101 / Resources available around the airport: 70 t cranes and 120 t carts - Operator: (+54 2604) 427103 - Extension: 101",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    },
+    {
+      "field": "item_4",
+      "label": "Observaciones / Remarks",
+      "type": "text",
+      "expected": "Prestador del servicio SEI: ANAC / SEI Service Provider: ANAC",
+      "required": true,
+      "normalization": [
+        "strip",
+        "collapse_spaces",
+        "normalize_dash",
+        "normalize_quotes",
+        "normalize_units"
+      ]
+    }
+  ],
+  "tables": []
+}
