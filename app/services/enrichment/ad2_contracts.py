@@ -17,7 +17,7 @@ class Ad2SectionContract:
 
 def load_ad2_contract(icao: str, section_id: str) -> Ad2SectionContract | None:
     stem = section_id.replace(" ", "_").replace(".", "_")
-    base_dir = Path(__file__).resolve().parents[3] / "tests" / "golden" / icao.upper()
+    base_dir = Path(__file__).resolve().parent / "contracts" / icao.upper()
     rules_path = base_dir / f"{stem}.rules.json"
     expected_path = base_dir / f"{stem}.expected.json"
     if not rules_path.exists() or not expected_path.exists():

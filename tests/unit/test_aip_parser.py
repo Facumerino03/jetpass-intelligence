@@ -1,341 +1,223 @@
-"""Unit tests for AD 2.0 parsing and raw section segmentation."""
+"""Unit tests for PyMuPDF AD 2.0 parsing."""
 
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 import pytest
 
 from app.schemas.aerodrome import AerodromeCreate
 from app.services.scraper.aip_parser import (
-    DoclingOcrParser,
-    ParserConfig,
-    ParserExecutionStats,
     PdfFormatError,
     PdfNotReadableError,
-    PdfOcrError,
-    _get_parser_config,
+    PyMuPdfAipParser,
     parse_aerodrome_from_ad20,
     parse_aerodrome_from_documents,
 )
+from app.services.scraper.aip_segmenter import sectionize_layout_artifact
 
 
-def _ad2_text(*, missing: str | None = None, duplicate: str | None = None) -> str:
-    chunks: list[str] = []
-    for idx in range(1, 26):
-        section_id = f"AD 2.{idx}"
-        if section_id == missing:
+def _layout_artifact(*, missing: str | None = None) -> dict:
+    elements = []
+    order = 1
+    elements.append(
+        {
+            "type": "text",
+            "text": "AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERODROMO / AERODROME LOCATION INDICATOR AND NAME\nSAMR - SAN RAFAEL / S. A. SANTIAGO GERMANO",
+            "page": 1,
+            "bbox": [80, 70, 500, 120],
+            "order": order,
+        }
+    )
+    order += 1
+    for idx in range(2, 26):
+        sid = f"AD 2.{idx}"
+        if sid == missing:
             continue
-        chunks.append(
-            f"SAMR {section_id} SECTION {idx}\n"
-            f"Contenido ES/EN {idx}\n"
-            f"Linea\n\n"
+        elements.append(
+            {
+                "type": "table",
+                "text": f"{sid} SECTION {idx}\n1 | Label {idx} | Value {idx}",
+                "page": 1 + idx // 4,
+                "bbox": [42, 140 + idx, 550, 180 + idx],
+                "order": order,
+                "table": {
+                    "label": f"{sid} SECTION {idx}",
+                    "columns": ["item", "label", "value"],
+                    "rows": [{"item": "1", "label": f"Label {idx}", "value": f"Value {idx}"}],
+                    "cells": ["1", f"Label {idx}", f"Value {idx}"],
+                    "raw_rows": [[sid, f"SECTION {idx}"], ["1", f"Label {idx}", f"Value {idx}"]],
+                },
+            }
         )
-        if section_id == duplicate:
-            chunks.append(
-                f"SAMR {section_id} SECTION DUP\n"
-                f"Contenido duplicado {idx}\n\n"
-            )
-    return "".join(chunks)
+        order += 1
+    return {
+        "schema_version": "aip-layout-v1",
+        "engine": "pymupdf",
+        "pages": [{"page": 1, "width": 595, "height": 842, "elements": elements}],
+    }
 
 
-def _ad2_text_with_real_ad21_heading() -> str:
-    chunks: list[str] = []
-    for idx in range(1, 26):
-        if idx == 1:
-            chunks.append(
-                "## AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERODROMO / "
-                "AERODROME LOCATION INDICATOR AND NAME SAMR - SAN RAFAEL / "
-                "S. A. SANTIAGO GERMANO\n\n"
-                "AEROPUERTO NACIONAL / NATIONAL AIRPORT\n\n"
-            )
-            continue
-        chunks.append(
-            f"SAMR AD 2.{idx} SECTION {idx}\n"
-            f"Contenido ES/EN {idx}\n\n"
-        )
-    return "".join(chunks)
-
-
-def _ad2_text_with_orphan_coordinates_between_210_211() -> str:
-    chunks: list[str] = []
-    for idx in range(1, 26):
-        if idx == 10:
-            chunks.append(
-                "SAMR AD 2.10 OBSTACLES\n"
-                "En el área de circuito y en el AD / In circling area and at AD\n"
-                "Tipo de obstáculo, Elevación\n"
-                "Antena/\n"
-                "Antenna, Markings and LGT\n"
-                "790.75 m (2.594 ft)\n"
-                "Observaciones / Remarks: NIL\n\n"
-            )
-            continue
-        if idx == 11:
-            chunks.append(
-                "SAMR AD 2.11 METEOROLOGICAL INFORMATION\n"
-                "Coordenadas\n\n"
-                "/ Coordinates\n\n"
-                "343510.2S 0682717.9W\n\n"
-                "1 Oficina MET asociada / Associated MET office\n"
-                "EMA SAN RAFAEL\n\n"
-            )
-            continue
-        chunks.append(
-            f"SAMR AD 2.{idx} SECTION {idx}\n"
-            f"Contenido ES/EN {idx}\n\n"
-        )
-    return "".join(chunks)
-
-
-def _stats() -> ParserExecutionStats:
-    return ParserExecutionStats(
-        extraction_seconds=0.01,
-        ocr_seconds=0.0,
-        ocr_triggered=False,
-        parser_strategy="docling_ocr",
+def test_sectionize_layout_returns_25_sections_with_tables() -> None:
+    result = sectionize_layout_artifact(
+        layout_artifact=_layout_artifact(),
+        icao="SAMR",
+        source_path=Path("SAMR_AD-2.0.pdf"),
+        logger=object(),
+        format_error=PdfFormatError,
     )
 
-
-def _docling_parser_config(*, ocr_enabled: bool = True, ocr_mode: str = "page") -> ParserConfig:
-    return ParserConfig(
-        quality_threshold=0.2,
-        ocr_enabled=ocr_enabled,
-        ocr_mode=ocr_mode,
-        timeout_seconds=60,
-        max_pages=20,
-        docling_do_ocr=False,
-        docling_ocr_languages=("es", "en"),
-        docling_force_full_page_ocr=True,
-        tesseract_lang="spa+eng",
-        tesseract_psm=6,
-        docling_do_table_structure=False,
-        docling_table_mode="fast",
-        docling_table_cell_matching=False,
-    )
+    assert len(result.sections) == 25
+    assert result.sections[0].section_id == "AD 2.1"
+    assert result.sections[0].raw_text.startswith("AD 2.1")
+    ad22 = next(section for section in result.sections if section.section_id == "AD 2.2")
+    assert ad22.data["tables"][0]["rows"][0]["value"] == "Value 2"
+    assert ad22.anchors["section_blocks"][0]["bbox"] == [42, 142, 550, 182]
+    assert ad22.section_title == "SECTION 2"
 
 
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_from_documents_returns_structured_sections(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
-    assert isinstance(result, AerodromeCreate)
-    assert result.icao_code == "SAMR"
-    assert len(result.ad_sections) == 25
-    assert result.ad_sections[0].section_id == "AD 2.1"
-    assert result.ad_sections[-1].section_id == "AD 2.25"
-    assert result.ad_sections[0].raw_text.startswith("SAMR AD 2.1")
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_extracts_name_from_ad21_heading(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text_with_real_ad21_heading(), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
-    assert result.name == "San Rafael"
-    assert result.full_name == "SAN RAFAEL / S. A. SANTIAGO GERMANO"
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_from_documents_preserves_multiline_content(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    text = _ad2_text().replace("Contenido ES/EN 5\nLinea", "Contenido ES/EN 5\n\nLinea")
-    mock_extract_text.return_value = (text, _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
-    section_5 = next(s for s in result.ad_sections if s.section_id == "AD 2.5")
-    assert "Contenido ES/EN 5" in section_5.raw_text
-    assert "Linea" in section_5.raw_text
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_distinguishes_ad21_from_ad210(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-
-    section_1 = next(s for s in result.ad_sections if s.section_id == "AD 2.1")
-    section_10 = next(s for s in result.ad_sections if s.section_id == "AD 2.10")
-    assert "AD 2.10" not in section_1.raw_text.splitlines()[0]
-    assert "AD 2.10" in section_10.raw_text.splitlines()[0]
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_raises_with_missing_section_diagnostics(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(missing="AD 2.12"), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
-
+def test_sectionize_layout_raises_with_missing_section_diagnostics() -> None:
     with pytest.raises(PdfFormatError, match=r"missing=\['AD 2.12'\]"):
-        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+        sectionize_layout_artifact(
+            layout_artifact=_layout_artifact(missing="AD 2.12"),
+            icao="SAMR",
+            source_path=Path("SAMR_AD-2.0.pdf"),
+            logger=object(),
+            format_error=PdfFormatError,
+        )
 
 
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_tolerates_duplicate_headers_using_first_match(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(duplicate="AD 2.19"), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
+def test_section_title_does_not_include_table_rows() -> None:
+    artifact = _layout_artifact()
+    table = artifact["pages"][0]["elements"][1]
+    table["text"] = "AD 2.2 TITLE / ENGLISH TITLE\n1 | Label | Value"
+    table["table"]["label"] = "AD 2.2 TITLE /"
+    table["table"]["raw_rows"] = [["AD 2.2 TITLE /"], ["1", "Label", "Value"]]
+
+    result = sectionize_layout_artifact(
+        layout_artifact=artifact,
+        icao="SAMR",
+        source_path=Path("SAMR_AD-2.0.pdf"),
+        logger=object(),
+        format_error=PdfFormatError,
+    )
+
+    ad22 = next(section for section in result.sections if section.section_id == "AD 2.2")
+    assert ad22.section_title == "TITLE / ENGLISH TITLE"
+    assert "Label" not in ad22.section_title
+
+
+def test_pymupdf_parser_rejects_empty_pdf(tmp_path: Path) -> None:
+    pdf_path = tmp_path / "empty.pdf"
     pdf_path.touch()
 
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
-    assert len(result.ad_sections) == 25
-    section_19 = next(s for s in result.ad_sections if s.section_id == "AD 2.19")
-    assert section_19.raw_text.startswith("SAMR AD 2.19 SECTION 19")
-    assert "Contenido duplicado 19" in section_19.raw_text
+    with pytest.raises(PdfNotReadableError, match="empty"):
+        PyMuPdfAipParser().extract_layout(pdf_path)
 
 
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_rebalances_orphan_coordinates_between_sections(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text_with_orphan_coordinates_between_210_211(), _stats())
+def test_parse_aerodrome_from_ad20_infers_icao_from_filename(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
+    pdf_path.write_bytes(b"%PDF-1.7\n")
 
-    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+    def fake_parse(paths: list[Path], *, icao: str) -> AerodromeCreate:
+        return AerodromeCreate(
+            icao_code=icao,
+            name="San Rafael",
+            ad_sections=[
+                {
+                    "section_id": f"AD 2.{idx}",
+                    "title": f"AD 2.{idx}",
+                    "raw_text": f"AD 2.{idx}",
+                }
+                for idx in range(1, 26)
+            ],
+        )
 
-    section_10 = next(s for s in result.ad_sections if s.section_id == "AD 2.10")
-    section_11 = next(s for s in result.ad_sections if s.section_id == "AD 2.11")
-    assert "Antena/Antenna 790.75 m (2.594 ft) 343510.2S 0682717.9W" in section_10.raw_text
-    assert "Coordenadas" not in section_11.raw_text
-    assert "343510.2S 0682717.9W" not in section_11.raw_text
-
-
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_from_ad20_infers_icao_from_filename(
-    mock_extract_text: MagicMock, tmp_path: Path
-) -> None:
-    mock_extract_text.return_value = (_ad2_text(), _stats())
-    pdf_path = tmp_path / "SAMR_AD-2.0.pdf"
-    pdf_path.touch()
+    monkeypatch.setattr("app.services.scraper.aip_parser.parse_aerodrome_from_documents", fake_parse)
 
     result = parse_aerodrome_from_ad20(pdf_path)
 
     assert result.icao_code == "SAMR"
 
 
-@patch("app.services.scraper.aip_parser.DoclingOcrParser.extract_text")
-def test_parse_aerodrome_raises_on_empty_pdf(mock_extract_text: MagicMock, tmp_path: Path) -> None:
-    mock_extract_text.side_effect = PdfNotReadableError("unreadable")
-    pdf_path = tmp_path / "SAMR_empty.pdf"
-    pdf_path.touch()
+def test_parse_real_samr_pdf_when_available() -> None:
+    pdf_path = Path("/mnt/c/Users/facun/Downloads/SAMR PLAN DE VUELO/AIP-SAMR.pdf")
+    if not pdf_path.exists():
+        pytest.skip("Local SAMR AIP fixture is not available.")
 
-    with pytest.raises(PdfNotReadableError):
-        parse_aerodrome_from_documents([pdf_path], icao="SAMR")
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAMR")
 
-
-def test_get_parser_config_from_settings() -> None:
-    with patch(
-        "app.services.scraper.aip_parser.get_settings",
-        return_value=MagicMock(
-            aip_parser_docling_quality_threshold=0.2,
-            aip_parser_ocr_enabled=True,
-            aip_parser_ocr_mode="page",
-            aip_parser_timeout_seconds=60,
-            aip_parser_max_pages=20,
-            aip_parser_docling_do_ocr=False,
-            aip_parser_docling_ocr_languages="es,en",
-            aip_parser_docling_force_full_page_ocr=True,
-            aip_parser_tesseract_lang="spa+eng",
-            aip_parser_tesseract_psm=6,
-            aip_parser_docling_do_table_structure=False,
-            aip_parser_docling_table_mode="fast",
-            aip_parser_docling_table_cell_matching=False,
-        ),
-    ):
-        config = _get_parser_config()
-        assert config.quality_threshold == 0.2
-        assert config.ocr_enabled is True
-        assert config.ocr_mode == "page"
-        assert config.docling_do_ocr is False
-        assert config.docling_ocr_languages == ("es", "en")
-        assert config.tesseract_lang == "spa+eng"
-        assert config.docling_do_table_structure is False
+    assert result.name == "San Rafael"
+    assert len(result.ad_sections) == 25
+    ad22 = next(section for section in result.ad_sections if section.section_id == "AD 2.2")
+    assert ad22.data["tables"]
+    assert ad22.anchors and ad22.anchors["section_blocks"][0]["bbox"]
 
 
-def test_docling_parser_uses_ocr_for_low_quality_pages(tmp_path: Path) -> None:
-    pdf_path = tmp_path / "scan.pdf"
-    pdf_path.touch()
-    parser = DoclingOcrParser(_docling_parser_config())
+def test_parse_real_saez_ad212_declared_tables_when_available() -> None:
+    pdf_path = Path("/mnt/c/Users/facun/Downloads/SAEZ AIP.pdf")
+    if not pdf_path.exists():
+        pytest.skip("Local SAEZ AIP fixture is not available.")
 
-    with (
-        patch.object(parser, "_validate_operational_limits"),
-        patch.object(parser, "_extract_pages_with_docling", return_value=[""]),
-        patch.object(parser, "_apply_ocr_fallback", return_value=["decoded by ocr"]),
-    ):
-        text, stats = parser.extract_text(pdf_path)
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAEZ")
+    ad212 = next(section for section in result.ad_sections if section.section_id == "AD 2.12")
 
-    assert text == "decoded by ocr"
-    assert stats.ocr_triggered is True
-
-
-def test_docling_parser_raises_when_ocr_disabled_and_needed(tmp_path: Path) -> None:
-    pdf_path = tmp_path / "scan.pdf"
-    pdf_path.touch()
-    parser = DoclingOcrParser(_docling_parser_config(ocr_enabled=False))
-
-    with (
-        patch.object(parser, "_validate_operational_limits"),
-        patch.object(parser, "_extract_pages_with_docling", return_value=[""]),
-    ):
-        with pytest.raises(PdfOcrError, match="disabled"):
-            parser.extract_text(pdf_path)
+    assert ad212.section_title == "CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS"
+    assert len(ad212.data["tables"]) == 2
+    first = ad212.data["tables"][0]
+    second = ad212.data["tables"][1]
+    row_35 = next(row for row in first["rows"] if row["RWY"] == "35")
+    assert row_35["Dimensions of RWY (m)"] == "3.105x45"
+    assert row_35["THR coordinates"] == "344957.32S 0583131.79W"
+    assert row_35["Slope RWY-SWY"] == "-0.01%"
+    supp_35 = next(row for row in second["rows"] if row["RWY"] == "35")
+    assert supp_35["CWY (m)"] == "300x150"
+    assert "DTHR 35 300 m" in supp_35["Remarks"]
 
 
-def test_apply_ocr_fallback_document_mode_ocrs_all_rendered_pages(tmp_path: Path) -> None:
-    pdf_path = tmp_path / "scan.pdf"
-    pdf_path.touch()
-    parser = DoclingOcrParser(_docling_parser_config(ocr_enabled=True, ocr_mode="document"))
+def test_parse_real_saez_normalizes_lighting_comms_and_charts_when_available() -> None:
+    pdf_path = Path("/mnt/c/Users/facun/Downloads/SAEZ AIP.pdf")
+    if not pdf_path.exists():
+        pytest.skip("Local SAEZ AIP fixture is not available.")
 
-    with (
-        patch("app.services.scraper.aip_parser.convert_from_path", return_value=[object(), object()]),
-        patch(
-            "app.services.scraper.aip_parser.pytesseract.image_to_string",
-            side_effect=["first page text", "second page text"],
-        ),
-    ):
-        pages = parser._apply_ocr_fallback(pdf_path, pages=[""], low_quality_indexes=[0])
+    result = parse_aerodrome_from_documents([pdf_path], icao="SAEZ")
 
-    assert pages == ["first page text", "second page text"]
+    ad214 = next(section for section in result.ad_sections if section.section_id == "AD 2.14")
+    assert len(ad214.data["tables"]) == 2
+    lighting_29 = next(
+        row for row in ad214.data["tables"][0]["rows"]
+        if row["Designador RWY / RWY designator"] == "29"
+    )
+    assert lighting_29["LGT THR Color WBAR / THR LGT Color WBAR"] == "Sí/Yes"
+    assert lighting_29["PAPI, VASIS"] == "Ángulo de aproximación 2.95° / Approach angle 2,95°"
+    assert lighting_29["LEN LGT TDZ"] == "No"
+    rcll_35 = next(
+        row for row in ad214.data["tables"][1]["rows"]
+        if row["Designador RWY / RWY designator"] == "35"
+    )
+    assert rcll_35["Observaciones / Remarks"] == "NIL"
 
+    ad218 = next(section for section in result.ad_sections if section.section_id == "AD 2.18")
+    comm_rows = ad218.data["tables"][0]["rows"]
+    assert "Horas de funcionamiento / Hours of operation" in ad218.data["tables"][0]["columns"]
+    twr = next(row for row in comm_rows if row["Designacion del Servicio / Service designation"] == "TWR")
+    assert twr["Canales / Channels"] == "CPPL"
+    assert twr["Horas de funcionamiento / Hours of operation"] == "H24"
+    atis = next(row for row in comm_rows if row["Designacion del Servicio / Service designation"] == "ATIS")
+    assert atis["Distintivo de llamada / Call sign"] == "ATIS Ezeiza / Ezeiza ATIS"
+    assert atis["Observaciones / Remarks"] == "Ver/See GEN 3.4."
+    clrd_dcl = [
+        row for row in comm_rows
+        if row["Designacion del Servicio / Service designation"] == "CLRD"
+        and "DCL system" in row["Observaciones / Remarks"]
+    ][0]
+    assert clrd_dcl["Horas de funcionamiento / Hours of operation"] == "H24"
 
-def test_apply_ocr_fallback_uses_configured_tesseract_language_and_psm(tmp_path: Path) -> None:
-    pdf_path = tmp_path / "scan.pdf"
-    pdf_path.touch()
-    parser = DoclingOcrParser(_docling_parser_config(ocr_enabled=True, ocr_mode="page"))
-    image = object()
-
-    with (
-        patch("app.services.scraper.aip_parser.convert_from_path", return_value=[image]),
-        patch(
-            "app.services.scraper.aip_parser.pytesseract.image_to_string",
-            return_value="texto con acentos",
-        ) as mock_ocr,
-    ):
-        pages = parser._apply_ocr_fallback(pdf_path, pages=[""], low_quality_indexes=[0])
-
-    assert pages == ["texto con acentos"]
-    mock_ocr.assert_called_once_with(image, lang="spa+eng", config="--psm 6")
+    ad224 = next(section for section in result.ad_sections if section.section_id == "AD 2.24")
+    chart_rows = ad224.data["tables"][0]["rows"]
+    commercial_apron = next(row for row in chart_rows if "Commercial Apron" in row["Carta / Chart"])
+    assert commercial_apron["Codigo / Code"] == "SAEZ AD 2.B1-B2-B3-B4-B5-B6-B7-B8-B9"
+    assert "SAEZ AD" not in commercial_apron["Carta / Chart"]
+    sid = next(row for row in chart_rows if row["Carta / Chart"] == "ATOVO 3A-BIVAM 3A-LANDA 3A")
+    assert "salida normalizada" in sid["Categoria / Category"]
+    assert sid["Pista / RWY"] == "Pista/RWY 11"

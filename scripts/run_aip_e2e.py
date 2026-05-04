@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import os
 from pathlib import Path
 
 from app.core.config import get_settings
@@ -47,20 +46,7 @@ def _parse_args() -> argparse.Namespace:
         action="store_true",
         help="Skip enrichment and only run import.",
     )
-    parser.add_argument("--ocr-enabled", choices=["true", "false"], default=None)
-    parser.add_argument("--ocr-mode", choices=["page", "document"], default=None)
-    parser.add_argument("--quality-threshold", type=float, default=None)
     return parser.parse_args()
-
-
-def _apply_parser_overrides(args: argparse.Namespace) -> None:
-    if args.ocr_enabled is not None:
-        os.environ["AIP_PARSER_OCR_ENABLED"] = args.ocr_enabled
-    if args.ocr_mode is not None:
-        os.environ["AIP_PARSER_OCR_MODE"] = args.ocr_mode
-    if args.quality_threshold is not None:
-        os.environ["AIP_PARSER_DOCLING_QUALITY_THRESHOLD"] = str(args.quality_threshold)
-    get_settings.cache_clear()
 
 
 async def _print_status(icao: str) -> None:
@@ -112,7 +98,6 @@ async def _run(args: argparse.Namespace) -> None:
 
 def main() -> None:
     args = _parse_args()
-    _apply_parser_overrides(args)
     asyncio.run(_run(args))
 
 

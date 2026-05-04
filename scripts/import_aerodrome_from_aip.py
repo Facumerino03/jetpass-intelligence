@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import asyncio
 import logging
-import os
 from pathlib import Path
 
 from app.core.config import get_settings
@@ -42,24 +41,6 @@ def _parse_args() -> argparse.Namespace:
         help="Directory where downloaded AIP PDFs will be stored.",
     )
     parser.add_argument(
-        "--ocr-enabled",
-        choices=["true", "false"],
-        default=None,
-        help="Override OCR fallback toggle for this run.",
-    )
-    parser.add_argument(
-        "--ocr-mode",
-        choices=["page", "document"],
-        default=None,
-        help="Override OCR mode for this run.",
-    )
-    parser.add_argument(
-        "--quality-threshold",
-        type=float,
-        default=None,
-        help="Override quality threshold that triggers OCR fallback.",
-    )
-    parser.add_argument(
         "--skip-enrichment",
         action="store_true",
         help="Persist parsed AD-2.0 data without running LLM enrichment.",
@@ -78,16 +59,6 @@ def _print_summary(aerodrome: AerodromeResponse) -> None:
     print(f"  History   : {len(aerodrome.history)} version(es)")
 
 
-def _apply_parser_overrides(args: argparse.Namespace) -> None:
-    if args.ocr_enabled is not None:
-        os.environ["AIP_PARSER_OCR_ENABLED"] = args.ocr_enabled
-    if args.ocr_mode is not None:
-        os.environ["AIP_PARSER_OCR_MODE"] = args.ocr_mode
-    if args.quality_threshold is not None:
-        os.environ["AIP_PARSER_DOCLING_QUALITY_THRESHOLD"] = str(args.quality_threshold)
-    get_settings.cache_clear()
-
-
 async def _run(icao: str, output_dir: Path | None, enrich: bool) -> None:
     settings = get_settings()
     if not settings.mongodb_url:
@@ -101,7 +72,6 @@ async def _run(icao: str, output_dir: Path | None, enrich: bool) -> None:
 
 def main() -> None:
     args = _parse_args()
-    _apply_parser_overrides(args)
     try:
         asyncio.run(_run(args.icao, args.output_dir, enrich=not args.skip_enrichment))
     except AipImportError as exc:

@@ -8,7 +8,13 @@ import pytest
 
 from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot
 from app.models.meta import DocumentMeta
-from app.services.enrichment.aerodrome_enricher import _coerce_json_payload, enrich_aerodrome_document
+from app.services.enrichment.aerodrome_enricher import (
+    _coerce_json_payload,
+    _inject_layout_tables,
+    _postprocess_section_payload,
+    _sanitize_llm_payload,
+    enrich_aerodrome_document,
+)
 
 
 def _doc() -> AerodromeDocument:
@@ -114,3 +120,97 @@ def test_coerce_json_payload_extracts_json_from_preamble() -> None:
     payload = _coerce_json_payload(raw)
 
     assert payload == '{"served_city":"San Rafael"}'
+
+
+def test_sanitize_llm_payload_coerces_null_required_strings() -> None:
+    raw = '{"section_id": null, "schema": null, "fields": [], "tables": [{"name": null, "label": null, "columns": [null, "A"], "rows": []}]}'
+
+    payload = _sanitize_llm_payload(raw, section_id="AD 2.9")
+
+    assert payload["section_id"] == "AD 2.9"
+    assert payload["schema"] == "generic-field-value-v1"
+    assert payload["tables"][0]["name"] == "table_1"
+    assert payload["tables"][0]["label"] == ""
+    assert payload["tables"][0]["columns"] == ["", "A"]
+
+
+def test_postprocess_ad225_keeps_single_field_and_drops_table() -> None:
+    payload = {
+        "section_id": "AD 2.25",
+        "schema": "generic-field-value-v1",
+        "fields": [{"field": "vss", "label": "", "value": "No"}],
+        "tables": [{"name": "table_1", "label": "", "columns": ["value"], "rows": [{"value": "No"}]}],
+    }
+
+    out = _postprocess_section_payload(
+        section_id="AD 2.25",
+        payload=payload,
+        contract_expected=None,
+    )
+
+    assert out["tables"] == []
+    assert out["fields"][0]["value"] == "No"
+    assert "VISUAL SEGMENT SURFACE" in out["fields"][0]["label"]
+
+
+def test_postprocess_ad224_preserves_canonical_layout_table() -> None:
+    payload = {
+        "section_id": "AD 2.24",
+        "schema": "generic-field-value-v1",
+        "fields": [],
+        "tables": [
+            {
+                "name": "table_1",
+                "label": "AD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+                "columns": ["Categoria / Category", "Carta / Chart", "Pista / RWY", "Codigo / Code"],
+                "rows": [
+                    {
+                        "Categoria / Category": "Cartas de salida normalizada por instrumentos",
+                        "Carta / Chart": "ATOVO 3A-BIVAM 3A-LANDA 3A",
+                        "Pista / RWY": "Pista/RWY 11",
+                        "Codigo / Code": "SAEZ AD 2.I1-I2",
+                    }
+                ],
+            }
+        ],
+    }
+
+    out = _postprocess_section_payload(
+        section_id="AD 2.24",
+        payload=payload,
+        contract_expected=None,
+    )
+
+    assert out["tables"][0]["columns"] == ["Categoria / Category", "Carta / Chart", "Pista / RWY", "Codigo / Code"]
+    assert out["tables"][0]["rows"][0]["Pista / RWY"] == "Pista/RWY 11"
+
+
+def test_inject_layout_tables_overrides_ad212_llm_payload() -> None:
+    payload = {
+        "section_id": "AD 2.12",
+        "schema": "GenericAd2SectionData",
+        "fields": [{"field": "bad", "label": "bad", "value": "bad"}],
+        "tables": [{"name": "bad", "label": "bad", "columns": ["bad"], "rows": []}],
+    }
+    blocks = [
+        {
+            "type": "table",
+            "text": "AD 2.12",
+            "table": {
+                "label": "AD 2.12 CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+                "columns": ["RWY", "Dimensions of RWY (m)"],
+                "rows": [{"RWY": "35", "Dimensions of RWY (m)": "3.105x45"}],
+            },
+        }
+    ]
+
+    out = _inject_layout_tables(
+        payload,
+        blocks,
+        section_id="AD 2.12",
+        raw_text="AD 2.12 | 35 | 3.105x45 |",
+    )
+
+    assert out["fields"] == []
+    assert out["tables"][0]["label"].startswith("AD 2.12")
+    assert out["tables"][0]["rows"][0]["Dimensions of RWY (m)"] == "3.105x45"

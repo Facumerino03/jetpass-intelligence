@@ -11,4 +11,5 @@ dist/
 openspec/
 .agents/
 .worktrees/
-docs/
+tmp/
+JETPASS-INTELLIGENCE/

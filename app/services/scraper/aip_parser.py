@@ -1,4 +1,4 @@
-"""AIP PDF parser — deterministic AD 2.0 extraction and segmentation."""
+"""AIP AD 2.0 parser based on PyMuPDF layout and table extraction."""
 
 from __future__ import annotations
 
@@ -8,35 +8,39 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
-import pytesseract
-from docling.document_converter import DocumentConverter
-from pdf2image import convert_from_path
+import pymupdf
 
-from app.core.config import get_settings
+from app.repositories.pre_llm_artifacts_repo import upsert_pre_llm_sections, upsert_raw_extraction
 from app.schemas.aerodrome import AerodromeCreate
-from app.services.scraper.aip_extraction import extract_documents_text, forced_document_ocr_config
 from app.services.scraper.aip_metadata import extract_airac_cycle, extract_name_fields
-from app.services.scraper.aip_pipeline import extract_and_segment_sections
-from app.services.scraper.aip_segmenter import segment_ad2_sections
+from app.services.scraper.aip_segmenter import (
+    LAYOUT_ENGINE,
+    LAYOUT_SCHEMA_VERSION,
+    sectionize_layout_artifact,
+)
 
 logger = logging.getLogger(__name__)
 
+_PAGE_HEADER_Y = 58.0
+_PAGE_FOOTER_MARGIN = 58.0
+
 
 class AipParserError(Exception):
-    """Base error for the AIP parser module."""
+    pass
 
 
 class PdfNotReadableError(AipParserError):
-    """PDF cannot be opened or contains no extractable text."""
+    pass
 
 
 class PdfFormatError(AipParserError):
-    """LLM could not produce a valid structured response from the PDF content."""
+    pass
 
 
 class PdfOcrError(AipParserError):
-    """OCR stage failed or produced unusable output."""
+    """Reserved for future OCR support. OCR is intentionally disabled in v1."""
 
 
 @dataclass(frozen=True)
@@ -49,206 +53,143 @@ class ParserExecutionStats:
 
 @dataclass(frozen=True)
 class ParserConfig:
-    quality_threshold: float
-    ocr_enabled: bool
-    ocr_mode: str
-    timeout_seconds: int
-    max_pages: int
-    docling_do_ocr: bool
-    docling_ocr_languages: tuple[str, ...]
-    docling_force_full_page_ocr: bool
-    tesseract_lang: str
-    tesseract_psm: int
-    docling_do_table_structure: bool
-    docling_table_mode: str
-    docling_table_cell_matching: bool
+    """PyMuPDF parser configuration."""
+
+    max_pages: int | None = None
 
 
-class DoclingOcrParser:
-    """Docling-first parser with configurable OCR fallback."""
+class PyMuPdfAipParser:
+    """Extract ANAC AIP AD 2.0 layout blocks and tables from native PDF text."""
 
-    def __init__(self, config: ParserConfig) -> None:
-        self._config = config
+    def __init__(self, config: ParserConfig | None = None) -> None:
+        self._config = config or ParserConfig()
+        self._artifacts: dict[str, Any] = {}
 
-    def extract_text(self, pdf_path: Path) -> tuple[str, ParserExecutionStats]:
-        self._validate_operational_limits(pdf_path)
-        extraction_start = time.monotonic()
-        pages = self._extract_pages_with_docling(pdf_path)
-        extraction_elapsed = time.monotonic() - extraction_start
+    def get_artifacts(self) -> dict[str, Any]:
+        return dict(self._artifacts)
 
-        low_quality_indexes = [
-            idx for idx, page_text in enumerate(pages) if _page_quality(page_text) < self._config.quality_threshold
-        ]
-        needs_ocr = len(low_quality_indexes) == len(pages) if self._config.ocr_mode == "document" else bool(low_quality_indexes)
+    def extract_layout(self, pdf_path: Path) -> tuple[dict[str, Any], ParserExecutionStats]:
+        self._validate_pdf(pdf_path)
+        started = time.monotonic()
 
-        ocr_elapsed = 0.0
-        if needs_ocr:
-            if not self._config.ocr_enabled:
-                raise PdfOcrError(
-                    f"OCR is required but disabled by configuration for '{pdf_path}'."
-                )
-            ocr_start = time.monotonic()
-            pages = self._apply_ocr_fallback(pdf_path, pages, low_quality_indexes)
-            ocr_elapsed = time.monotonic() - ocr_start
+        try:
+            doc = pymupdf.open(str(pdf_path))
+        except Exception as exc:
+            raise PdfNotReadableError(f"Could not open PDF '{pdf_path}': {exc}") from exc
 
-        normalized = _normalize_text("\n".join(page for page in pages if page.strip()))
-        if not normalized.strip():
+        try:
+            page_count = doc.page_count
+            if page_count <= 0:
+                raise PdfNotReadableError(f"PDF has no pages: {pdf_path}")
+            max_pages = self._config.max_pages or page_count
+            pages_limit = min(max_pages, page_count)
+            pages = [_extract_page_layout(doc[index], page_number=index + 1) for index in range(pages_limit)]
+        finally:
+            doc.close()
+
+        plain_text = "\n\n".join(
+            str(element.get("text") or "")
+            for page in pages
+            for element in page.get("elements", [])
+            if isinstance(element, dict) and str(element.get("text") or "").strip()
+        )
+        if not plain_text.strip():
             raise PdfNotReadableError(
-                f"PDF is empty or unreadable after Docling/OCR processing: {pdf_path}"
+                f"PDF has no embedded text usable by PyMuPDF: {pdf_path}. OCR is disabled for this parser."
             )
 
-        return normalized, ParserExecutionStats(
-            extraction_seconds=extraction_elapsed,
-            ocr_seconds=ocr_elapsed,
-            ocr_triggered=needs_ocr,
-            parser_strategy="docling_ocr",
+        elapsed = time.monotonic() - started
+        artifact = {
+            "schema_version": LAYOUT_SCHEMA_VERSION,
+            "engine": LAYOUT_ENGINE,
+            "source_path": str(pdf_path),
+            "extraction_seconds": elapsed,
+            "metadata": {
+                "page_count": page_count,
+                "pages_extracted": len(pages),
+                "ocr_enabled": False,
+            },
+            "pages": pages,
+        }
+        self._artifacts = {"raw_extraction": artifact}
+        return artifact, ParserExecutionStats(
+            extraction_seconds=elapsed,
+            ocr_seconds=0.0,
+            ocr_triggered=False,
+            parser_strategy=LAYOUT_ENGINE,
         )
 
-    def _validate_operational_limits(self, pdf_path: Path) -> None:
-        if self._config.timeout_seconds <= 0:
-            raise PdfNotReadableError("Invalid parser timeout configuration.")
+    def _validate_pdf(self, pdf_path: Path) -> None:
         if not pdf_path.exists():
             raise PdfNotReadableError(f"PDF file does not exist: {pdf_path}")
-        if self._config.max_pages <= 0:
-            raise PdfNotReadableError("Invalid max pages parser configuration.")
-        # Docling currently returns a document-level export in this flow.
-        # We keep max_pages as guardrail config for future page-aware extraction.
         if pdf_path.stat().st_size == 0:
-            raise PdfNotReadableError(
-                f"PDF is empty or unreadable before Docling processing: {pdf_path}"
-            )
-
-    def _extract_pages_with_docling(self, pdf_path: Path) -> list[str]:
-        try:
-            converter = self._build_docling_converter()
-            result = converter.convert(str(pdf_path))
-            markdown = _normalize_text(result.document.export_to_markdown())
-        except Exception as exc:
-            raise PdfNotReadableError(f"Docling failed for '{pdf_path}': {exc}") from exc
-
-        # Docling exports document-level markdown; we keep compatibility with a page-list API.
-        return [markdown] if markdown else [""]
-
-    def _build_docling_converter(self) -> DocumentConverter:
-        try:
-            from docling.datamodel.base_models import InputFormat
-            from docling.datamodel.pipeline_options import EasyOcrOptions, PdfPipelineOptions, TableFormerMode
-            from docling.document_converter import PdfFormatOption
-
-            pipeline_options = PdfPipelineOptions()
-            pipeline_options.do_ocr = self._config.docling_do_ocr
-            if self._config.docling_do_ocr:
-                pipeline_options.ocr_options = EasyOcrOptions(
-                    lang=list(self._config.docling_ocr_languages),
-                )
-                pipeline_options.ocr_options.force_full_page_ocr = self._config.docling_force_full_page_ocr
-            pipeline_options.do_table_structure = self._config.docling_do_table_structure
-            if self._config.docling_do_table_structure:
-                pipeline_options.table_structure_options.mode = (
-                    TableFormerMode.ACCURATE
-                    if self._config.docling_table_mode == "accurate"
-                    else TableFormerMode.FAST
-                )
-                pipeline_options.table_structure_options.do_cell_matching = (
-                    self._config.docling_table_cell_matching
-                )
-
-            return DocumentConverter(
-                format_options={
-                    InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
-                }
-            )
-        except Exception:
-            return DocumentConverter()
-
-    def _apply_ocr_fallback(
-        self,
-        pdf_path: Path,
-        pages: list[str],
-        low_quality_indexes: list[int],
-    ) -> list[str]:
-        try:
-            images = convert_from_path(str(pdf_path))
-        except Exception as exc:
-            raise PdfOcrError(f"OCR image conversion failed for '{pdf_path}': {exc}") from exc
-
-        if not images:
-            raise PdfOcrError(f"OCR image conversion yielded no pages for '{pdf_path}'.")
-
-        # Docling currently provides a document-level markdown blob as a single entry.
-        # To avoid losing non-first pages during OCR fallback, OCR all rendered pages
-        # when operating in document mode or when page mapping is ambiguous.
-        if self._config.ocr_mode == "document" or (len(pages) == 1 and len(images) > 1):
-            ocr_pages: list[str] = []
-            for image in images:
-                ocr_pages.append(_normalize_text(self._tesseract_to_string(image)))
-            if any(page.strip() for page in ocr_pages):
-                return ocr_pages
-            return pages
-
-        targets = low_quality_indexes
-
-        updated_pages = pages[:]
-        for idx in targets:
-            if idx >= len(images):
-                continue
-            ocr_text = _normalize_text(self._tesseract_to_string(images[idx]))
-            if ocr_text.strip():
-                updated_pages[idx] = ocr_text
-        return updated_pages
-
-    def _tesseract_to_string(self, image: object) -> str:
-        return pytesseract.image_to_string(
-            image,
-            lang=self._config.tesseract_lang,
-            config=f"--psm {self._config.tesseract_psm}",
-        )
+            raise PdfNotReadableError(f"PDF is empty or unreadable before extraction: {pdf_path}")
 
 
-# ── public interface ───────────────────────────────────────────────────────────
+PymupdfParser = PyMuPdfAipParser
 
 
 def parse_aerodrome_from_ad20(pdf_path: Path) -> AerodromeCreate:
-    """Backward-compatible single-document entrypoint for AD-2.0 parsing."""
     inferred_icao = _infer_icao_from_path(pdf_path)
     if inferred_icao is None:
         raise PdfFormatError(
             "Could not infer ICAO from PDF file path. "
-            "Use parse_aerodrome_from_documents(..., icao='SAXX')."
+            "Use parse_aerodrome_from_documents(..., icao='XXXX')."
         )
     return parse_aerodrome_from_documents([pdf_path], icao=inferred_icao)
 
 
 def parse_aerodrome_from_documents(pdf_paths: list[Path], icao: str) -> AerodromeCreate:
-    """Extract deterministic AD 2.0 sections from one or more AIP PDFs."""
     if not pdf_paths:
         raise PdfNotReadableError("No AIP PDF documents were provided for parsing.")
 
-    config = _get_parser_config()
-    pipeline = extract_and_segment_sections(
-        pdf_paths=pdf_paths,
-        icao=icao,
-        config=config,
-        parser_factory=lambda cfg: DoclingOcrParser(config=cfg),
-        extract_documents_text=extract_documents_text,
-        segment_sections=lambda text, source_path, code: segment_ad2_sections(
-            text,
-            source_path,
-            code,
-            logger=logger,
-            format_error=PdfFormatError,
-        ),
-        forced_config_builder=forced_document_ocr_config,
-        format_error=PdfFormatError,
-        logger=logger,
-    )
-    text = pipeline.text
-    sections = pipeline.sections
+    parser = PyMuPdfAipParser(_get_parser_config())
+    layouts: list[dict[str, Any]] = []
+    source_names: list[str] = []
+    total_extraction_seconds = 0.0
+    for pdf_path in pdf_paths:
+        layout, stats = parser.extract_layout(pdf_path)
+        layouts.append(layout)
+        source_names.append(pdf_path.name)
+        total_extraction_seconds += stats.extraction_seconds
 
+    merged_layout = _merge_layouts(layouts, source_names=source_names)
+    logger.info(
+        "aip.parser.extraction",
+        extra={
+            "strategy": LAYOUT_ENGINE,
+            "ocr_triggered": False,
+            "documents_count": len(pdf_paths),
+            "extraction_seconds": round(total_extraction_seconds, 3),
+            "ocr_seconds": 0.0,
+        },
+    )
+
+    sectionized = sectionize_layout_artifact(
+        layout_artifact=merged_layout,
+        icao=icao,
+        source_path=pdf_paths[0],
+        logger=logger,
+        format_error=PdfFormatError,
+    )
+    sections = sectionized.sections
+
+    full_text = _layout_plain_text(merged_layout)
     name, full_name = extract_name_fields(sections)
     now = datetime.now(timezone.utc)
-    source_document = ", ".join(path.name for path in pdf_paths)
-    airac_cycle = extract_airac_cycle(text) or "unknown"
+    source_document = ", ".join(source_names)
+    airac_cycle = extract_airac_cycle(full_text) or "unknown"
+
+    parser_artifacts = {
+        "raw_extraction": merged_layout,
+        "pre_llm_sections": sectionized.pre_llm_sections,
+    }
+    _persist_intermediate_artifacts(
+        icao=icao,
+        airac_cycle=airac_cycle,
+        source_filename=pdf_paths[0].name,
+        parser_artifacts=parser_artifacts,
+    )
 
     return AerodromeCreate(
         icao_code=icao.strip().upper(),
@@ -263,45 +204,275 @@ def parse_aerodrome_from_documents(pdf_paths: list[Path], icao: str) -> Aerodrom
     )
 
 
-# ── private helpers ────────────────────────────────────────────────────────────
+def _extract_page_layout(page: pymupdf.Page, *, page_number: int) -> dict[str, Any]:
+    text_blocks = _page_text_blocks(page, page_number=page_number)
+    tables = _page_tables(page, page_number=page_number)
+    table_bboxes = [table["bbox"] for table in tables if isinstance(table.get("bbox"), list)]
+
+    elements: list[dict[str, Any]] = []
+    for block in text_blocks:
+        if _is_in_any_bbox(block["bbox"], table_bboxes):
+            continue
+        elements.append(block)
+    elements.extend(tables)
+    elements.sort(key=lambda e: (float(e["bbox"][1]), float(e["bbox"][0]), int(e["order"])))
+    for order, element in enumerate(elements, start=1):
+        element["order"] = order
+
+    return {
+        "page": page_number,
+        "width": float(page.rect.width),
+        "height": float(page.rect.height),
+        "elements": elements,
+    }
 
 
-def _get_parser_config() -> ParserConfig:
-    settings = get_settings()
-    docling_ocr_languages = tuple(
-        part.strip() for part in settings.aip_parser_docling_ocr_languages.split(",") if part.strip()
-    ) or ("es", "en")
-    return ParserConfig(
-        quality_threshold=settings.aip_parser_docling_quality_threshold,
-        ocr_enabled=settings.aip_parser_ocr_enabled,
-        ocr_mode=settings.aip_parser_ocr_mode,
-        timeout_seconds=settings.aip_parser_timeout_seconds,
-        max_pages=settings.aip_parser_max_pages,
-        docling_do_ocr=settings.aip_parser_docling_do_ocr,
-        docling_ocr_languages=docling_ocr_languages,
-        docling_force_full_page_ocr=settings.aip_parser_docling_force_full_page_ocr,
-        tesseract_lang=settings.aip_parser_tesseract_lang,
-        tesseract_psm=settings.aip_parser_tesseract_psm,
-        docling_do_table_structure=settings.aip_parser_docling_do_table_structure,
-        docling_table_mode=settings.aip_parser_docling_table_mode,
-        docling_table_cell_matching=settings.aip_parser_docling_table_cell_matching,
+def _page_text_blocks(page: pymupdf.Page, *, page_number: int) -> list[dict[str, Any]]:
+    data = page.get_text("dict", sort=True)
+    blocks: list[dict[str, Any]] = []
+    for idx, block in enumerate(data.get("blocks", []), start=1):
+        if block.get("type") != 0:
+            continue
+        bbox = _bbox(block.get("bbox"))
+        if bbox is None or _is_page_header_or_footer(bbox, page_height=float(page.rect.height)):
+            continue
+        text = _text_from_block(block)
+        if not text:
+            continue
+        blocks.append(
+            {
+                "type": "text",
+                "text": text,
+                "page": page_number,
+                "bbox": bbox,
+                "order": idx,
+            }
+        )
+    return blocks
+
+
+def _page_tables(page: pymupdf.Page, *, page_number: int) -> list[dict[str, Any]]:
+    try:
+        found = page.find_tables()
+    except Exception as exc:
+        logger.warning("aip.parser.table_detection_failed", extra={"page": page_number, "error": str(exc)})
+        return []
+
+    tables: list[dict[str, Any]] = []
+    for idx, table in enumerate(found.tables, start=1):
+        bbox = _bbox(table.bbox)
+        if bbox is None or _is_page_header_or_footer(bbox, page_height=float(page.rect.height)):
+            continue
+        raw_rows = table.extract()
+        normalized = _normalize_table(raw_rows)
+        if not normalized["rows"] and not normalized["label"]:
+            continue
+        text_lines = [normalized["label"]] if normalized["label"] else []
+        for row in normalized["rows"]:
+            text_lines.append(
+                " | ".join(
+                    value
+                    for value in (
+                        str(row.get("item") or "").strip(),
+                        str(row.get("label") or "").strip(),
+                        str(row.get("value") or "").strip(),
+                    )
+                    if value
+                )
+            )
+        tables.append(
+            {
+                "type": "table",
+                "text": "\n".join(line for line in text_lines if line).strip(),
+                "page": page_number,
+                "bbox": bbox,
+                "order": idx,
+                "table": {
+                    "label": normalized["label"],
+                    "columns": ["item", "label", "value"],
+                    "rows": normalized["rows"],
+                    "cells": normalized["cells"],
+                    "raw_rows": normalized["raw_rows"],
+                },
+            }
+        )
+    return tables
+
+
+def _normalize_table(raw_rows: list[list[Any]]) -> dict[str, Any]:
+    rows = [_clean_cells(row) for row in raw_rows if isinstance(row, list)]
+    rows = [row for row in rows if any(row)]
+    label = ""
+    data_rows: list[dict[str, str]] = []
+    cells: list[str] = []
+
+    for row in rows:
+        nonempty = [cell for cell in row if cell]
+        if not nonempty:
+            continue
+        joined = " ".join(nonempty)
+        cells.extend(nonempty)
+        if not label and re.search(r"(?i)\bAD\s*2\.\d{1,2}\b", joined):
+            label = joined
+            continue
+
+        item = ""
+        values = nonempty
+        if re.fullmatch(r"\d{1,2}", nonempty[0]):
+            item = nonempty[0]
+            values = nonempty[1:]
+
+        if not values:
+            data_rows.append({"item": item, "label": "", "value": ""})
+            continue
+        if len(values) == 1:
+            data_rows.append({"item": item, "label": "", "value": values[0]})
+            continue
+        data_rows.append(
+            {
+                "item": item,
+                "label": values[0],
+                "value": " ".join(values[1:]).strip(),
+            }
+        )
+
+    return {
+        "label": label,
+        "columns": ["item", "label", "value"],
+        "rows": data_rows,
+        "cells": cells,
+        "raw_rows": rows,
+    }
+
+
+def _clean_cells(row: list[Any]) -> list[str]:
+    return [_clean_text(str(cell or "")) for cell in row]
+
+
+def _text_from_block(block: dict[str, Any]) -> str:
+    lines: list[str] = []
+    for line in block.get("lines", []):
+        spans = line.get("spans", []) if isinstance(line, dict) else []
+        text = "".join(str(span.get("text") or "") for span in spans if isinstance(span, dict))
+        text = _clean_text(text)
+        if text:
+            lines.append(text)
+    return "\n".join(lines).strip()
+
+
+def _bbox(value: Any) -> list[float] | None:
+    if not isinstance(value, (tuple, list)) or len(value) != 4:
+        return None
+    try:
+        return [float(v) for v in value]
+    except (TypeError, ValueError):
+        return None
+
+
+def _is_page_header_or_footer(bbox: list[float], *, page_height: float) -> bool:
+    return bbox[1] < _PAGE_HEADER_Y or bbox[3] > page_height - _PAGE_FOOTER_MARGIN
+
+
+def _is_in_any_bbox(bbox: list[float], candidates: list[list[float]]) -> bool:
+    cx = (bbox[0] + bbox[2]) / 2
+    cy = (bbox[1] + bbox[3]) / 2
+    for candidate in candidates:
+        if candidate[0] <= cx <= candidate[2] and candidate[1] <= cy <= candidate[3]:
+            return True
+    return False
+
+
+def _merge_layouts(layouts: list[dict[str, Any]], *, source_names: list[str]) -> dict[str, Any]:
+    pages: list[dict[str, Any]] = []
+    offset = 0
+    for layout, source_name in zip(layouts, source_names, strict=False):
+        for page in layout.get("pages", []):
+            if not isinstance(page, dict):
+                continue
+            page_copy = dict(page)
+            page_copy["source_document"] = source_name
+            page_copy["page"] = int(page_copy.get("page", 0) or 0) + offset
+            for element in page_copy.get("elements", []):
+                if isinstance(element, dict):
+                    element["source_document"] = source_name
+                    element["page"] = page_copy["page"]
+            pages.append(page_copy)
+        offset += int(layout.get("metadata", {}).get("pages_extracted", 0) or len(layout.get("pages", [])))
+    return {
+        "schema_version": LAYOUT_SCHEMA_VERSION,
+        "engine": LAYOUT_ENGINE,
+        "source_documents": source_names,
+        "metadata": {
+            "documents_count": len(layouts),
+            "pages_extracted": len(pages),
+            "ocr_enabled": False,
+        },
+        "pages": pages,
+    }
+
+
+def _layout_plain_text(layout: dict[str, Any]) -> str:
+    return "\n\n".join(
+        str(element.get("text") or "")
+        for page in layout.get("pages", [])
+        if isinstance(page, dict)
+        for element in page.get("elements", [])
+        if isinstance(element, dict) and str(element.get("text") or "").strip()
     )
 
 
-def _normalize_text(text: str) -> str:
-    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
-    return normalized.replace("\x00", "")
+def _persist_intermediate_artifacts(*, icao: str, airac_cycle: str, source_filename: str, parser_artifacts: dict[str, object]) -> None:
+    raw_extraction = parser_artifacts.get("raw_extraction") if isinstance(parser_artifacts, dict) else None
+    pre_llm = parser_artifacts.get("pre_llm_sections") if isinstance(parser_artifacts, dict) else None
+    if not isinstance(raw_extraction, dict) or not isinstance(pre_llm, dict):
+        return
+    try:
+        import asyncio
+
+        async def _save() -> None:
+            await upsert_raw_extraction(
+                icao=icao,
+                airac_cycle=airac_cycle,
+                source_filename=source_filename,
+                payload=raw_extraction,
+            )
+            await upsert_pre_llm_sections(
+                icao=icao,
+                airac_cycle=airac_cycle,
+                source_filename=source_filename,
+                payload=pre_llm,
+            )
+
+        try:
+            loop = asyncio.get_running_loop()
+            loop.create_task(_save())
+        except RuntimeError:
+            try:
+                asyncio.run(_save())
+            except Exception as exc:
+                if exc.__class__.__name__ == "CollectionWasNotInitialized":
+                    logger.debug("aip.parser.persist_intermediate_skipped_beanie_not_initialized")
+                    return
+                raise
+    except Exception:
+        logger.exception("aip.parser.persist_intermediate_failed", extra={"icao": icao, "source": source_filename})
 
 
-def _page_quality(text: str) -> float:
-    if not text:
-        return 0.0
-    meaningful_chars = sum(1 for ch in text if ch.isalnum())
-    return meaningful_chars / max(len(text), 1)
+def _get_parser_config() -> ParserConfig:
+    return ParserConfig()
+
+
+def _clean_text(text: str) -> str:
+    text = text.replace("\x00", " ").replace("\r\n", "\n").replace("\r", "\n")
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return "\n".join(line.strip() for line in text.splitlines()).strip()
 
 
 def _infer_icao_from_path(pdf_path: Path) -> str | None:
-    candidates = re.findall(r"SA[A-Z0-9]{2}", pdf_path.name.upper())
-    if candidates:
-        return candidates[0]
+    """Pick first 4-letter alphabetic token (underscore is a word char in regex \\b)."""
+    name = pdf_path.stem.upper()
+    for token in re.split(r"[^A-Z]+", name):
+        if len(token) == 4 and token.isalpha():
+            return token
     return None

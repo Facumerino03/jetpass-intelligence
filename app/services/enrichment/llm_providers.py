@@ -48,6 +48,7 @@ class StructuredLlmProvider(Protocol):
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str: ...
 
 
@@ -59,6 +60,22 @@ def _build_user_prompt(icao: str, section_id: str, raw_text: str) -> str:
         "(accents/diacritics, apostrophes, dashes, punctuation).\n"
         "Extract fields from this raw text:\n\n"
         f"{raw_text}"
+    )
+
+
+def _build_user_prompt_with_blocks(
+    icao: str,
+    section_id: str,
+    raw_text: str,
+    section_blocks: list[dict[str, Any]] | None,
+) -> str:
+    base = _build_user_prompt(icao, section_id, raw_text)
+    if not section_blocks:
+        return base
+    return (
+        f"{base}\n\n"
+        "Structured section blocks (use these as structural hints for table/list boundaries):\n"
+        f"{json.dumps(section_blocks, ensure_ascii=True)}"
     )
 
 
@@ -77,7 +94,11 @@ def _build_contract_instructions(contract: dict[str, Any] | None) -> str:
 
 
 def _build_ollama_messages(
-    icao: str, section_id: str, raw_text: str, contract: dict[str, Any] | None
+    icao: str,
+    section_id: str,
+    raw_text: str,
+    contract: dict[str, Any] | None,
+    section_blocks: list[dict[str, Any]] | None,
 ) -> list[dict[str, str]]:
     system = (
         "You extract structured aeronautical data from AD 2.0 sections. "
@@ -92,12 +113,20 @@ def _build_ollama_messages(
         system = f"{system}\n\n{contract_text}"
     return [
         {"role": "system", "content": system},
-        {"role": "user", "content": _build_user_prompt(icao, section_id, raw_text)},
+        {
+            "role": "user",
+            "content": _build_user_prompt_with_blocks(icao, section_id, raw_text, section_blocks),
+        },
     ]
 
 
 def _build_cloud_messages(
-    icao: str, section_id: str, raw_text: str, schema: dict[str, Any], contract: dict[str, Any] | None
+    icao: str,
+    section_id: str,
+    raw_text: str,
+    schema: dict[str, Any],
+    contract: dict[str, Any] | None,
+    section_blocks: list[dict[str, Any]] | None,
 ) -> list[dict[str, str]]:
     schema_text = json.dumps(schema, ensure_ascii=True)
     system = (
@@ -115,7 +144,10 @@ def _build_cloud_messages(
         system = f"{system}\n\n{contract_text}"
     return [
         {"role": "system", "content": system},
-        {"role": "user", "content": _build_user_prompt(icao, section_id, raw_text)},
+        {
+            "role": "user",
+            "content": _build_user_prompt_with_blocks(icao, section_id, raw_text, section_blocks),
+        },
     ]
 
 
@@ -135,10 +167,11 @@ class OllamaProvider:
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str:
         response = self._client.chat(
             model=self.model_name,
-            messages=_build_ollama_messages(icao, section_id, raw_text, contract),
+            messages=_build_ollama_messages(icao, section_id, raw_text, contract, section_blocks),
             format=schema,
             options={"temperature": self._temperature},
         )
@@ -161,10 +194,18 @@ class _OpenAiCompatibleProvider:
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str:
         completion = self._client.chat.completions.create(
             model=self.model_name,
-            messages=_build_cloud_messages(icao, section_id, raw_text, schema, contract),
+            messages=_build_cloud_messages(
+                icao,
+                section_id,
+                raw_text,
+                schema,
+                contract,
+                section_blocks,
+            ),
             response_format={"type": "json_object"},
             temperature=self._temperature,
         )
@@ -223,12 +264,20 @@ class NvidiaProvider(_OpenAiCompatibleProvider):
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str:
         # NVIDIA endpoint can reject response_format for some models/routes.
         # We enforce JSON in prompt and validate with Pydantic downstream.
         completion = self._client.chat.completions.create(
             model=self.model_name,
-            messages=_build_cloud_messages(icao, section_id, raw_text, schema, contract),
+            messages=_build_cloud_messages(
+                icao,
+                section_id,
+                raw_text,
+                schema,
+                contract,
+                section_blocks,
+            ),
             temperature=self._temperature,
         )
         content = completion.choices[0].message.content
@@ -260,12 +309,20 @@ class GoogleAiStudioProvider(_OpenAiCompatibleProvider):
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str:
         # AI Studio OpenAI-compatible endpoint can vary in response_format support.
         # We enforce JSON in prompt and validate with Pydantic downstream.
         completion = self._client.chat.completions.create(
             model=self.model_name,
-            messages=_build_cloud_messages(icao, section_id, raw_text, schema, contract),
+            messages=_build_cloud_messages(
+                icao,
+                section_id,
+                raw_text,
+                schema,
+                contract,
+                section_blocks,
+            ),
             temperature=self._temperature,
         )
         content = completion.choices[0].message.content
@@ -316,9 +373,10 @@ class GoogleVertexProvider:
         raw_text: str,
         schema: dict[str, Any],
         contract: dict[str, Any] | None = None,
+        section_blocks: list[dict[str, Any]] | None = None,
     ) -> str:
         client = self._get_client()
-        messages = _build_cloud_messages(icao, section_id, raw_text, schema, contract)
+        messages = _build_cloud_messages(icao, section_id, raw_text, schema, contract, section_blocks)
         kwargs: dict[str, Any] = {
             "model": self.model_name,
             "messages": messages,

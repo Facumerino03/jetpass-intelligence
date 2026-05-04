@@ -41,37 +41,6 @@ class Settings(BaseSettings):
     ollama_host: str = Field(default="http://localhost:11434", alias="OLLAMA_HOST")
     ollama_model: str = Field(default="llama3.1:8b", alias="OLLAMA_MODEL")
     ollama_temperature: float = Field(default=0.0, alias="OLLAMA_TEMPERATURE")
-    aip_parser_docling_quality_threshold: float = Field(
-        default=0.2, alias="AIP_PARSER_DOCLING_QUALITY_THRESHOLD"
-    )
-    aip_parser_ocr_enabled: bool = Field(default=True, alias="AIP_PARSER_OCR_ENABLED")
-    aip_parser_ocr_mode: Literal["document", "page"] = Field(
-        default="page", alias="AIP_PARSER_OCR_MODE"
-    )
-    aip_parser_timeout_seconds: int = Field(
-        default=60, alias="AIP_PARSER_TIMEOUT_SECONDS"
-    )
-    aip_parser_max_pages: int = Field(default=80, alias="AIP_PARSER_MAX_PAGES")
-    aip_parser_docling_ocr_languages: str = Field(
-        default="es,en", alias="AIP_PARSER_DOCLING_OCR_LANGUAGES"
-    )
-    aip_parser_docling_do_ocr: bool = Field(
-        default=False, alias="AIP_PARSER_DOCLING_DO_OCR"
-    )
-    aip_parser_docling_force_full_page_ocr: bool = Field(
-        default=True, alias="AIP_PARSER_DOCLING_FORCE_FULL_PAGE_OCR"
-    )
-    aip_parser_tesseract_lang: str = Field(default="spa+eng", alias="AIP_PARSER_TESSERACT_LANG")
-    aip_parser_tesseract_psm: int = Field(default=6, alias="AIP_PARSER_TESSERACT_PSM")
-    aip_parser_docling_do_table_structure: bool = Field(
-        default=False, alias="AIP_PARSER_DOCLING_DO_TABLE_STRUCTURE"
-    )
-    aip_parser_docling_table_mode: Literal["accurate", "fast"] = Field(
-        default="fast", alias="AIP_PARSER_DOCLING_TABLE_MODE"
-    )
-    aip_parser_docling_table_cell_matching: bool = Field(
-        default=False, alias="AIP_PARSER_DOCLING_TABLE_CELL_MATCHING"
-    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

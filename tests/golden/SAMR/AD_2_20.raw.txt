@@ -1,5 +1,0 @@
-## AD 2.20 REGLAMENTO LOCAL DEL AERÓDROMO / LOCAL AERODROME REGULATIONS
-
-- -Las OPS VFR deberán ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft.
-- -En las circunstancias detalladas en el ENR 1.4 , el piloto que decida realizar vuelos VFR, deberá coordinar previamente con el Jefe de Aeródromo y/o Explotador de Aeródromo la asignación de PSN para estacionamiento, también con el Proveedor de Combustible (en caso de necesitarlo) y otras coordinaciones operativas necesarias. /- -VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.
-- -In the circumstances detailed in ENR 1.4 , the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary operational coordination

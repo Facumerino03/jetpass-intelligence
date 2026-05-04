@@ -9,6 +9,7 @@ from app.core.database import init_mongodb
 from app.core.redis import close_redis_client
 from app.routers.aerodrome_router import router as aerodrome_router
 from app.routers.health_router import router as health_router
+from app.routers.intelligence_router import router as intelligence_router
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -30,3 +31,4 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(title=settings.app_name, debug=settings.debug, lifespan=lifespan)
 app.include_router(health_router)
 app.include_router(aerodrome_router)
+app.include_router(intelligence_router)

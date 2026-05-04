@@ -35,8 +35,18 @@ def extract_name_fields(sections: list[SectionSchema]) -> tuple[str, str | None]
         if note_lines:
             first_line = note_lines[0]
 
-    icao_name_match = re.search(r"\b([A-Z]{4})\s*-\s*(.+)$", first_line)
+    icao_name_match = re.search(r"\b([A-Z]{4})\s*[-–]\s*(.+)$", first_line)
     if icao_name_match:
+        full_name = icao_name_match.group(2).strip(" -:")
+        main_name = full_name.split("/")[0].strip(" -:")
+        if main_name:
+            return main_name.title(), full_name
+        return full_name.title(), full_name
+
+    for line in raw_lines[1:]:
+        icao_name_match = re.search(r"\b([A-Z]{4})\s*[-–]\s*(.+)$", line)
+        if not icao_name_match:
+            continue
         full_name = icao_name_match.group(2).strip(" -:")
         main_name = full_name.split("/")[0].strip(" -:")
         if main_name:

@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot, SectionMeta
+from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot
 from app.models.meta import DocumentMeta
 
 
@@ -50,10 +50,10 @@ class AerodromeCreate(BaseModel):
 
     @field_validator("icao_code")
     @classmethod
-    def icao_must_be_argentine(cls, v: str) -> str:
+    def icao_must_be_four_letters(cls, v: str) -> str:
         code = v.strip().upper()
-        if not code.startswith("SA"):
-            raise ValueError(f'icao_code must start with "SA" for Argentine aerodromes (got "{v}")')
+        if len(code) != 4 or not code.isalpha():
+            raise ValueError(f"icao_code must be a 4-letter ICAO code (got {v!r})")
         return code
 
 

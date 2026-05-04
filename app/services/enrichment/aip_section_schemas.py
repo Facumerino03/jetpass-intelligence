@@ -1,4 +1,4 @@
-"""Generic AD 2.x section schema registry aligned to golden format."""
+"""Generic AD 2.x section schema registry."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class FieldValue(BaseModel):
-    field: str
-    label: str
+    field: str | None = None
+    label: str | None = None
     value: str | None = None
 
 

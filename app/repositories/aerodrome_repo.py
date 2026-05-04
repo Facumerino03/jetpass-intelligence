@@ -92,6 +92,50 @@ def _superseded_snapshot(snapshot: AerodromeSnapshot) -> AerodromeSnapshot:
     return snapshot.model_copy(update={"meta": superseded_meta})
 
 
+async def prepare_document(data: AerodromeCreate) -> tuple[AerodromeDocument, bool]:
+    """Build a versioned AerodromeDocument in memory without writing to MongoDB.
+
+    Returns ``(document, is_new)`` where ``is_new`` indicates whether
+    ``persist_document`` should call ``insert`` or ``save``.
+    """
+    _validate_sections(data.ad_sections)
+    icao = data.icao_code.strip().upper()
+    existing = await get_by_icao(icao)
+
+    if existing is None:
+        doc = AerodromeDocument(
+            id=icao,
+            icao=icao,
+            name=data.name,
+            full_name=data.full_name,
+            current=_build_snapshot(data, version=1, replaces=None),
+            history=[],
+        )
+        return doc, True
+
+    current_meta = existing.current.meta
+    next_version = current_meta.version + 1
+    replaces = f"{icao}-v{current_meta.version}"
+    new_snapshot = _build_snapshot(data, version=next_version, replaces=replaces)
+
+    if current_meta.airac_cycle != data.airac_cycle:
+        existing.history.append(_superseded_snapshot(existing.current))
+
+    existing.name = data.name
+    existing.full_name = data.full_name
+    existing.current = new_snapshot
+    return existing, False
+
+
+async def persist_document(doc: AerodromeDocument, *, is_new: bool) -> AerodromeDocument:
+    """Persist a pre-built document produced by ``prepare_document``."""
+    if is_new:
+        await doc.insert()
+    else:
+        await doc.save()
+    return doc
+
+
 async def get_by_icao(icao: str) -> AerodromeDocument | None:
     normalized = icao.strip().upper()
     try:
