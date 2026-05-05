@@ -14,6 +14,19 @@ class Settings(BaseSettings):
     mongodb_url: str | None = Field(default=None, alias="MONGODB_URL")
     mongodb_db_name: str = Field(default="jetpass_aeronautical", alias="MONGODB_DB_NAME")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
+    notam_cache_ttl_hours: int = Field(default=4, alias="NOTAM_CACHE_TTL_HOURS")
+    notam_location_sync_enabled: bool = Field(
+        default=True, alias="NOTAM_LOCATION_SYNC_ENABLED"
+    )
+    notam_location_sync_interval_hours: int = Field(
+        default=12, alias="NOTAM_LOCATION_SYNC_INTERVAL_HOURS"
+    )
+    notam_location_sync_on_startup: bool = Field(
+        default=True, alias="NOTAM_LOCATION_SYNC_ON_STARTUP"
+    )
+    notam_location_sync_headless: bool = Field(
+        default=True, alias="NOTAM_LOCATION_SYNC_HEADLESS"
+    )
     openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(
         default="openai/gpt-4o-mini", alias="OPENROUTER_MODEL"
