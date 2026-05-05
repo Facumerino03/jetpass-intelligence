@@ -12,7 +12,7 @@ The project currently has one intelligence capability: the **aerodrome agent**, 
 
 This spec covers two tightly coupled changes:
 
-1. **NOTAM agent** — scrapes active NOTAMs from the ANAC NOTAM consultation website for a given aerodrome, caches results in MongoDB, and interprets them via LLM (summary + classification by criticality/type).
+1. **NOTAM agent** — scrapes active NOTAMs from the ANAC NOTAM consultation website for a given aerodrome and caches results in MongoDB. LLM interpretation (summary + classification) is deferred to a future iteration.
 2. **LangGraph orchestrator migration** — the current `run()` function becomes a `StateGraph` with parallel-capable agent nodes. This is the right moment to introduce LangGraph because the system is graduating from 1 to 2 independent capabilities.
 
 ---
@@ -91,16 +91,12 @@ notam_intel_service.get_notam_intelligence(icao)
        → Playwright: extract site_last_updated_at from banner
        → Playwright: select "AVISOS A TODAS LAS FIRS" → scrape fir_notams
        → Playwright: select aerodrome name from dropdown → scrape aerodrome_notams
-  4. Interpret (LLM)
-       notam_interpret_tool.interpret(aerodrome_notams + fir_notams)
-       → classify each NOTAM by category and criticality
-       → generate overall_summary paragraph
-  5. Persist
+  4. Persist
        notam_repo.upsert(NotamDocument)
-  6. Return NotamIntelResult (source="fresh_scrape")
+  5. Return NotamIntelResult (source="fresh_scrape")
 ```
 
-The internal service is kept as a sequential function (not a LangGraph subgraph) following YAGNI. If the NOTAM agent needs branching logic in the future (e.g. fallback sources), it can be promoted to a subgraph then.
+The internal service is kept as a sequential function (not a LangGraph subgraph) following YAGNI. LLM interpretation is intentionally excluded from this iteration.
 
 ---
 
@@ -117,24 +113,6 @@ class RawNotam(BaseModel):
     raw_text: str             # ICAO-format NOTAM text
     spanish_text: str | None  # "Versión en Español" if present on site
 
-class NotamClassification(BaseModel):
-    category: str             # RUNWAY | NAVAID | AIRSPACE | SERVICES | OTHER
-    criticality: str          # HIGH | MEDIUM | LOW
-    summary: str              # one-line plain-language description
-
-class InterpretedNotam(BaseModel):
-    notam_id: str
-    classification: NotamClassification
-
-class NotamInterpretation(BaseModel):
-    overall_summary: str                      # paragraph for the pilot in plain language
-    critical_count: int
-    aerodrome_notams_count: int
-    fir_notams_count: int
-    classified_notams: list[InterpretedNotam] # full per-NOTAM classification
-    by_category: dict[str, list[str]]         # {"RUNWAY": ["A1472/2026"], ...} for quick lookup
-    interpreted_at: datetime
-
 class NotamDocument(Document):
     id: str                   # ICAO code → MongoDB _id
     icao: str
@@ -143,7 +121,6 @@ class NotamDocument(Document):
     fetched_at: datetime              # timestamp of our scraping run
     aerodrome_notams: list[RawNotam]
     fir_notams: list[RawNotam]
-    interpretation: NotamInterpretation | None
 
     class Settings:
         name = "notams"
@@ -152,6 +129,8 @@ class NotamDocument(Document):
             IndexModel([("fetched_at", ASCENDING)]),
         ]
 ```
+
+`NotamClassification`, `InterpretedNotam`, and `NotamInterpretation` are deferred to the next iteration.
 
 ---
 
@@ -173,7 +152,6 @@ class NotamIntelResult(BaseModel):
     fetched_at: datetime | None = None
     aerodrome_notams: list[RawNotam] | None = None
     fir_notams: list[RawNotam] | None = None
-    interpretation: NotamInterpretation | None = None
     source: Literal["cache", "fresh_scrape"]
     alerts: list[Alert] = Field(default_factory=list)
     messages: list[str] = Field(default_factory=list)
@@ -207,14 +185,9 @@ The `site_last_updated_at` timestamp (from the ANAC banner) is always surfaced i
 
 ---
 
-## 7. LLM Interpretation
+## 7. LLM Interpretation — Deferred
 
-The `notam_interpreter.py` service receives all NOTAMs (aerodrome + FIR) and produces a `NotamInterpretation`. It uses the same LLM provider pattern already in place (`app/services/enrichment/llm_providers.py`).
-
-**Classification prompt guidance:**
-- `category`: RUNWAY (runway/taxiway closures, surface conditions), NAVAID (navigation aids out of service), AIRSPACE (restricted/danger areas, CTR changes), SERVICES (ATC hours, fuel, handling), OTHER.
-- `criticality`: HIGH (affects safe operation directly — closed runway, NAVAID failure), MEDIUM (operational impact — reduced capacity, restricted hours), LOW (informational).
-- `overall_summary`: a brief paragraph in Spanish suitable for a pilot briefing. Mentions the most critical items first.
+Classification by category/criticality and natural-language summary generation are intentionally excluded from this iteration to keep scope manageable. The `NotamDocument` stores all raw NOTAM data needed for a future interpretation pass. This will be implemented as a separate change adding `notam_interpreter.py`, `notam_interpret_tool.py`, and `NotamInterpretation` model.
 
 ---
 
@@ -225,10 +198,8 @@ The `notam_interpreter.py` service receives all NOTAMs (aerodrome + FIR) and pro
 | `app/models/notam.py` | Beanie document model |
 | `app/repositories/notam_repo.py` | MongoDB read/write for NOTAMs |
 | `app/services/scraper/notam_scraper.py` | Playwright scraper for ANAC NOTAM site |
-| `app/services/interpretation/notam_interpreter.py` | LLM classification + summary |
 | `app/tools/notam_scrape_tool.py` | Tool wrapper for scraper |
-| `app/tools/notam_interpret_tool.py` | Tool wrapper for interpreter |
-| `app/intelligence/notam_intel_service.py` | Service: cache-first, scrape/interpret on miss |
+| `app/intelligence/notam_intel_service.py` | Service: cache-first, scrape on miss |
 | `app/intelligence/graph.py` | LangGraph StateGraph definition + compilation |
 
 ## 9. Modified Files
@@ -251,13 +222,12 @@ Each step can fail independently and emits a typed `Alert`:
 | Name resolution (aerodrome not in DB) | `AERODROME_NOT_FOUND` | ERROR | Return early, no scrape |
 | Scrape fails | `NOTAM_SCRAPE_FAILED` | ERROR | Return early with alert |
 | Dropdown name not found on site | `NOTAM_LOCATION_NOT_FOUND` | WARNING | Return FIR NOTAMs only |
-| LLM interpretation fails | `NOTAM_INTERPRET_FAILED` | WARNING | Persist raw NOTAMs without interpretation |
 
 ---
 
 ## 11. Testing
 
-- **Unit**: `notam_scraper.py` (mock Playwright), `notam_interpreter.py` (mock LLM), `notam_intel_service.py` (mock repo + tools).
+- **Unit**: `notam_scraper.py` (mock Playwright), `notam_intel_service.py` (mock repo + tool).
 - **Integration**: `test_notam_repo.py` (mongomock), `test_langgraph_orchestrator.py` (mock both services, verify State transitions).
 - **E2E script**: `scripts/run_notam_e2e.py` — takes an ICAO, runs full pipeline, prints result. Mirrors `scripts/run_aip_e2e.py`.
 
