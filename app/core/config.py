@@ -14,6 +14,17 @@ class Settings(BaseSettings):
     mongodb_url: str | None = Field(default=None, alias="MONGODB_URL")
     mongodb_db_name: str = Field(default="jetpass_aeronautical", alias="MONGODB_DB_NAME")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
+    documentai_project_id: str = Field(default="655673003934", alias="DOCUMENTAI_PROJECT_ID")
+    documentai_location: str = Field(default="us", alias="DOCUMENTAI_LOCATION")
+    documentai_processor_id: str = Field(
+        default="c57cf2f52aedbbe3", alias="DOCUMENTAI_PROCESSOR_ID"
+    )
+    documentai_processor_version_id: str | None = Field(
+        default=None, alias="DOCUMENTAI_PROCESSOR_VERSION_ID"
+    )
+    documentai_imageless_mode: bool = Field(
+        default=False, alias="DOCUMENTAI_IMAGELESS_MODE"
+    )
     notam_cache_ttl_hours: int = Field(default=4, alias="NOTAM_CACHE_TTL_HOURS")
     notam_location_sync_enabled: bool = Field(
         default=True, alias="NOTAM_LOCATION_SYNC_ENABLED"
