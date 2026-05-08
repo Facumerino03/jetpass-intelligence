@@ -102,7 +102,7 @@ async def test_weather_cache_hit_returns_cached_products(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_upstream_error_produces_warning_alert(monkeypatch):
-    from app.services.weather.aviation_weather_client import AviationWeatherClientError
+    from app.tools.aviation_weather_tool import AviationWeatherToolError
 
     redis = FakeRedis()
     async def existing_aerodrome(icao) -> SimpleNamespace:
@@ -112,12 +112,12 @@ async def test_upstream_error_produces_warning_alert(monkeypatch):
         return redis
 
     async def failing_fetch_metar(self, icao: str, *, hours: float):
-        raise AviationWeatherClientError("simulated upstream failure")
+        raise AviationWeatherToolError("simulated upstream failure")
 
     monkeypatch.setattr("app.intelligence.weather_intel_service.aerodrome_repo.get_by_icao", existing_aerodrome)
     monkeypatch.setattr("app.intelligence.weather_intel_service.get_redis", fake_redis)
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_metar",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_metar",
         failing_fetch_metar,
     )
     async def _fake_station_info(self, icao):
@@ -130,15 +130,15 @@ async def test_upstream_error_produces_warning_alert(monkeypatch):
         return {"type": "FeatureCollection", "features": []}
 
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_station_info",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_station_info",
         _fake_station_info,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_taf",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_taf",
         _fake_taf,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_isigmet_geojson",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_isigmet_geojson",
         _fake_isigmet,
     )
 
@@ -182,19 +182,19 @@ async def test_force_refresh_bypasses_cache(monkeypatch):
         return fresh_sigmet
 
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_station_info",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_station_info",
         _fresh_station,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_metar",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_metar",
         _fresh_metar,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_taf",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_taf",
         _fresh_taf,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_isigmet_geojson",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_isigmet_geojson",
         _fresh_sigmet,
     )
 
@@ -240,19 +240,19 @@ async def test_metar_hours_back_is_passed_to_fetch_metar(monkeypatch):
     monkeypatch.setattr("app.intelligence.weather_intel_service.aerodrome_repo.get_by_icao", existing_aerodrome)
     monkeypatch.setattr("app.intelligence.weather_intel_service.get_redis", fake_redis)
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_metar",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_metar",
         capture_metar,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_station_info",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_station_info",
         _fake_station,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_taf",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_taf",
         _fake_taf,
     )
     monkeypatch.setattr(
-        "app.services.weather.aviation_weather_client.AviationWeatherClient.fetch_isigmet_geojson",
+        "app.tools.aviation_weather_tool.AviationWeatherTool.fetch_isigmet_geojson",
         _fake_sigmet,
     )
 

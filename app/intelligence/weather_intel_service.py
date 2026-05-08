@@ -19,11 +19,8 @@ from app.intelligence.contracts import (
     WeatherTaf,
 )
 from app.repositories import aerodrome_repo
-from app.services.weather.aviation_weather_client import (
-    AviationWeatherClient,
-    AviationWeatherClientError,
-)
 from app.services.weather.geometry import feature_contains_point
+from app.tools.aviation_weather_tool import AviationWeatherTool, AviationWeatherToolError
 
 logger = logging.getLogger(__name__)
 
@@ -181,13 +178,13 @@ async def get_weather_intelligence(
         base_url=settings.aviation_weather_base_url,
         timeout=settings.weather_http_timeout_seconds,
     ) as http:
-        client = AviationWeatherClient(
+        tool = AviationWeatherTool(
             http=http, user_agent=settings.weather_user_agent
         )
 
         if station_payload is None:
             try:
-                station_rows = await client.fetch_station_info(normalized)
+                station_rows = await tool.fetch_station_info(normalized)
                 station_payload = station_rows[0] if station_rows else None
                 if station_payload is not None:
                     await _set_json(
@@ -196,7 +193,7 @@ async def get_weather_intelligence(
                         station_payload,
                         settings.weather_station_cache_ttl_seconds,
                     )
-            except AviationWeatherClientError as exc:
+            except AviationWeatherToolError as exc:
                 alerts.append(
                     Alert(
                         level=AlertLevel.WARNING,
@@ -208,7 +205,7 @@ async def get_weather_intelligence(
 
         if metar_payload is None:
             try:
-                metar_rows = await client.fetch_metar(
+                metar_rows = await tool.fetch_metar(
                     normalized, hours=hours_back
                 )
                 metar_payload = metar_rows[0] if metar_rows else None
@@ -219,7 +216,7 @@ async def get_weather_intelligence(
                         metar_payload,
                         settings.weather_metar_cache_ttl_seconds,
                     )
-            except AviationWeatherClientError as exc:
+            except AviationWeatherToolError as exc:
                 alerts.append(
                     Alert(
                         level=AlertLevel.WARNING,
@@ -231,7 +228,7 @@ async def get_weather_intelligence(
 
         if taf_payload is None:
             try:
-                taf_rows = await client.fetch_taf(normalized)
+                taf_rows = await tool.fetch_taf(normalized)
                 taf_payload = taf_rows[0] if taf_rows else None
                 if taf_payload is not None:
                     await _set_json(
@@ -240,7 +237,7 @@ async def get_weather_intelligence(
                         taf_payload,
                         settings.weather_taf_cache_ttl_seconds,
                     )
-            except AviationWeatherClientError as exc:
+            except AviationWeatherToolError as exc:
                 alerts.append(
                     Alert(
                         level=AlertLevel.WARNING,
@@ -252,14 +249,14 @@ async def get_weather_intelligence(
 
         if sigmet_payload is None:
             try:
-                sigmet_payload = await client.fetch_isigmet_geojson()
+                sigmet_payload = await tool.fetch_isigmet_geojson()
                 await _set_json(
                     redis,
                     sigmet_key,
                     sigmet_payload,
                     settings.weather_sigmet_cache_ttl_seconds,
                 )
-            except AviationWeatherClientError as exc:
+            except AviationWeatherToolError as exc:
                 alerts.append(
                     Alert(
                         level=AlertLevel.WARNING,
