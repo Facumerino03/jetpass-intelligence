@@ -40,11 +40,6 @@ def _parse_args() -> argparse.Namespace:
         default=None,
         help="Directory where downloaded AIP PDFs will be stored.",
     )
-    parser.add_argument(
-        "--skip-enrichment",
-        action="store_true",
-        help="Persist parsed AD-2.0 data without running LLM enrichment.",
-    )
     return parser.parse_args()
 
 
@@ -59,21 +54,21 @@ def _print_summary(aerodrome: AerodromeResponse) -> None:
     print(f"  History   : {len(aerodrome.history)} version(es)")
 
 
-async def _run(icao: str, output_dir: Path | None, enrich: bool) -> None:
+async def _run(icao: str, output_dir: Path | None) -> None:
     settings = get_settings()
     if not settings.mongodb_url:
         raise SystemExit(
             "MONGODB_URL is not configured. Set it in your .env file."
         )
     await init_mongodb(settings.mongodb_url, settings.mongodb_db_name)
-    aerodrome = await import_aerodrome_from_aip(icao, output_dir=output_dir, enrich=enrich)
+    aerodrome = await import_aerodrome_from_aip(icao, output_dir=output_dir)
     _print_summary(aerodrome)
 
 
 def main() -> None:
     args = _parse_args()
     try:
-        asyncio.run(_run(args.icao, args.output_dir, enrich=not args.skip_enrichment))
+        asyncio.run(_run(args.icao, args.output_dir))
     except AipImportError as exc:
         print(f"\n✗ Import failed: {exc}")
         raise SystemExit(1) from exc
