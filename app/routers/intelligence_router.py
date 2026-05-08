@@ -31,10 +31,10 @@ router = APIRouter(prefix="/intelligence", tags=["intelligence"])
     ),
 )
 async def run_intelligence(request: OrchestratorRequest) -> OrchestratorResponse:
-    if request.aerodrome is None and request.notam is None:
+    if request.aerodrome is None and request.notam is None and request.weather is None:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="At least one intent must be specified (e.g. 'aerodrome' or 'notam').",
+            detail="At least one intent must be specified (e.g. 'aerodrome', 'notam', or 'weather').",
         )
     logger.info("Intelligence request received: %s", request.model_dump(exclude_none=True))
     return await run(request)

@@ -15,6 +15,38 @@ class Settings(BaseSettings):
     mongodb_db_name: str = Field(default="jetpass_aeronautical", alias="MONGODB_DB_NAME")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
     notam_cache_ttl_hours: int = Field(default=4, alias="NOTAM_CACHE_TTL_HOURS")
+    aviation_weather_base_url: str = Field(
+        default="https://aviationweather.gov/api/data",
+        alias="AVIATION_WEATHER_BASE_URL",
+    )
+    weather_station_cache_ttl_seconds: int = Field(
+        default=604800,
+        alias="WEATHER_STATION_CACHE_TTL_SECONDS",
+    )
+    weather_metar_cache_ttl_seconds: int = Field(
+        default=120,
+        alias="WEATHER_METAR_CACHE_TTL_SECONDS",
+    )
+    weather_taf_cache_ttl_seconds: int = Field(
+        default=600,
+        alias="WEATHER_TAF_CACHE_TTL_SECONDS",
+    )
+    weather_sigmet_cache_ttl_seconds: int = Field(
+        default=120,
+        alias="WEATHER_SIGMET_CACHE_TTL_SECONDS",
+    )
+    weather_metar_hours_back: float = Field(
+        default=2.0,
+        alias="WEATHER_METAR_HOURS_BACK",
+    )
+    weather_http_timeout_seconds: float = Field(
+        default=10.0,
+        alias="WEATHER_HTTP_TIMEOUT_SECONDS",
+    )
+    weather_user_agent: str = Field(
+        default="jetpass-intelligence",
+        alias="WEATHER_USER_AGENT",
+    )
     notam_location_sync_enabled: bool = Field(
         default=True, alias="NOTAM_LOCATION_SYNC_ENABLED"
     )
@@ -54,6 +86,9 @@ class Settings(BaseSettings):
     ollama_host: str = Field(default="http://localhost:11434", alias="OLLAMA_HOST")
     ollama_model: str = Field(default="llama3.1:8b", alias="OLLAMA_MODEL")
     ollama_temperature: float = Field(default=0.0, alias="OLLAMA_TEMPERATURE")
+    aip_parser_engine: Literal["docling", "pymupdf"] = Field(
+        default="docling", alias="AIP_PARSER_ENGINE"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

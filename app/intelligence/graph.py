@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import logging
 import asyncio
-from typing import TypedDict
+from typing import Any, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
@@ -14,119 +13,75 @@ from app.intelligence.contracts import (
     Alert,
     NotamIntelResult,
     OrchestratorRequest,
+    WeatherIntelResult,
 )
 from app.intelligence.notam_intel_service import get_notam_intelligence
-
-logger = logging.getLogger(__name__)
-
+from app.intelligence.weather_intel_service import get_weather_intelligence
 
 class IntelligenceState(TypedDict, total=False):
     request: OrchestratorRequest
     aerodrome_result: AerodromeIntelResult
     notam_result: NotamIntelResult
+    weather_result: WeatherIntelResult
     alerts: list[Alert]
     intent: str
 
 
-def _route_intents(state: IntelligenceState) -> str:
+async def _run_requested_capabilities(state: IntelligenceState) -> IntelligenceState:
     request = state["request"]
-    if request.aerodrome is not None and request.notam is not None:
-        return "both_node"
+    calls: list[tuple[str, Any]] = []
+
     if request.aerodrome is not None:
-        return "aerodrome_node"
+        aero = request.aerodrome
+        calls.append((
+            "aerodrome_result",
+            get_aerodrome_intelligence(
+                aero.icao,
+                force_refresh=aero.force_refresh,
+                section_ids=aero.section_ids,
+            ),
+        ))
     if request.notam is not None:
-        return "notam_node"
-    return "aggregate_results"
+        ntm = request.notam
+        calls.append(("notam_result", get_notam_intelligence(ntm.icao, force_refresh=ntm.force_refresh)))
+    if request.weather is not None:
+        wx = request.weather
+        calls.append(("weather_result", get_weather_intelligence(wx.icao, force_refresh=wx.force_refresh, metar_hours_back=wx.metar_hours_back)))
 
-
-def _route_intents_node(_: IntelligenceState) -> IntelligenceState:
-    return {}
-
-
-async def _aerodrome_node(state: IntelligenceState) -> IntelligenceState:
-    request = state["request"]
-    intent = request.aerodrome
-    if intent is None:
-        return {}
-    result = await get_aerodrome_intelligence(
-        intent.icao,
-        force_refresh=intent.force_refresh,
-        section_ids=intent.section_ids,
-    )
-    return {"aerodrome_result": result}
-
-
-async def _notam_node(state: IntelligenceState) -> IntelligenceState:
-    request = state["request"]
-    intent = request.notam
-    if intent is None:
-        return {}
-    result = await get_notam_intelligence(intent.icao, force_refresh=intent.force_refresh)
-    return {"notam_result": result}
-
-
-async def _both_node(state: IntelligenceState) -> IntelligenceState:
-    request = state["request"]
-    aerodrome_intent = request.aerodrome
-    notam_intent = request.notam
-    if aerodrome_intent is None or notam_intent is None:
+    if not calls:
         return {}
 
-    aerodrome_result, notam_result = await asyncio.gather(
-        get_aerodrome_intelligence(
-            aerodrome_intent.icao,
-            force_refresh=aerodrome_intent.force_refresh,
-            section_ids=aerodrome_intent.section_ids,
-        ),
-        get_notam_intelligence(notam_intent.icao, force_refresh=notam_intent.force_refresh),
-    )
-    return {
-        "aerodrome_result": aerodrome_result,
-        "notam_result": notam_result,
-    }
+    results = await asyncio.gather(*(call for _, call in calls))
+    return {key: result for (key, _), result in zip(calls, results, strict=True)}
 
 
 def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
     request = state["request"]
     alerts: list[Alert] = []
 
-    aerodrome_result = state.get("aerodrome_result")
-    if aerodrome_result is not None:
-        alerts.extend(aerodrome_result.alerts)
-
-    notam_result = state.get("notam_result")
-    if notam_result is not None:
-        alerts.extend(notam_result.alerts)
+    for key in ("aerodrome_result", "notam_result", "weather_result"):
+        result = state.get(key)
+        if result is not None:
+            alerts.extend(result.alerts)
 
     parts = []
     if request.aerodrome is not None:
         parts.append("aerodrome_context")
     if request.notam is not None:
         parts.append("notam_context")
+    if request.weather is not None:
+        parts.append("weather_context")
 
-    return {
-        "alerts": alerts,
-        "intent": "+".join(parts) if parts else "noop",
-    }
+    return {"alerts": alerts, "intent": "+".join(parts) if parts else "noop"}
 
 
 def build_graph():
     graph = StateGraph(IntelligenceState)
-    graph.add_node("route_intents", _route_intents_node)
-    graph.add_node("aerodrome_node", _aerodrome_node)
-    graph.add_node("notam_node", _notam_node)
-    graph.add_node("both_node", _both_node)
+    graph.add_node("run_requested_capabilities", _run_requested_capabilities)
     graph.add_node("aggregate_results", _aggregate_results)
 
-    graph.add_edge(START, "route_intents")
-    graph.add_conditional_edges(
-        "route_intents",
-        _route_intents,
-        ["aerodrome_node", "notam_node", "both_node", "aggregate_results"],
-    )
-    graph.add_edge("aerodrome_node", "aggregate_results")
-    graph.add_edge("notam_node", "aggregate_results")
-    graph.add_edge("both_node", "aggregate_results")
+    graph.add_edge(START, "run_requested_capabilities")
+    graph.add_edge("run_requested_capabilities", "aggregate_results")
     graph.add_edge("aggregate_results", END)
     return graph.compile()
 

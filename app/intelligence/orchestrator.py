@@ -9,12 +9,8 @@ added, this is the layer that coordinates them — potentially via LangGraph nod
 
 from __future__ import annotations
 
-import logging
-
 from app.intelligence.contracts import OrchestratorRequest, OrchestratorResponse
 from app.intelligence.graph import intelligence_graph
-
-logger = logging.getLogger(__name__)
 
 
 async def run(request: OrchestratorRequest) -> OrchestratorResponse:
@@ -24,5 +20,6 @@ async def run(request: OrchestratorRequest) -> OrchestratorResponse:
         intent=state.get("intent", "noop"),
         aerodrome=state.get("aerodrome_result"),
         notam=state.get("notam_result"),
+        weather=state.get("weather_result"),
         alerts=state.get("alerts", []),
     )
