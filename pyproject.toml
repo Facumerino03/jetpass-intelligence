@@ -23,6 +23,7 @@ dependencies = [
     "uvicorn[standard]>=0.45.0",
     "google-auth>=2.0.0",
     "apscheduler<4",
+    "docling>=2.92.0",
 ]
 
 [dependency-groups]

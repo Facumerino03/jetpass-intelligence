@@ -51,7 +51,6 @@ async def _aerodrome_node(state: IntelligenceState) -> IntelligenceState:
     result = await get_aerodrome_intelligence(
         intent.icao,
         force_refresh=intent.force_refresh,
-        section_ids=intent.section_ids,
     )
     return {"aerodrome_result": result}
 
@@ -76,7 +75,6 @@ async def _both_node(state: IntelligenceState) -> IntelligenceState:
         get_aerodrome_intelligence(
             aerodrome_intent.icao,
             force_refresh=aerodrome_intent.force_refresh,
-            section_ids=aerodrome_intent.section_ids,
         ),
         get_notam_intelligence(notam_intent.icao, force_refresh=notam_intent.force_refresh),
     )

@@ -6,20 +6,17 @@ from typing import Iterable, TypeVar
 
 FULL_AD2_SECTION_IDS = tuple(f"AD 2.{idx}" for idx in range(1, 26))
 
-OPERATIONAL_AD_SECTION_IDS = (
+FLIGHT_PLANNING_AD_SECTION_IDS = (
     "AD 2.1",
     "AD 2.2",
     "AD 2.3",
     "AD 2.4",
-    "AD 2.6",
-    "AD 2.8",
-    "AD 2.9",
     "AD 2.12",
     "AD 2.13",
-    "AD 2.14",
-    "AD 2.18",
     "AD 2.19",
 )
+
+OPERATIONAL_AD_SECTION_IDS = FLIGHT_PLANNING_AD_SECTION_IDS
 
 _OPERATIONAL_SET = set(OPERATIONAL_AD_SECTION_IDS)
 

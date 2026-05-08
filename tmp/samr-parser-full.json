@@ -1,0 +1,4153 @@
+{
+  "icao_code": "SAMR",
+  "name": "San Rafael",
+  "full_name": "SAN RAFAEL / S. A. SANTIAGO GERMANO",
+  "airac_cycle": "unknown",
+  "airac_effective_date": "2026-05-06T04:47:19.928015Z",
+  "airac_expiry_date": "2026-05-06T04:47:19.928015Z",
+  "source_document": "SAMR_AD-2.0.pdf",
+  "source_url": null,
+  "downloaded_by": "parser-agent",
+  "ad_sections": [
+    {
+      "section_id": "AD 2.1",
+      "title": "AD 2.1",
+      "section_title": "INDICADOR DE LUGAR Y NOMBRE DEL AERÓDROMO / AERODROME LOCATION INDICATOR AND NAME",
+      "raw_text": "AD 2.1\nAD 2. AERÓDROMOS / AERODROMES\nAD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERÓDROMO / AERODROME LOCATION INDICATOR AND NAME\nSAMR – SAN RAFAEL / S. A. SANTIAGO GERMANO\nAEROPUERTO NACIONAL / NATIONAL AIRPORT",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "paragraph",
+            "text": "AD 2. AERÓDROMOS / AERODROMES",
+            "page": 1,
+            "bbox": [
+              227.57000732421875,
+              64.52996826171875,
+              369.90399169921875,
+              73.52996826171875
+            ],
+            "order": 1
+          },
+          {
+            "type": "heading",
+            "text": "AD 2.1 INDICADOR DE LUGAR Y NOMBRE DEL AERÓDROMO / AERODROME LOCATION INDICATOR AND NAME",
+            "page": 1,
+            "bbox": [
+              92.42400360107422,
+              87.5899658203125,
+              505.17401123046875,
+              96.5899658203125
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "SAMR – SAN RAFAEL / S. A. SANTIAGO GERMANO",
+            "page": 1,
+            "bbox": [
+              204.77000427246094,
+              104.6300048828125,
+              392.8240051269531,
+              113.6300048828125
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "AEROPUERTO NACIONAL / NATIONAL AIRPORT",
+            "page": 1,
+            "bbox": [
+              211.97000122070312,
+              119.28618621826172,
+              386.2388916015625,
+              130.54998779296875
+            ],
+            "order": 4
+          }
+        ],
+        "source": {
+          "pages": [
+            1
+          ],
+          "blocks_count": 4,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.2",
+      "title": "AD 2.2",
+      "section_title": "DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA",
+      "raw_text": "AD 2.2\nAD 2.2 DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA\n| 1 | COORD GEO del ARP y emplazamiento en el AD /\nARP GEO COORD and location in the AD | 343516S 0682413W Centro geométrico de pista /\n343516S 0682413W Geometric center of runway |\n| 2 | Dirección y distancia desde la ciudad /\nDirection and distance from city | 8 km al NW de la ciudad de San Rafael /\n8 km NW of the city of San Rafael |\n| 3 | ELEV, temperatura de referencia y temperatura mínima media /\nELEV, reference temperature and mean low temperature | 754.75 m (2.476 ft), 31.8°C - 0.8°C |\n| 4 | GUND en la posición de la elevación del AD /\nGUND at AD ELEV PSN | 23 m (75 ft) |\n| 5 | VAR, cambio anual / VAR, annual change | 1° W / 11’ W (Año / year 2025) |\n| 6 | Jefatura de aeródromo, dirección, teléfono, FAX, AFS, correo\nelectrónico y sitio web /\nAD Head Office, Address, telephone, FAX, AFS, e-mail and\nwebsite | ADMINISTRACIÓN NACIONAL DE AVIACIÓN CIVIL, RP 143, Las\nParedes, CP 5601, San Rafael, Pcia. de Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar /\nNATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las\nParedes, Zip Code 5601, San Rafael, Province of Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar |\n|  | Explotador, teléfono, FAX, AFS, correo electrónico y sitio web /\nAD operator, Telephone, FAX, AFS, e-mail and website | Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de\nMendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com /\nAeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,\nProvince of Mendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com |\n|  | Prestador de los Servicios de Navegación Aérea (ANSP),\nteléfono, FAX, AFS, correo electrónico y sitio web /\nAir Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-\nmail and website | Empresa Argentina de Navegación Aérea (EANA SA), ARO-AIS (+54\n260) 4430703, acsra@eana.com.ar, www.eana.com.ar /\nArgentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)\n4430703, acsra@eana.com.ar, www.eana.com.ar |\n| 7 | Tipos de tránsito permitido (IFR/VFR) /\nTypes of traffic permitted (IFR/VFR) | IFR/VFR |\n| 8 | Observaciones / Remarks | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.2 DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "COORD GEO del ARP y emplazamiento en el AD /\nARP GEO COORD and location in the AD",
+                "value": "343516S 0682413W Centro geométrico de pista /\n343516S 0682413W Geometric center of runway"
+              },
+              {
+                "item": "2",
+                "label": "Dirección y distancia desde la ciudad /\nDirection and distance from city",
+                "value": "8 km al NW de la ciudad de San Rafael /\n8 km NW of the city of San Rafael"
+              },
+              {
+                "item": "3",
+                "label": "ELEV, temperatura de referencia y temperatura mínima media /\nELEV, reference temperature and mean low temperature",
+                "value": "754.75 m (2.476 ft), 31.8°C - 0.8°C"
+              },
+              {
+                "item": "4",
+                "label": "GUND en la posición de la elevación del AD /\nGUND at AD ELEV PSN",
+                "value": "23 m (75 ft)"
+              },
+              {
+                "item": "5",
+                "label": "VAR, cambio anual / VAR, annual change",
+                "value": "1° W / 11’ W (Año / year 2025)"
+              },
+              {
+                "item": "6",
+                "label": "Jefatura de aeródromo, dirección, teléfono, FAX, AFS, correo\nelectrónico y sitio web /\nAD Head Office, Address, telephone, FAX, AFS, e-mail and\nwebsite",
+                "value": "ADMINISTRACIÓN NACIONAL DE AVIACIÓN CIVIL, RP 143, Las\nParedes, CP 5601, San Rafael, Pcia. de Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar /\nNATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las\nParedes, Zip Code 5601, San Rafael, Province of Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar"
+              },
+              {
+                "item": "",
+                "label": "Explotador, teléfono, FAX, AFS, correo electrónico y sitio web /\nAD operator, Telephone, FAX, AFS, e-mail and website",
+                "value": "Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de\nMendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com /\nAeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,\nProvince of Mendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com"
+              },
+              {
+                "item": "",
+                "label": "Prestador de los Servicios de Navegación Aérea (ANSP),\nteléfono, FAX, AFS, correo electrónico y sitio web /\nAir Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-\nmail and website",
+                "value": "Empresa Argentina de Navegación Aérea (EANA SA), ARO-AIS (+54\n260) 4430703, acsra@eana.com.ar, www.eana.com.ar /\nArgentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)\n4430703, acsra@eana.com.ar, www.eana.com.ar"
+              },
+              {
+                "item": "7",
+                "label": "Tipos de tránsito permitido (IFR/VFR) /\nTypes of traffic permitted (IFR/VFR)",
+                "value": "IFR/VFR"
+              },
+              {
+                "item": "8",
+                "label": "Observaciones / Remarks",
+                "value": "NIL"
+              }
+            ],
+            "page": 1,
+            "bbox": [
+              42.60000038146973,
+              137.0,
+              552.9400329589844,
+              526.0899810791016
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.2 DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA\n1 | COORD GEO del ARP y emplazamiento en el AD /\nARP GEO COORD and location in the AD | 343516S 0682413W Centro geométrico de pista /\n343516S 0682413W Geometric center of runway\n2 | Dirección y distancia desde la ciudad /\nDirection and distance from city | 8 km al NW de la ciudad de San Rafael /\n8 km NW of the city of San Rafael\n3 | ELEV, temperatura de referencia y temperatura mínima media /\nELEV, reference temperature and mean low temperature | 754.75 m (2.476 ft), 31.8°C - 0.8°C\n4 | GUND en la posición de la elevación del AD /\nGUND at AD ELEV PSN | 23 m (75 ft)\n5 | VAR, cambio anual / VAR, annual change | 1° W / 11’ W (Año / year 2025)\n6 | Jefatura de aeródromo, dirección, teléfono, FAX, AFS, correo\nelectrónico y sitio web /\nAD Head Office, Address, telephone, FAX, AFS, e-mail and\nwebsite | ADMINISTRACIÓN NACIONAL DE AVIACIÓN CIVIL, RP 143, Las\nParedes, CP 5601, San Rafael, Pcia. de Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar /\nNATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las\nParedes, Zip Code 5601, San Rafael, Province of Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar\nExplotador, teléfono, FAX, AFS, correo electrónico y sitio web /\nAD operator, Telephone, FAX, AFS, e-mail and website | Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de\nMendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com /\nAeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,\nProvince of Mendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com\nPrestador de los Servicios de Navegación Aérea (ANSP),\nteléfono, FAX, AFS, correo electrónico y sitio web /\nAir Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-\nmail and website | Empresa Argentina de Navegación Aérea (EANA SA), ARO-AIS (+54\n260) 4430703, acsra@eana.com.ar, www.eana.com.ar /\nArgentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)\n4430703, acsra@eana.com.ar, www.eana.com.ar\n7 | Tipos de tránsito permitido (IFR/VFR) /\nTypes of traffic permitted (IFR/VFR) | IFR/VFR\n8 | Observaciones / Remarks | NIL",
+            "page": 1,
+            "bbox": [
+              42.60000038146973,
+              137.0,
+              552.9400329589844,
+              526.0899810791016
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.2 DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "COORD GEO del ARP y emplazamiento en el AD /\nARP GEO COORD and location in the AD",
+                  "value": "343516S 0682413W Centro geométrico de pista /\n343516S 0682413W Geometric center of runway"
+                },
+                {
+                  "item": "2",
+                  "label": "Dirección y distancia desde la ciudad /\nDirection and distance from city",
+                  "value": "8 km al NW de la ciudad de San Rafael /\n8 km NW of the city of San Rafael"
+                },
+                {
+                  "item": "3",
+                  "label": "ELEV, temperatura de referencia y temperatura mínima media /\nELEV, reference temperature and mean low temperature",
+                  "value": "754.75 m (2.476 ft), 31.8°C - 0.8°C"
+                },
+                {
+                  "item": "4",
+                  "label": "GUND en la posición de la elevación del AD /\nGUND at AD ELEV PSN",
+                  "value": "23 m (75 ft)"
+                },
+                {
+                  "item": "5",
+                  "label": "VAR, cambio anual / VAR, annual change",
+                  "value": "1° W / 11’ W (Año / year 2025)"
+                },
+                {
+                  "item": "6",
+                  "label": "Jefatura de aeródromo, dirección, teléfono, FAX, AFS, correo\nelectrónico y sitio web /\nAD Head Office, Address, telephone, FAX, AFS, e-mail and\nwebsite",
+                  "value": "ADMINISTRACIÓN NACIONAL DE AVIACIÓN CIVIL, RP 143, Las\nParedes, CP 5601, San Rafael, Pcia. de Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar /\nNATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las\nParedes, Zip Code 5601, San Rafael, Province of Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar"
+                },
+                {
+                  "item": "",
+                  "label": "Explotador, teléfono, FAX, AFS, correo electrónico y sitio web /\nAD operator, Telephone, FAX, AFS, e-mail and website",
+                  "value": "Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de\nMendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com /\nAeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,\nProvince of Mendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com"
+                },
+                {
+                  "item": "",
+                  "label": "Prestador de los Servicios de Navegación Aérea (ANSP),\nteléfono, FAX, AFS, correo electrónico y sitio web /\nAir Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-\nmail and website",
+                  "value": "Empresa Argentina de Navegación Aérea (EANA SA), ARO-AIS (+54\n260) 4430703, acsra@eana.com.ar, www.eana.com.ar /\nArgentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)\n4430703, acsra@eana.com.ar, www.eana.com.ar"
+                },
+                {
+                  "item": "7",
+                  "label": "Tipos de tránsito permitido (IFR/VFR) /\nTypes of traffic permitted (IFR/VFR)",
+                  "value": "IFR/VFR"
+                },
+                {
+                  "item": "8",
+                  "label": "Observaciones / Remarks",
+                  "value": "NIL"
+                }
+              ],
+              "cells": [
+                "AD 2.2 DATOS GEOGRÁFICOS Y ADMINISTRATIVOS DEL AERÓDROMO / AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA",
+                "1",
+                "COORD GEO del ARP y emplazamiento en el AD /\nARP GEO COORD and location in the AD",
+                "343516S 0682413W Centro geométrico de pista /\n343516S 0682413W Geometric center of runway",
+                "2",
+                "Dirección y distancia desde la ciudad /\nDirection and distance from city",
+                "8 km al NW de la ciudad de San Rafael /\n8 km NW of the city of San Rafael",
+                "3",
+                "ELEV, temperatura de referencia y temperatura mínima media /\nELEV, reference temperature and mean low temperature",
+                "754.75 m (2.476 ft), 31.8°C - 0.8°C",
+                "4",
+                "GUND en la posición de la elevación del AD /\nGUND at AD ELEV PSN",
+                "23 m (75 ft)",
+                "5",
+                "VAR, cambio anual / VAR, annual change",
+                "1° W / 11’ W (Año / year 2025)",
+                "6",
+                "Jefatura de aeródromo, dirección, teléfono, FAX, AFS, correo\nelectrónico y sitio web /\nAD Head Office, Address, telephone, FAX, AFS, e-mail and\nwebsite",
+                "ADMINISTRACIÓN NACIONAL DE AVIACIÓN CIVIL, RP 143, Las\nParedes, CP 5601, San Rafael, Pcia. de Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar /\nNATIONAL CIVIL AVIATION ADMINISTRATION, RP 143, Las\nParedes, Zip Code 5601, San Rafael, Province of Mendoza.\n(+54 260) 4421693, ydSRA@anac.gob.ar",
+                "Explotador, teléfono, FAX, AFS, correo electrónico y sitio web /\nAD operator, Telephone, FAX, AFS, e-mail and website",
+                "Aeropuertos Argentina, Las Paredes, CP 5601, San Rafael, Pcia. de\nMendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com /\nAeropuertos Argentina, Las Paredes, Zip Code 5601, San Rafael,\nProvince of Mendoza\n(+54 260) 4427103, Dmerino@aeropuertosargentina.com,\nwww.aeropuertosargentina.com",
+                "Prestador de los Servicios de Navegación Aérea (ANSP),\nteléfono, FAX, AFS, correo electrónico y sitio web /\nAir Navigation Service Provider (ANSP), Telephone, FAX, AFS, e-\nmail and website",
+                "Empresa Argentina de Navegación Aérea (EANA SA), ARO-AIS (+54\n260) 4430703, acsra@eana.com.ar, www.eana.com.ar /\nArgentine Air Navigation Company (EANA SA), ARO-AIS (+54 260)\n4430703, acsra@eana.com.ar, www.eana.com.ar",
+                "7",
+                "Tipos de tránsito permitido (IFR/VFR) /\nTypes of traffic permitted (IFR/VFR)",
+                "IFR/VFR",
+                "8",
+                "Observaciones / Remarks",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            1
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.3",
+      "title": "AD 2.3",
+      "section_title": "HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS",
+      "raw_text": "AD 2.3\nAD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS\n| 1 | Explotador del AD / AD operator | 11:00-19:00 UTC (Administración / Administration) |\n| 2 | Aduanas / Customs | No |\n|  | Inmigraciones / Inmigration | No |\n| 3 | Servicios médicos y de sanidad / Health and sanitation services | Solo vuelo comercial regular. Resto O/R 4 HR antelación /\nOnly regular commercial flights / Rest O/R 4 HR in advance |\n| 4 | Oficina de información AIS / AIS Briefing Office | 10:00-23:59 UTC y / and O/R |\n| 5 | Oficina de notificación ATS (ARO) / ATS Reporting Office (ARO) | 10:00-23:59 UTC y / and O/R |\n| 6 | Oficina de información MET / MET Briefing Office | H24 |\n| 7 | ATS | 10:00-23:59 UTC y / and O/R |\n| 8 | Abastecimiento de combustible / Fuelling | 10:00-23:59 UTC y/and O/R (*) |\n| 9 | Servicios de escala / Handling | No |\n| 10 | Servicios de seguridad de la aviación (protección) / Security | 10:00-23:59 UTC y /and O/R |\n| 11 | Deshielo / De-icing | No |\n| 12 | Observaciones / Remarks | (*) COOR (+54 260) 4824047 |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Explotador del AD / AD operator",
+                "value": "11:00-19:00 UTC (Administración / Administration)"
+              },
+              {
+                "item": "2",
+                "label": "Aduanas / Customs",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "Inmigraciones / Inmigration",
+                "value": "No"
+              },
+              {
+                "item": "3",
+                "label": "Servicios médicos y de sanidad / Health and sanitation services",
+                "value": "Solo vuelo comercial regular. Resto O/R 4 HR antelación /\nOnly regular commercial flights / Rest O/R 4 HR in advance"
+              },
+              {
+                "item": "4",
+                "label": "Oficina de información AIS / AIS Briefing Office",
+                "value": "10:00-23:59 UTC y / and O/R"
+              },
+              {
+                "item": "5",
+                "label": "Oficina de notificación ATS (ARO) / ATS Reporting Office (ARO)",
+                "value": "10:00-23:59 UTC y / and O/R"
+              },
+              {
+                "item": "6",
+                "label": "Oficina de información MET / MET Briefing Office",
+                "value": "H24"
+              },
+              {
+                "item": "7",
+                "label": "ATS",
+                "value": "10:00-23:59 UTC y / and O/R"
+              },
+              {
+                "item": "8",
+                "label": "Abastecimiento de combustible / Fuelling",
+                "value": "10:00-23:59 UTC y/and O/R (*)"
+              },
+              {
+                "item": "9",
+                "label": "Servicios de escala / Handling",
+                "value": "No"
+              },
+              {
+                "item": "10",
+                "label": "Servicios de seguridad de la aviación (protección) / Security",
+                "value": "10:00-23:59 UTC y /and O/R"
+              },
+              {
+                "item": "11",
+                "label": "Deshielo / De-icing",
+                "value": "No"
+              },
+              {
+                "item": "12",
+                "label": "Observaciones / Remarks",
+                "value": "(*) COOR (+54 260) 4824047"
+              }
+            ],
+            "page": 1,
+            "bbox": [
+              42.60000038146973,
+              533.8899536132812,
+              552.9400329589844,
+              751.7160034179688
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS\n1 | Explotador del AD / AD operator | 11:00-19:00 UTC (Administración / Administration)\n2 | Aduanas / Customs | No\nInmigraciones / Inmigration | No\n3 | Servicios médicos y de sanidad / Health and sanitation services | Solo vuelo comercial regular. Resto O/R 4 HR antelación /\nOnly regular commercial flights / Rest O/R 4 HR in advance\n4 | Oficina de información AIS / AIS Briefing Office | 10:00-23:59 UTC y / and O/R\n5 | Oficina de notificación ATS (ARO) / ATS Reporting Office (ARO) | 10:00-23:59 UTC y / and O/R\n6 | Oficina de información MET / MET Briefing Office | H24\n7 | ATS | 10:00-23:59 UTC y / and O/R\n8 | Abastecimiento de combustible / Fuelling | 10:00-23:59 UTC y/and O/R (*)\n9 | Servicios de escala / Handling | No\n10 | Servicios de seguridad de la aviación (protección) / Security | 10:00-23:59 UTC y /and O/R\n11 | Deshielo / De-icing | No\n12 | Observaciones / Remarks | (*) COOR (+54 260) 4824047",
+            "page": 1,
+            "bbox": [
+              42.60000038146973,
+              533.8899536132812,
+              552.9400329589844,
+              751.7160034179688
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Explotador del AD / AD operator",
+                  "value": "11:00-19:00 UTC (Administración / Administration)"
+                },
+                {
+                  "item": "2",
+                  "label": "Aduanas / Customs",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "Inmigraciones / Inmigration",
+                  "value": "No"
+                },
+                {
+                  "item": "3",
+                  "label": "Servicios médicos y de sanidad / Health and sanitation services",
+                  "value": "Solo vuelo comercial regular. Resto O/R 4 HR antelación /\nOnly regular commercial flights / Rest O/R 4 HR in advance"
+                },
+                {
+                  "item": "4",
+                  "label": "Oficina de información AIS / AIS Briefing Office",
+                  "value": "10:00-23:59 UTC y / and O/R"
+                },
+                {
+                  "item": "5",
+                  "label": "Oficina de notificación ATS (ARO) / ATS Reporting Office (ARO)",
+                  "value": "10:00-23:59 UTC y / and O/R"
+                },
+                {
+                  "item": "6",
+                  "label": "Oficina de información MET / MET Briefing Office",
+                  "value": "H24"
+                },
+                {
+                  "item": "7",
+                  "label": "ATS",
+                  "value": "10:00-23:59 UTC y / and O/R"
+                },
+                {
+                  "item": "8",
+                  "label": "Abastecimiento de combustible / Fuelling",
+                  "value": "10:00-23:59 UTC y/and O/R (*)"
+                },
+                {
+                  "item": "9",
+                  "label": "Servicios de escala / Handling",
+                  "value": "No"
+                },
+                {
+                  "item": "10",
+                  "label": "Servicios de seguridad de la aviación (protección) / Security",
+                  "value": "10:00-23:59 UTC y /and O/R"
+                },
+                {
+                  "item": "11",
+                  "label": "Deshielo / De-icing",
+                  "value": "No"
+                },
+                {
+                  "item": "12",
+                  "label": "Observaciones / Remarks",
+                  "value": "(*) COOR (+54 260) 4824047"
+                }
+              ],
+              "cells": [
+                "AD 2.3 HORAS DE FUNCIONAMIENTO / OPERATIONAL HOURS",
+                "1",
+                "Explotador del AD / AD operator",
+                "11:00-19:00 UTC (Administración / Administration)",
+                "2",
+                "Aduanas / Customs",
+                "No",
+                "Inmigraciones / Inmigration",
+                "No",
+                "3",
+                "Servicios médicos y de sanidad / Health and sanitation services",
+                "Solo vuelo comercial regular. Resto O/R 4 HR antelación /\nOnly regular commercial flights / Rest O/R 4 HR in advance",
+                "4",
+                "Oficina de información AIS / AIS Briefing Office",
+                "10:00-23:59 UTC y / and O/R",
+                "5",
+                "Oficina de notificación ATS (ARO) / ATS Reporting Office (ARO)",
+                "10:00-23:59 UTC y / and O/R",
+                "6",
+                "Oficina de información MET / MET Briefing Office",
+                "H24",
+                "7",
+                "ATS",
+                "10:00-23:59 UTC y / and O/R",
+                "8",
+                "Abastecimiento de combustible / Fuelling",
+                "10:00-23:59 UTC y/and O/R (*)",
+                "9",
+                "Servicios de escala / Handling",
+                "No",
+                "10",
+                "Servicios de seguridad de la aviación (protección) / Security",
+                "10:00-23:59 UTC y /and O/R",
+                "11",
+                "Deshielo / De-icing",
+                "No",
+                "12",
+                "Observaciones / Remarks",
+                "(*) COOR (+54 260) 4824047"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            1
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.4",
+      "title": "AD 2.4",
+      "section_title": null,
+      "raw_text": "AD 2.4\nAD 2.4\nSERVICIOS E INSTALACIONES DE ESCALA / HANDLING SERVICES AND FACILITIES\n1\nElementos disponibles para el manejo de carga /\nCargo-handling facilities\nNo\n2\nTipos de combustible, lubricantes / Fuel and oil types\nJET A-1\n3\nInstalaciones y capacidad de abastecimiento de combustible /\nFuelling facilities and capacity\n80.000 litros JET-A1 a través de AEROPIT (1 Camión abastecedor) /\n80,000 liters JET-A1 through AEROPIT (1 supplying truck)\n4\nServicios e instalaciones de deshielo / De-icing facilities\nNo\n5\nEspacio de hangar para aeronaves de paso /\nHangar space for visiting aircraft\n6\nInstalaciones para reparaciones de aeronaves de paso /\nRepair facilities for visiting aircraft\nSí / Yes\nObservaciones / Remarks\nEn aeroclub San Rafael, existe taller habilitado para aeronaves\nlivianas /\nSan Rafael aeroclub has an authorized workshop for light aircraft\n7",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.4\nSERVICIOS E INSTALACIONES DE ESCALA / HANDLING SERVICES AND FACILITIES",
+            "page": 2,
+            "bbox": [
+              46.08000183105469,
+              61.04998779296875,
+              381.66400146484375,
+              70.04998779296875
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "1\nElementos disponibles para el manejo de carga /\nCargo-handling facilities",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              74.489990234375,
+              246.5240020751953,
+              94.54998779296875
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "No",
+            "page": 2,
+            "bbox": [
+              311.2099914550781,
+              74.6099853515625,
+              323.8240051269531,
+              83.6099853515625
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "2\nTipos de combustible, lubricantes / Fuel and oil types\nJET A-1",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              100.07000732421875,
+              339.42401123046875,
+              109.07000732421875
+            ],
+            "order": 4
+          },
+          {
+            "type": "paragraph",
+            "text": "3\nInstalaciones y capacidad de abastecimiento de combustible /\nFuelling facilities and capacity",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              114.469970703125,
+              296.4440002441406,
+              134.50994873046875
+            ],
+            "order": 5
+          },
+          {
+            "type": "paragraph",
+            "text": "80.000 litros JET-A1 a través de AEROPIT (1 Camión abastecedor) /\n80,000 liters JET-A1 through AEROPIT (1 supplying truck)",
+            "page": 2,
+            "bbox": [
+              311.2099914550781,
+              114.469970703125,
+              554.614013671875,
+              134.50994873046875
+            ],
+            "order": 6
+          },
+          {
+            "type": "paragraph",
+            "text": "4\nServicios e instalaciones de deshielo / De-icing facilities\nNo",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              140.02996826171875,
+              323.8240051269531,
+              149.02996826171875
+            ],
+            "order": 7
+          },
+          {
+            "type": "paragraph",
+            "text": "5\nEspacio de hangar para aeronaves de paso /\nHangar space for visiting aircraft",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              154.42999267578125,
+              229.36399841308594,
+              174.469970703125
+            ],
+            "order": 8
+          },
+          {
+            "type": "paragraph",
+            "text": "No",
+            "page": 2,
+            "bbox": [
+              311.2099914550781,
+              154.54998779296875,
+              323.8240051269531,
+              163.54998779296875
+            ],
+            "order": 9
+          },
+          {
+            "type": "paragraph",
+            "text": "6\nInstalaciones para reparaciones de aeronaves de paso /\nRepair facilities for visiting aircraft",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              179.989990234375,
+              272.5639953613281,
+              200.02996826171875
+            ],
+            "order": 10
+          },
+          {
+            "type": "paragraph",
+            "text": "Sí / Yes",
+            "page": 2,
+            "bbox": [
+              311.2099914550781,
+              179.989990234375,
+              339.1839904785156,
+              188.989990234375
+            ],
+            "order": 11
+          },
+          {
+            "type": "paragraph",
+            "text": "Observaciones / Remarks\nEn aeroclub San Rafael, existe taller habilitado para aeronaves\nlivianas /\nSan Rafael aeroclub has an authorized workshop for light aircraft",
+            "page": 2,
+            "bbox": [
+              63.14400100708008,
+              205.42999267578125,
+              551.2129516601562,
+              236.38995361328125
+            ],
+            "order": 12
+          },
+          {
+            "type": "paragraph",
+            "text": "7",
+            "page": 2,
+            "bbox": [
+              47.400001525878906,
+              216.469970703125,
+              53.99399948120117,
+              225.469970703125
+            ],
+            "order": 13
+          }
+        ],
+        "source": {
+          "pages": [
+            2
+          ],
+          "blocks_count": 13,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.5",
+      "title": "AD 2.5",
+      "section_title": "INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES",
+      "raw_text": "AD 2.5\nAD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES\n| 1 | Hoteles en el aeródromo o en sus proximidades /\nHotel(s) at or in the vicinity of AD | Sí / Yes |\n| 2 | Restaurantes en el aeródromo o en sus proximidades /\nRestaurant(s) at or in the vicinity of AD | Sí / Yes |\n| 3 | Transporte / Transportation possibilities | Sí / Yes |\n| 4 | Instalaciones y servicios médicos /\nMedical facilities | Sí (*) / Yes (*) |\n| 5 | Banco / Bank at or in the vicinity of AD | No |\n|  | Oficina de correo / Post offices at or in the vicinity of AD | No |\n| 6 | Oficina de turismo / Tourist office | No |\n| 7 | Observaciones / Remarks | (*) Solo disponible durante vuelo comercial /\n(*) Only available during commercial flights |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Hoteles en el aeródromo o en sus proximidades /\nHotel(s) at or in the vicinity of AD",
+                "value": "Sí / Yes"
+              },
+              {
+                "item": "2",
+                "label": "Restaurantes en el aeródromo o en sus proximidades /\nRestaurant(s) at or in the vicinity of AD",
+                "value": "Sí / Yes"
+              },
+              {
+                "item": "3",
+                "label": "Transporte / Transportation possibilities",
+                "value": "Sí / Yes"
+              },
+              {
+                "item": "4",
+                "label": "Instalaciones y servicios médicos /\nMedical facilities",
+                "value": "Sí (*) / Yes (*)"
+              },
+              {
+                "item": "5",
+                "label": "Banco / Bank at or in the vicinity of AD",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "Oficina de correo / Post offices at or in the vicinity of AD",
+                "value": "No"
+              },
+              {
+                "item": "6",
+                "label": "Oficina de turismo / Tourist office",
+                "value": "No"
+              },
+              {
+                "item": "7",
+                "label": "Observaciones / Remarks",
+                "value": "(*) Solo disponible durante vuelo comercial /\n(*) Only available during commercial flights"
+              }
+            ],
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              247.64300537109375,
+              552.9753238453585,
+              425.8699836730957
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES\n1 | Hoteles en el aeródromo o en sus proximidades /\nHotel(s) at or in the vicinity of AD | Sí / Yes\n2 | Restaurantes en el aeródromo o en sus proximidades /\nRestaurant(s) at or in the vicinity of AD | Sí / Yes\n3 | Transporte / Transportation possibilities | Sí / Yes\n4 | Instalaciones y servicios médicos /\nMedical facilities | Sí (*) / Yes (*)\n5 | Banco / Bank at or in the vicinity of AD | No\nOficina de correo / Post offices at or in the vicinity of AD | No\n6 | Oficina de turismo / Tourist office | No\n7 | Observaciones / Remarks | (*) Solo disponible durante vuelo comercial /\n(*) Only available during commercial flights",
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              247.64300537109375,
+              552.9753238453585,
+              425.8699836730957
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Hoteles en el aeródromo o en sus proximidades /\nHotel(s) at or in the vicinity of AD",
+                  "value": "Sí / Yes"
+                },
+                {
+                  "item": "2",
+                  "label": "Restaurantes en el aeródromo o en sus proximidades /\nRestaurant(s) at or in the vicinity of AD",
+                  "value": "Sí / Yes"
+                },
+                {
+                  "item": "3",
+                  "label": "Transporte / Transportation possibilities",
+                  "value": "Sí / Yes"
+                },
+                {
+                  "item": "4",
+                  "label": "Instalaciones y servicios médicos /\nMedical facilities",
+                  "value": "Sí (*) / Yes (*)"
+                },
+                {
+                  "item": "5",
+                  "label": "Banco / Bank at or in the vicinity of AD",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "Oficina de correo / Post offices at or in the vicinity of AD",
+                  "value": "No"
+                },
+                {
+                  "item": "6",
+                  "label": "Oficina de turismo / Tourist office",
+                  "value": "No"
+                },
+                {
+                  "item": "7",
+                  "label": "Observaciones / Remarks",
+                  "value": "(*) Solo disponible durante vuelo comercial /\n(*) Only available during commercial flights"
+                }
+              ],
+              "cells": [
+                "AD 2.5 INSTALACIONES Y SERVICIOS PARA LOS PASAJEROS / PASSENGER FACILITIES",
+                "1",
+                "Hoteles en el aeródromo o en sus proximidades /\nHotel(s) at or in the vicinity of AD",
+                "Sí / Yes",
+                "2",
+                "Restaurantes en el aeródromo o en sus proximidades /\nRestaurant(s) at or in the vicinity of AD",
+                "Sí / Yes",
+                "3",
+                "Transporte / Transportation possibilities",
+                "Sí / Yes",
+                "4",
+                "Instalaciones y servicios médicos /\nMedical facilities",
+                "Sí (*) / Yes (*)",
+                "5",
+                "Banco / Bank at or in the vicinity of AD",
+                "No",
+                "Oficina de correo / Post offices at or in the vicinity of AD",
+                "No",
+                "6",
+                "Oficina de turismo / Tourist office",
+                "No",
+                "7",
+                "Observaciones / Remarks",
+                "(*) Solo disponible durante vuelo comercial /\n(*) Only available during commercial flights"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            2
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.6",
+      "title": "AD 2.6",
+      "section_title": "SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES",
+      "raw_text": "AD 2.6\nAD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES\n| 1 | Categoría del AD para la extinción de incendios /\nAD category for firefighting | 5 (cinco / five) |\n| 2 | Equipo de salvamento / Rescue equipment | 1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg\nde polvo químico seco\n1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120\nkg of dry chemical powder |\n| 3 | Capacidad para retirar aeronaves inutilizadas /\nCapability for removal of disabled aircraft | Recursos disponibles en el entorno del aeropuerto: Grúas 70 t y\nCarretones 120 t- Explotador: (+54 2604) 427103 - Int: 101\nResources available around the airport: 70 t cranes and 120 t\ncarts - Operator: (+54 2604) 427103 - Extension: 101 |\n| 4 | Observaciones / Remarks | Prestador del servicio SEI: ANAC\nSEI Service Provider: ANAC |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Categoría del AD para la extinción de incendios /\nAD category for firefighting",
+                "value": "5 (cinco / five)"
+              },
+              {
+                "item": "2",
+                "label": "Equipo de salvamento / Rescue equipment",
+                "value": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg\nde polvo químico seco\n1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120\nkg of dry chemical powder"
+              },
+              {
+                "item": "3",
+                "label": "Capacidad para retirar aeronaves inutilizadas /\nCapability for removal of disabled aircraft",
+                "value": "Recursos disponibles en el entorno del aeropuerto: Grúas 70 t y\nCarretones 120 t- Explotador: (+54 2604) 427103 - Int: 101\nResources available around the airport: 70 t cranes and 120 t\ncarts - Operator: (+54 2604) 427103 - Extension: 101"
+              },
+              {
+                "item": "4",
+                "label": "Observaciones / Remarks",
+                "value": "Prestador del servicio SEI: ANAC\nSEI Service Provider: ANAC"
+              }
+            ],
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              433.66798400878906,
+              552.9753238453585,
+              600.969970703125
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES\n1 | Categoría del AD para la extinción de incendios /\nAD category for firefighting | 5 (cinco / five)\n2 | Equipo de salvamento / Rescue equipment | 1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg\nde polvo químico seco\n1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120\nkg of dry chemical powder\n3 | Capacidad para retirar aeronaves inutilizadas /\nCapability for removal of disabled aircraft | Recursos disponibles en el entorno del aeropuerto: Grúas 70 t y\nCarretones 120 t- Explotador: (+54 2604) 427103 - Int: 101\nResources available around the airport: 70 t cranes and 120 t\ncarts - Operator: (+54 2604) 427103 - Extension: 101\n4 | Observaciones / Remarks | Prestador del servicio SEI: ANAC\nSEI Service Provider: ANAC",
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              433.66798400878906,
+              552.9753238453585,
+              600.969970703125
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Categoría del AD para la extinción de incendios /\nAD category for firefighting",
+                  "value": "5 (cinco / five)"
+                },
+                {
+                  "item": "2",
+                  "label": "Equipo de salvamento / Rescue equipment",
+                  "value": "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg\nde polvo químico seco\n1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120\nkg of dry chemical powder"
+                },
+                {
+                  "item": "3",
+                  "label": "Capacidad para retirar aeronaves inutilizadas /\nCapability for removal of disabled aircraft",
+                  "value": "Recursos disponibles en el entorno del aeropuerto: Grúas 70 t y\nCarretones 120 t- Explotador: (+54 2604) 427103 - Int: 101\nResources available around the airport: 70 t cranes and 120 t\ncarts - Operator: (+54 2604) 427103 - Extension: 101"
+                },
+                {
+                  "item": "4",
+                  "label": "Observaciones / Remarks",
+                  "value": "Prestador del servicio SEI: ANAC\nSEI Service Provider: ANAC"
+                }
+              ],
+              "cells": [
+                "AD 2.6 SERVICIOS DE SALVAMENTO Y EXTINCIÓN DE INCENDIOS / RESCUE AND FIRE FIGHTING SERVICES",
+                "1",
+                "Categoría del AD para la extinción de incendios /\nAD category for firefighting",
+                "5 (cinco / five)",
+                "2",
+                "Equipo de salvamento / Rescue equipment",
+                "1 autobomba; 6.000 litros de agua; 500 litros de espuma; 120 kg\nde polvo químico seco\n1 firefighting truck; 6,000 liters of water; 500 liters of foam; 120\nkg of dry chemical powder",
+                "3",
+                "Capacidad para retirar aeronaves inutilizadas /\nCapability for removal of disabled aircraft",
+                "Recursos disponibles en el entorno del aeropuerto: Grúas 70 t y\nCarretones 120 t- Explotador: (+54 2604) 427103 - Int: 101\nResources available around the airport: 70 t cranes and 120 t\ncarts - Operator: (+54 2604) 427103 - Extension: 101",
+                "4",
+                "Observaciones / Remarks",
+                "Prestador del servicio SEI: ANAC\nSEI Service Provider: ANAC"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            2
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.7",
+      "title": "AD 2.7",
+      "section_title": "DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE / SEASONAL AVAILABILITY – CLEARING",
+      "raw_text": "AD 2.7\nAD 2.7 DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE /\n|  |  | SEASONAL AVAILABILITY – CLEARING |\n| 1 | Tipos de equipo de remoción de obstáculos /\nTypes of clearing equipment | No |\n| 2 | Prioridades de remoción de obstáculos / Clearance priorities | No |\n| 3 | Observaciones / Remarks | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.7 DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE /",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "",
+                "label": "",
+                "value": "SEASONAL AVAILABILITY – CLEARING"
+              },
+              {
+                "item": "1",
+                "label": "Tipos de equipo de remoción de obstáculos /\nTypes of clearing equipment",
+                "value": "No"
+              },
+              {
+                "item": "2",
+                "label": "Prioridades de remoción de obstáculos / Clearance priorities",
+                "value": "No"
+              },
+              {
+                "item": "3",
+                "label": "Observaciones / Remarks",
+                "value": "NIL"
+              }
+            ],
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              608.7729797363281,
+              552.9753238453585,
+              688.719970703125
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.7 DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE /\nSEASONAL AVAILABILITY – CLEARING\n1 | Tipos de equipo de remoción de obstáculos /\nTypes of clearing equipment | No\n2 | Prioridades de remoción de obstáculos / Clearance priorities | No\n3 | Observaciones / Remarks | NIL",
+            "page": 2,
+            "bbox": [
+              42.56470624138327,
+              608.7729797363281,
+              552.9753238453585,
+              688.719970703125
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.7 DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE /",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "",
+                  "label": "",
+                  "value": "SEASONAL AVAILABILITY – CLEARING"
+                },
+                {
+                  "item": "1",
+                  "label": "Tipos de equipo de remoción de obstáculos /\nTypes of clearing equipment",
+                  "value": "No"
+                },
+                {
+                  "item": "2",
+                  "label": "Prioridades de remoción de obstáculos / Clearance priorities",
+                  "value": "No"
+                },
+                {
+                  "item": "3",
+                  "label": "Observaciones / Remarks",
+                  "value": "NIL"
+                }
+              ],
+              "cells": [
+                "AD 2.7 DISPONIBILIDAD SEGÚN LA ESTACIÓN DEL AÑO - REMOCIÓN DE OBSTÁCULOS EN SUPERFICIE /",
+                "SEASONAL AVAILABILITY – CLEARING",
+                "1",
+                "Tipos de equipo de remoción de obstáculos /\nTypes of clearing equipment",
+                "No",
+                "2",
+                "Prioridades de remoción de obstáculos / Clearance priorities",
+                "No",
+                "3",
+                "Observaciones / Remarks",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            2
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.8",
+      "title": "AD 2.8",
+      "section_title": "DATOS SOBRE PLATAFORMAS, CALLES DE RODAJE Y EMPLAZAMIENTOS/POSICIONES DE VERIFICACIÓN DE EQUIPO / APRONS, TAXIWAYS AND CHECK LOCATIONS/POSITIONS DATA",
+      "raw_text": "AD 2.8\nAD 2.8 DATOS SOBRE PLATAFORMAS, CALLES DE RODAJE Y EMPLAZAMIENTOS/POSICIONES DE VERIFICACIÓN DE EQUIPO /\nAPRONS, TAXIWAYS AND CHECK LOCATIONS/POSITIONS DATA\nCONC - PCR 550/R/B/W/T – ELEV 746 m (2448 ft)\n1\nDesignación, superficie y resistencia APN /\nDesignation surface and strength of aprons\n“A”, 18 m, ASPH, PCR 430/F/B/X/T\n2\nDesignación, ancho, superficie y resistencia TWY /\nDesignation, width, surface and strength of taxiways\nNo\n3\nEmplazamiento y elevación ACL /\nLocation and elevation of altimenter checkpoints\n4\nEmplazamiento de los puntos de verificación VOR /\nLocation of VOR checkpoints\nSí en TWY “A”, RDL 255, distancia 0.29 NM – 540 m /\nYes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m\n5\nPosición de los puntos de verificación INS /\nPosition of INS checkpoints\n6\nObservaciones / Remarks\nNIL",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.8 DATOS SOBRE PLATAFORMAS, CALLES DE RODAJE Y EMPLAZAMIENTOS/POSICIONES DE VERIFICACIÓN DE EQUIPO /\nAPRONS, TAXIWAYS AND CHECK LOCATIONS/POSITIONS DATA",
+            "page": 3,
+            "bbox": [
+              46.08000183105469,
+              61.04998779296875,
+              512.2540283203125,
+              80.969970703125
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "CONC - PCR 550/R/B/W/T – ELEV 746 m (2448 ft)",
+            "page": 3,
+            "bbox": [
+              311.2099914550781,
+              85.42999267578125,
+              492.333984375,
+              94.42999267578125
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "1\nDesignación, superficie y resistencia APN /\nDesignation surface and strength of aprons",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              85.54998779296875,
+              226.60400390625,
+              105.469970703125
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "“A”, 18 m, ASPH, PCR 430/F/B/X/T",
+            "page": 3,
+            "bbox": [
+              311.2099914550781,
+              109.90997314453125,
+              438.90399169921875,
+              118.90997314453125
+            ],
+            "order": 4
+          },
+          {
+            "type": "paragraph",
+            "text": "2\nDesignación, ancho, superficie y resistencia TWY /\nDesignation, width, surface and strength of taxiways",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              110.02996826171875,
+              262.60400390625,
+              129.949951171875
+            ],
+            "order": 5
+          },
+          {
+            "type": "paragraph",
+            "text": "No",
+            "page": 3,
+            "bbox": [
+              311.2099914550781,
+              134.38995361328125,
+              323.8240051269531,
+              143.38995361328125
+            ],
+            "order": 6
+          },
+          {
+            "type": "paragraph",
+            "text": "3\nEmplazamiento y elevación ACL /\nLocation and elevation of altimenter checkpoints",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              134.50994873046875,
+              247.36399841308594,
+              154.42999267578125
+            ],
+            "order": 7
+          },
+          {
+            "type": "paragraph",
+            "text": "4\nEmplazamiento de los puntos de verificación VOR /\nLocation of VOR checkpoints",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              158.989990234375,
+              256.364013671875,
+              178.90997314453125
+            ],
+            "order": 8
+          },
+          {
+            "type": "paragraph",
+            "text": "Sí en TWY “A”, RDL 255, distancia 0.29 NM – 540 m /\nYes in TWY \"A\", RDL 255, distance 0.29 NM - 540 m",
+            "page": 3,
+            "bbox": [
+              311.2099914550781,
+              158.989990234375,
+              505.89398193359375,
+              178.90997314453125
+            ],
+            "order": 9
+          },
+          {
+            "type": "paragraph",
+            "text": "No",
+            "page": 3,
+            "bbox": [
+              311.2099914550781,
+              183.3499755859375,
+              323.8240051269531,
+              192.3499755859375
+            ],
+            "order": 10
+          },
+          {
+            "type": "paragraph",
+            "text": "5\nPosición de los puntos de verificación INS /\nPosition of INS checkpoints",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              183.469970703125,
+              225.40399169921875,
+              203.38995361328125
+            ],
+            "order": 11
+          },
+          {
+            "type": "paragraph",
+            "text": "6\nObservaciones / Remarks\nNIL",
+            "page": 3,
+            "bbox": [
+              47.400001525878906,
+              207.8299560546875,
+              325.14398193359375,
+              216.949951171875
+            ],
+            "order": 12
+          }
+        ],
+        "source": {
+          "pages": [
+            3
+          ],
+          "blocks_count": 12,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.9",
+      "title": "AD 2.9",
+      "section_title": "SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES / SURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS",
+      "raw_text": "AD 2.9\nAD 2.9 SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES /\nSURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS\n| 1 | Uso de señales ID de puestos de estacionamiento de\naeronaves, líneas de guía TWY y sistema de guía visual a\nestacionamiento en los puestos de aeronaves /\nUse of aircraft stand ID signs, TWY guide lines and visual\ndocking/parking guidance system at aircraft stands | Sí, Sí / Yes, Yes |\n| 2 | Señales y LGT de RWY y TWY /\nRWY and TWY markings and LGT | Sí, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,\nTDZ. Señales de Eje de TWY, borde TWY /\nYes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY\nAxis signals, TWY edge |\n| 3 | Barras de parada y luces de protección de RWY /\nStop bars and RWY guard lights | No |\n| 4 | Otras medidas de protección de RWY /\nOther runway protection measures | No |\n| 5 | Observaciones / Remarks | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.9 SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES /\nSURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Uso de señales ID de puestos de estacionamiento de\naeronaves, líneas de guía TWY y sistema de guía visual a\nestacionamiento en los puestos de aeronaves /\nUse of aircraft stand ID signs, TWY guide lines and visual\ndocking/parking guidance system at aircraft stands",
+                "value": "Sí, Sí / Yes, Yes"
+              },
+              {
+                "item": "2",
+                "label": "Señales y LGT de RWY y TWY /\nRWY and TWY markings and LGT",
+                "value": "Sí, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,\nTDZ. Señales de Eje de TWY, borde TWY /\nYes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY\nAxis signals, TWY edge"
+              },
+              {
+                "item": "3",
+                "label": "Barras de parada y luces de protección de RWY /\nStop bars and RWY guard lights",
+                "value": "No"
+              },
+              {
+                "item": "4",
+                "label": "Otras medidas de protección de RWY /\nOther runway protection measures",
+                "value": "No"
+              },
+              {
+                "item": "5",
+                "label": "Observaciones / Remarks",
+                "value": "NIL"
+              }
+            ],
+            "page": 3,
+            "bbox": [
+              43.246153538043686,
+              228.1999969482422,
+              552.6169286874624,
+              426.9499816894531
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.9 SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES /\nSURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS\n1 | Uso de señales ID de puestos de estacionamiento de\naeronaves, líneas de guía TWY y sistema de guía visual a\nestacionamiento en los puestos de aeronaves /\nUse of aircraft stand ID signs, TWY guide lines and visual\ndocking/parking guidance system at aircraft stands | Sí, Sí / Yes, Yes\n2 | Señales y LGT de RWY y TWY /\nRWY and TWY markings and LGT | Sí, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,\nTDZ. Señales de Eje de TWY, borde TWY /\nYes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY\nAxis signals, TWY edge\n3 | Barras de parada y luces de protección de RWY /\nStop bars and RWY guard lights | No\n4 | Otras medidas de protección de RWY /\nOther runway protection measures | No\n5 | Observaciones / Remarks | NIL",
+            "page": 3,
+            "bbox": [
+              43.246153538043686,
+              228.1999969482422,
+              552.6169286874624,
+              426.9499816894531
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.9 SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES /\nSURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Uso de señales ID de puestos de estacionamiento de\naeronaves, líneas de guía TWY y sistema de guía visual a\nestacionamiento en los puestos de aeronaves /\nUse of aircraft stand ID signs, TWY guide lines and visual\ndocking/parking guidance system at aircraft stands",
+                  "value": "Sí, Sí / Yes, Yes"
+                },
+                {
+                  "item": "2",
+                  "label": "Señales y LGT de RWY y TWY /\nRWY and TWY markings and LGT",
+                  "value": "Sí, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,\nTDZ. Señales de Eje de TWY, borde TWY /\nYes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY\nAxis signals, TWY edge"
+                },
+                {
+                  "item": "3",
+                  "label": "Barras de parada y luces de protección de RWY /\nStop bars and RWY guard lights",
+                  "value": "No"
+                },
+                {
+                  "item": "4",
+                  "label": "Otras medidas de protección de RWY /\nOther runway protection measures",
+                  "value": "No"
+                },
+                {
+                  "item": "5",
+                  "label": "Observaciones / Remarks",
+                  "value": "NIL"
+                }
+              ],
+              "cells": [
+                "AD 2.9 SISTEMA DE GUÍA Y CONTROL DEL MOVIMIENTO EN LA SUPERFICIE Y SEÑALES /\nSURFACE MOVEMENT GUIDANCE AND CONTROL SYSTEM AND MARKINGS",
+                "1",
+                "Uso de señales ID de puestos de estacionamiento de\naeronaves, líneas de guía TWY y sistema de guía visual a\nestacionamiento en los puestos de aeronaves /\nUse of aircraft stand ID signs, TWY guide lines and visual\ndocking/parking guidance system at aircraft stands",
+                "Sí, Sí / Yes, Yes",
+                "2",
+                "Señales y LGT de RWY y TWY /\nRWY and TWY markings and LGT",
+                "Sí, THR, Designadores de RWY, eje de RWY, Faja lateral de RWY,\nTDZ. Señales de Eje de TWY, borde TWY /\nYes, THR, RWY Designators, RWY Axis, RWY Side Strip, TDZ. TWY\nAxis signals, TWY edge",
+                "3",
+                "Barras de parada y luces de protección de RWY /\nStop bars and RWY guard lights",
+                "No",
+                "4",
+                "Otras medidas de protección de RWY /\nOther runway protection measures",
+                "No",
+                "5",
+                "Observaciones / Remarks",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            3
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.10",
+      "title": "AD 2.10",
+      "section_title": "OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES",
+      "raw_text": "AD 2.10\nAD 2.10 OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES\n|  |  | En las áreas de aproximación y despegue / In approach/TKOF areas |\n|  | RWY - Área afectada /\nRWY - Area affected | Tipo de obstáculo, Elevación, Señales y LGT / Coordenadas / |\n|  | Obstacle type, Elevation, Markings and LGT | Coordinates |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 800.0 m (2.625 ft) 343445.2S 0682551.1W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 795.5 m (2.610 ft) 343440.8S 0682548.1W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 800.5 m (2.626 ft) 343451.7S 0682546.0W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 794.0 m (2.605 ft) 343500.9S 0682530.7W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Mástil bandera/Flag mast, 776.5 m (2.548 ft) 343501.7S 0682525.7W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343459.0S 0682527.1W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Tanques blancos/White tanks, 774. 0 m (2.539 ft) 343456.1S 0682527.1W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Chimenea de casa/House fireplace, 772.5 m (2.534 ft) 343454.3S 0682520.6W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Árbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft) 343459.2S 0682525.4W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 771. 0 m (2.530 ft) 343458.9S 0682524.0W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343458.0S 0682522.8W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 771.5 m (2.531 ft) 343457.4S 0682516.2W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 769.5 m (2.525 ft) 343456.9S 0682515.2W |\n|  | RWY 29 - Ascenso en el despegue / takeoff climb | Árbol/Tree, 772.5 m (2.534 ft) 343456.6S 0682521.6W |\n|  | RWY 11 - Transición / Transition | Arboleda/Grove, 788.0 m (2.585 ft) 343506.1S 0682515.7W |\n|  | RWY 29 - Transición / Transition | Arboleda/Grove (ruta / route), 776.5 m (2.548 ft) 343512.6S 0682456.7W |\n|  | RWY 29 - Transición / Transition | Arboleda/Grove (ruta / route), 780.0 m (2.559 ft) 343515.1S 0682449.8W |\n|  | RWY 29 - Transición / Transition | WDI, 759.0 m (2.490 ft) 343513.5S 0682441.6W |\n|  | RWY 29 - Transición / Transition | Arboleda/Grove (ruta/route), 779.0 m (2.556 ft) 343518.9S 0682438.8W |\n|  | RWY 29 - Transición / Transition | Arboleda/Grove, 770.5 m (2.528 ft) 343503.7S 0682431.7W |\nRWY 29 - Transición / Transition\nArboleda/Grove (ruta/route), 779.5 m (2.557 ft)\n343526.5S 0682415.9W\nRWY 29 - Transición / Transition\nFaro de AD (TWR)/AD lighthouse (TWR), 765.5 m (2.511 ft)\n343527.8S 0682403.6W\nRWY 29 - Transición / Transition\nTanque de agua / Water tank, 774.1 m (2.540 ft)\n343530.3S 0682402.0W\nRWY 29 - Transición / Transition\nArboleda/Grove, 746.5 m (2.449 ft)\n343519.8S 0682341.0W\nRWY 29 - Transición / Transition\nArboleda/Grove, 749.0 m (2.457 ft)\n343523.9S 0682331.2W\nRWY 29 - Transición / Transition\nArboleda/Grove, 748.0 m (2.454 ft)\n343525.4S 0682326.5W\nRWY 29 – Aproximación / Approach\nArboleda/Grove, 754. 0 m (2.474 ft)\n343535.9S 0682324.3W\nRWY 29 - Transición / Transition\nArboleda/Grove, 760.5 m (2.495 ft)\n343537.8S 0682322.7W\nRWY 11 - Ascenso en el despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 751.0 m (2.464 ft)\n343533.0S 0682320.3W\nRWY 11 - Ascenso en el despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 749. 0 m (2.457 ft)\n343532.1S 0682320.0W\nRWY 11 - Ascenso en el Despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 752.5 m (2.469 ft)\n343529.4S 0682318.6W\nRWY 11 - Ascenso en el despegue / takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove (Pinos/Pine-tree), 752.0 m (2.467 ft)\n343527.6S 0682317.7W\nRWY 29 - Horizontal interna / Internal horizontal\nAntena/Antenna, 785.5 m (2.577 ft)\n343634.8S 0682201.5W\nRWY 29 - Horizontal Interna / Internal horizontal\nAntena/Antenna, 796.0 m (2.612 ft)\n343635.9S 0682203.8W\nEn el área de circuito y en el AD / In circling area and at AD\nTipo de obstáculo, Elevación, Señales y LGT /\nObstacle type, Elevation, Markings and LGT\nCoordenadas / Coordinates\nAntena/Antenna, 790.75 m (2.594 ft)\n343510.2S 0682717.9W\nObservaciones / Remarks: NIL",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.10 OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "",
+                "label": "",
+                "value": "En las áreas de aproximación y despegue / In approach/TKOF areas"
+              },
+              {
+                "item": "",
+                "label": "RWY - Área afectada /\nRWY - Area affected",
+                "value": "Tipo de obstáculo, Elevación, Señales y LGT / Coordenadas /"
+              },
+              {
+                "item": "",
+                "label": "Obstacle type, Elevation, Markings and LGT",
+                "value": "Coordinates"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 800.0 m (2.625 ft) 343445.2S 0682551.1W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 795.5 m (2.610 ft) 343440.8S 0682548.1W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 800.5 m (2.626 ft) 343451.7S 0682546.0W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 794.0 m (2.605 ft) 343500.9S 0682530.7W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Mástil bandera/Flag mast, 776.5 m (2.548 ft) 343501.7S 0682525.7W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343459.0S 0682527.1W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Tanques blancos/White tanks, 774. 0 m (2.539 ft) 343456.1S 0682527.1W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Chimenea de casa/House fireplace, 772.5 m (2.534 ft) 343454.3S 0682520.6W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Árbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft) 343459.2S 0682525.4W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Construcción/Construction (Bianchi), 771. 0 m (2.530 ft) 343458.9S 0682524.0W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343458.0S 0682522.8W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 771.5 m (2.531 ft) 343457.4S 0682516.2W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Arboleda/Grove, 769.5 m (2.525 ft) 343456.9S 0682515.2W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "value": "Árbol/Tree, 772.5 m (2.534 ft) 343456.6S 0682521.6W"
+              },
+              {
+                "item": "",
+                "label": "RWY 11 - Transición / Transition",
+                "value": "Arboleda/Grove, 788.0 m (2.585 ft) 343506.1S 0682515.7W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Transición / Transition",
+                "value": "Arboleda/Grove (ruta / route), 776.5 m (2.548 ft) 343512.6S 0682456.7W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Transición / Transition",
+                "value": "Arboleda/Grove (ruta / route), 780.0 m (2.559 ft) 343515.1S 0682449.8W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Transición / Transition",
+                "value": "WDI, 759.0 m (2.490 ft) 343513.5S 0682441.6W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Transición / Transition",
+                "value": "Arboleda/Grove (ruta/route), 779.0 m (2.556 ft) 343518.9S 0682438.8W"
+              },
+              {
+                "item": "",
+                "label": "RWY 29 - Transición / Transition",
+                "value": "Arboleda/Grove, 770.5 m (2.528 ft) 343503.7S 0682431.7W"
+              }
+            ],
+            "page": 3,
+            "bbox": [
+              43.246153538043686,
+              434.80798721313477,
+              552.6169286874624,
+              762.9959487915039
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.10 OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES\nEn las áreas de aproximación y despegue / In approach/TKOF areas\nRWY - Área afectada /\nRWY - Area affected | Tipo de obstáculo, Elevación, Señales y LGT / Coordenadas /\nObstacle type, Elevation, Markings and LGT | Coordinates\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 800.0 m (2.625 ft) 343445.2S 0682551.1W\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 795.5 m (2.610 ft) 343440.8S 0682548.1W\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 800.5 m (2.626 ft) 343451.7S 0682546.0W\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 794.0 m (2.605 ft) 343500.9S 0682530.7W\nRWY 29 - Ascenso en el despegue / takeoff climb | Mástil bandera/Flag mast, 776.5 m (2.548 ft) 343501.7S 0682525.7W\nRWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343459.0S 0682527.1W\nRWY 29 - Ascenso en el despegue / takeoff climb | Tanques blancos/White tanks, 774. 0 m (2.539 ft) 343456.1S 0682527.1W\nRWY 29 - Ascenso en el despegue / takeoff climb | Chimenea de casa/House fireplace, 772.5 m (2.534 ft) 343454.3S 0682520.6W\nRWY 29 - Ascenso en el despegue / takeoff climb | Árbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft) 343459.2S 0682525.4W\nRWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 771. 0 m (2.530 ft) 343458.9S 0682524.0W\nRWY 29 - Ascenso en el despegue / takeoff climb | Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343458.0S 0682522.8W\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 771.5 m (2.531 ft) 343457.4S 0682516.2W\nRWY 29 - Ascenso en el despegue / takeoff climb | Arboleda/Grove, 769.5 m (2.525 ft) 343456.9S 0682515.2W\nRWY 29 - Ascenso en el despegue / takeoff climb | Árbol/Tree, 772.5 m (2.534 ft) 343456.6S 0682521.6W\nRWY 11 - Transición / Transition | Arboleda/Grove, 788.0 m (2.585 ft) 343506.1S 0682515.7W\nRWY 29 - Transición / Transition | Arboleda/Grove (ruta / route), 776.5 m (2.548 ft) 343512.6S 0682456.7W\nRWY 29 - Transición / Transition | Arboleda/Grove (ruta / route), 780.0 m (2.559 ft) 343515.1S 0682449.8W\nRWY 29 - Transición / Transition | WDI, 759.0 m (2.490 ft) 343513.5S 0682441.6W\nRWY 29 - Transición / Transition | Arboleda/Grove (ruta/route), 779.0 m (2.556 ft) 343518.9S 0682438.8W\nRWY 29 - Transición / Transition | Arboleda/Grove, 770.5 m (2.528 ft) 343503.7S 0682431.7W",
+            "page": 3,
+            "bbox": [
+              43.246153538043686,
+              434.80798721313477,
+              552.6169286874624,
+              762.9959487915039
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.10 OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "",
+                  "label": "",
+                  "value": "En las áreas de aproximación y despegue / In approach/TKOF areas"
+                },
+                {
+                  "item": "",
+                  "label": "RWY - Área afectada /\nRWY - Area affected",
+                  "value": "Tipo de obstáculo, Elevación, Señales y LGT / Coordenadas /"
+                },
+                {
+                  "item": "",
+                  "label": "Obstacle type, Elevation, Markings and LGT",
+                  "value": "Coordinates"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 800.0 m (2.625 ft) 343445.2S 0682551.1W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 795.5 m (2.610 ft) 343440.8S 0682548.1W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 800.5 m (2.626 ft) 343451.7S 0682546.0W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 794.0 m (2.605 ft) 343500.9S 0682530.7W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Mástil bandera/Flag mast, 776.5 m (2.548 ft) 343501.7S 0682525.7W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343459.0S 0682527.1W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Tanques blancos/White tanks, 774. 0 m (2.539 ft) 343456.1S 0682527.1W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Chimenea de casa/House fireplace, 772.5 m (2.534 ft) 343454.3S 0682520.6W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Árbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft) 343459.2S 0682525.4W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Construcción/Construction (Bianchi), 771. 0 m (2.530 ft) 343458.9S 0682524.0W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Construcción/Construction (Bianchi), 777.5 m (2.551 ft) 343458.0S 0682522.8W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 771.5 m (2.531 ft) 343457.4S 0682516.2W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Arboleda/Grove, 769.5 m (2.525 ft) 343456.9S 0682515.2W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Ascenso en el despegue / takeoff climb",
+                  "value": "Árbol/Tree, 772.5 m (2.534 ft) 343456.6S 0682521.6W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 11 - Transición / Transition",
+                  "value": "Arboleda/Grove, 788.0 m (2.585 ft) 343506.1S 0682515.7W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Transición / Transition",
+                  "value": "Arboleda/Grove (ruta / route), 776.5 m (2.548 ft) 343512.6S 0682456.7W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Transición / Transition",
+                  "value": "Arboleda/Grove (ruta / route), 780.0 m (2.559 ft) 343515.1S 0682449.8W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Transición / Transition",
+                  "value": "WDI, 759.0 m (2.490 ft) 343513.5S 0682441.6W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Transición / Transition",
+                  "value": "Arboleda/Grove (ruta/route), 779.0 m (2.556 ft) 343518.9S 0682438.8W"
+                },
+                {
+                  "item": "",
+                  "label": "RWY 29 - Transición / Transition",
+                  "value": "Arboleda/Grove, 770.5 m (2.528 ft) 343503.7S 0682431.7W"
+                }
+              ],
+              "cells": [
+                "AD 2.10 OBSTÁCULOS DEL AERÓDROMO / AERODROME OBSTACLES",
+                "En las áreas de aproximación y despegue / In approach/TKOF areas",
+                "RWY - Área afectada /\nRWY - Area affected",
+                "Tipo de obstáculo, Elevación, Señales y LGT /",
+                "Coordenadas /",
+                "Obstacle type, Elevation, Markings and LGT",
+                "Coordinates",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 800.0 m (2.625 ft)",
+                "343445.2S 0682551.1W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 795.5 m (2.610 ft)",
+                "343440.8S 0682548.1W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 800.5 m (2.626 ft)",
+                "343451.7S 0682546.0W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 794.0 m (2.605 ft)",
+                "343500.9S 0682530.7W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Mástil bandera/Flag mast, 776.5 m (2.548 ft)",
+                "343501.7S 0682525.7W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Construcción/Construction (Bianchi), 777.5 m (2.551 ft)",
+                "343459.0S 0682527.1W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Tanques blancos/White tanks, 774. 0 m (2.539 ft)",
+                "343456.1S 0682527.1W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Chimenea de casa/House fireplace, 772.5 m (2.534 ft)",
+                "343454.3S 0682520.6W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Árbol/Tree (Palmeras/Palm trees - Bianchi), 777.5 m (2.551 ft)",
+                "343459.2S 0682525.4W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Construcción/Construction (Bianchi), 771. 0 m (2.530 ft)",
+                "343458.9S 0682524.0W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Construcción/Construction (Bianchi), 777.5 m (2.551 ft)",
+                "343458.0S 0682522.8W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 771.5 m (2.531 ft)",
+                "343457.4S 0682516.2W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Arboleda/Grove, 769.5 m (2.525 ft)",
+                "343456.9S 0682515.2W",
+                "RWY 29 - Ascenso en el despegue / takeoff climb",
+                "Árbol/Tree, 772.5 m (2.534 ft)",
+                "343456.6S 0682521.6W",
+                "RWY 11 - Transición / Transition",
+                "Arboleda/Grove, 788.0 m (2.585 ft)",
+                "343506.1S 0682515.7W",
+                "RWY 29 - Transición / Transition",
+                "Arboleda/Grove (ruta / route), 776.5 m (2.548 ft)",
+                "343512.6S 0682456.7W",
+                "RWY 29 - Transición / Transition",
+                "Arboleda/Grove (ruta / route), 780.0 m (2.559 ft)",
+                "343515.1S 0682449.8W",
+                "RWY 29 - Transición / Transition",
+                "WDI, 759.0 m (2.490 ft)",
+                "343513.5S 0682441.6W",
+                "RWY 29 - Transición / Transition",
+                "Arboleda/Grove (ruta/route), 779.0 m (2.556 ft)",
+                "343518.9S 0682438.8W",
+                "RWY 29 - Transición / Transition",
+                "Arboleda/Grove, 770.5 m (2.528 ft)",
+                "343503.7S 0682431.7W"
+              ]
+            }
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 29 - Transición / Transition\nArboleda/Grove (ruta/route), 779.5 m (2.557 ft)\n343526.5S 0682415.9W\nRWY 29 - Transición / Transition\nFaro de AD (TWR)/AD lighthouse (TWR), 765.5 m (2.511 ft)\n343527.8S 0682403.6W\nRWY 29 - Transición / Transition\nTanque de agua / Water tank, 774.1 m (2.540 ft)\n343530.3S 0682402.0W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              60.0899658203125,
+              548.4940185546875,
+              95.989990234375
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 29 - Transición / Transition\nArboleda/Grove, 746.5 m (2.449 ft)\n343519.8S 0682341.0W\nRWY 29 - Transición / Transition\nArboleda/Grove, 749.0 m (2.457 ft)\n343523.9S 0682331.2W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              100.54998779296875,
+              547.5339965820312,
+              122.989990234375
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 29 - Transición / Transition\nArboleda/Grove, 748.0 m (2.454 ft)\n343525.4S 0682326.5W\nRWY 29 – Aproximación / Approach\nArboleda/Grove, 754. 0 m (2.474 ft)\n343535.9S 0682324.3W\nRWY 29 - Transición / Transition\nArboleda/Grove, 760.5 m (2.495 ft)\n343537.8S 0682322.7W\nRWY 11 - Ascenso en el despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 751.0 m (2.464 ft)\n343533.0S 0682320.3W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              127.54998779296875,
+              548.4940185546875,
+              186.8299560546875
+            ],
+            "order": 4
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 11 - Ascenso en el despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 749. 0 m (2.457 ft)\n343532.1S 0682320.0W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              190.54998779296875,
+              547.8939819335938,
+              210.22998046875
+            ],
+            "order": 5
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 11 - Ascenso en el Despegue / Takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove, 752.5 m (2.469 ft)\n343529.4S 0682318.6W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              213.949951171875,
+              547.6539916992188,
+              233.50994873046875
+            ],
+            "order": 6
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 11 - Ascenso en el despegue / takeoff climb\nRWY 29 - Aproximación / Approach\nArboleda/Grove (Pinos/Pine-tree), 752.0 m (2.467 ft)\n343527.6S 0682317.7W",
+            "page": 4,
+            "bbox": [
+              49.20000076293945,
+              237.22998046875,
+              547.1740112304688,
+              256.90997314453125
+            ],
+            "order": 7
+          },
+          {
+            "type": "paragraph",
+            "text": "RWY 29 - Horizontal interna / Internal horizontal\nAntena/Antenna, 785.5 m (2.577 ft)\n343634.8S 0682201.5W\nRWY 29 - Horizontal Interna / Internal horizontal\nAntena/Antenna, 796.0 m (2.612 ft)\n343635.9S 0682203.8W\nEn el área de circuito y en el AD / In circling area and at AD",
+            "page": 4,
+            "bbox": [
+              46.31999969482422,
+              261.3800048828125,
+              547.8939819335938,
+              296.29998779296875
+            ],
+            "order": 8
+          },
+          {
+            "type": "paragraph",
+            "text": "Tipo de obstáculo, Elevación, Señales y LGT /",
+            "page": 4,
+            "bbox": [
+              86.90399932861328,
+              304.82000732421875,
+              256.0039978027344,
+              313.82000732421875
+            ],
+            "order": 9
+          },
+          {
+            "type": "paragraph",
+            "text": "Obstacle type, Elevation, Markings and LGT\nCoordenadas / Coordinates",
+            "page": 4,
+            "bbox": [
+              89.30400085449219,
+              310.3399658203125,
+              478.65399169921875,
+              324.8599853515625
+            ],
+            "order": 10
+          },
+          {
+            "type": "paragraph",
+            "text": "Antena/Antenna, 790.75 m (2.594 ft)\n343510.2S 0682717.9W",
+            "page": 4,
+            "bbox": [
+              104.41999816894531,
+              330.2599792480469,
+              470.2539978027344,
+              340.219970703125
+            ],
+            "order": 11
+          },
+          {
+            "type": "paragraph",
+            "text": "Observaciones / Remarks: NIL",
+            "page": 4,
+            "bbox": [
+              46.31999969482422,
+              344.77996826171875,
+              159.85400390625,
+              353.77996826171875
+            ],
+            "order": 12
+          }
+        ],
+        "source": {
+          "pages": [
+            3,
+            4
+          ],
+          "blocks_count": 12,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.11",
+      "title": "AD 2.11",
+      "section_title": "INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED",
+      "raw_text": "AD 2.11\nAD 2.11 INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED\n| 1 | Oficina MET asociada / Associated MET office | EMA SAN RAFAEL, OMA/OVM MENDOZA |\n| 2 | Horas de servicio / Hours of service | H24 |\n|  | Oficina MET fuera de horario / MET office out of service hours | OMA/OVM CÓRDOBA |\n| 3 | Oficina responsable de la preparación TAF /\nOffice responsible for preparation of TAFs | OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CÓRDOBA\n(06/06) |\n|  | Períodos de validez / Periods of validity | 24 HR: 00/00, 06/06, 12/12, 18/18 |\n| 4 | Disponibilidad de pronósticos de tendencias para el AD /\nAvailability of the trend forecasts for the AD | No |\n|  | Intervalos de expedición de pronósticos /\nInterval of issuance of the forecasts | No |\n| 5 | Información sobre cómo se hacen las exposiciones verbales y\nlas consultas /\nInformation on how briefing and/or consultation is provided | No |\n| 6 | Documentación de vuelo suministrada /\nFlight documentation supplied | No |\n|  | Idioma(s) utilizado(s) / Language(s) used | No |\n| 7 | Las cartas y otra información expuesta o a disposición para\nexposiciones verbales o consultas /\nCharts and other information displayed or available for briefing\nor consultation | No |\n| 8 | Equipo suplementario disponible para proporcionar\ninformación /\nSupplementary equipment available for providing information | CADAS, telefónico / CADAS, by phone |\n| 9 | Dependencias ATS a las cuales se suministra información\nmeteorológica /\nThe ATS units provided with meteorological information | TWR |\n| 10 | Información adicional (limitación de servicio, etc.) /\nAdditional information (limitation of service, etc.) | Oficina / Office Mendoza – H09/03 - (+54 261) 4487468\nOficina / Office Córdoba - H24 - (+54 351) 4753882 |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.11 INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Oficina MET asociada / Associated MET office",
+                "value": "EMA SAN RAFAEL, OMA/OVM MENDOZA"
+              },
+              {
+                "item": "2",
+                "label": "Horas de servicio / Hours of service",
+                "value": "H24"
+              },
+              {
+                "item": "",
+                "label": "Oficina MET fuera de horario / MET office out of service hours",
+                "value": "OMA/OVM CÓRDOBA"
+              },
+              {
+                "item": "3",
+                "label": "Oficina responsable de la preparación TAF /\nOffice responsible for preparation of TAFs",
+                "value": "OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CÓRDOBA\n(06/06)"
+              },
+              {
+                "item": "",
+                "label": "Períodos de validez / Periods of validity",
+                "value": "24 HR: 00/00, 06/06, 12/12, 18/18"
+              },
+              {
+                "item": "4",
+                "label": "Disponibilidad de pronósticos de tendencias para el AD /\nAvailability of the trend forecasts for the AD",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "Intervalos de expedición de pronósticos /\nInterval of issuance of the forecasts",
+                "value": "No"
+              },
+              {
+                "item": "5",
+                "label": "Información sobre cómo se hacen las exposiciones verbales y\nlas consultas /\nInformation on how briefing and/or consultation is provided",
+                "value": "No"
+              },
+              {
+                "item": "6",
+                "label": "Documentación de vuelo suministrada /\nFlight documentation supplied",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "Idioma(s) utilizado(s) / Language(s) used",
+                "value": "No"
+              },
+              {
+                "item": "7",
+                "label": "Las cartas y otra información expuesta o a disposición para\nexposiciones verbales o consultas /\nCharts and other information displayed or available for briefing\nor consultation",
+                "value": "No"
+              },
+              {
+                "item": "8",
+                "label": "Equipo suplementario disponible para proporcionar\ninformación /\nSupplementary equipment available for providing information",
+                "value": "CADAS, telefónico / CADAS, by phone"
+              },
+              {
+                "item": "9",
+                "label": "Dependencias ATS a las cuales se suministra información\nmeteorológica /\nThe ATS units provided with meteorological information",
+                "value": "TWR"
+              },
+              {
+                "item": "10",
+                "label": "Información adicional (limitación de servicio, etc.) /\nAdditional information (limitation of service, etc.)",
+                "value": "Oficina / Office Mendoza – H09/03 - (+54 261) 4487468\nOficina / Office Córdoba - H24 - (+54 351) 4753882"
+              }
+            ],
+            "page": 4,
+            "bbox": [
+              43.0399995077224,
+              368.6899604797363,
+              552.890252090082,
+              740.7999877929688
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.11 INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED\n1 | Oficina MET asociada / Associated MET office | EMA SAN RAFAEL, OMA/OVM MENDOZA\n2 | Horas de servicio / Hours of service | H24\nOficina MET fuera de horario / MET office out of service hours | OMA/OVM CÓRDOBA\n3 | Oficina responsable de la preparación TAF /\nOffice responsible for preparation of TAFs | OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CÓRDOBA\n(06/06)\nPeríodos de validez / Periods of validity | 24 HR: 00/00, 06/06, 12/12, 18/18\n4 | Disponibilidad de pronósticos de tendencias para el AD /\nAvailability of the trend forecasts for the AD | No\nIntervalos de expedición de pronósticos /\nInterval of issuance of the forecasts | No\n5 | Información sobre cómo se hacen las exposiciones verbales y\nlas consultas /\nInformation on how briefing and/or consultation is provided | No\n6 | Documentación de vuelo suministrada /\nFlight documentation supplied | No\nIdioma(s) utilizado(s) / Language(s) used | No\n7 | Las cartas y otra información expuesta o a disposición para\nexposiciones verbales o consultas /\nCharts and other information displayed or available for briefing\nor consultation | No\n8 | Equipo suplementario disponible para proporcionar\ninformación /\nSupplementary equipment available for providing information | CADAS, telefónico / CADAS, by phone\n9 | Dependencias ATS a las cuales se suministra información\nmeteorológica /\nThe ATS units provided with meteorological information | TWR\n10 | Información adicional (limitación de servicio, etc.) /\nAdditional information (limitation of service, etc.) | Oficina / Office Mendoza – H09/03 - (+54 261) 4487468\nOficina / Office Córdoba - H24 - (+54 351) 4753882",
+            "page": 4,
+            "bbox": [
+              43.0399995077224,
+              368.6899604797363,
+              552.890252090082,
+              740.7999877929688
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.11 INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Oficina MET asociada / Associated MET office",
+                  "value": "EMA SAN RAFAEL, OMA/OVM MENDOZA"
+                },
+                {
+                  "item": "2",
+                  "label": "Horas de servicio / Hours of service",
+                  "value": "H24"
+                },
+                {
+                  "item": "",
+                  "label": "Oficina MET fuera de horario / MET office out of service hours",
+                  "value": "OMA/OVM CÓRDOBA"
+                },
+                {
+                  "item": "3",
+                  "label": "Oficina responsable de la preparación TAF /\nOffice responsible for preparation of TAFs",
+                  "value": "OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CÓRDOBA\n(06/06)"
+                },
+                {
+                  "item": "",
+                  "label": "Períodos de validez / Periods of validity",
+                  "value": "24 HR: 00/00, 06/06, 12/12, 18/18"
+                },
+                {
+                  "item": "4",
+                  "label": "Disponibilidad de pronósticos de tendencias para el AD /\nAvailability of the trend forecasts for the AD",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "Intervalos de expedición de pronósticos /\nInterval of issuance of the forecasts",
+                  "value": "No"
+                },
+                {
+                  "item": "5",
+                  "label": "Información sobre cómo se hacen las exposiciones verbales y\nlas consultas /\nInformation on how briefing and/or consultation is provided",
+                  "value": "No"
+                },
+                {
+                  "item": "6",
+                  "label": "Documentación de vuelo suministrada /\nFlight documentation supplied",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "Idioma(s) utilizado(s) / Language(s) used",
+                  "value": "No"
+                },
+                {
+                  "item": "7",
+                  "label": "Las cartas y otra información expuesta o a disposición para\nexposiciones verbales o consultas /\nCharts and other information displayed or available for briefing\nor consultation",
+                  "value": "No"
+                },
+                {
+                  "item": "8",
+                  "label": "Equipo suplementario disponible para proporcionar\ninformación /\nSupplementary equipment available for providing information",
+                  "value": "CADAS, telefónico / CADAS, by phone"
+                },
+                {
+                  "item": "9",
+                  "label": "Dependencias ATS a las cuales se suministra información\nmeteorológica /\nThe ATS units provided with meteorological information",
+                  "value": "TWR"
+                },
+                {
+                  "item": "10",
+                  "label": "Información adicional (limitación de servicio, etc.) /\nAdditional information (limitation of service, etc.)",
+                  "value": "Oficina / Office Mendoza – H09/03 - (+54 261) 4487468\nOficina / Office Córdoba - H24 - (+54 351) 4753882"
+                }
+              ],
+              "cells": [
+                "AD 2.11 INFORMACIÓN METEOROLÓGICA PROPORCIONADA / METEOROLOGICAL INFORMATION PROVIDED",
+                "1",
+                "Oficina MET asociada / Associated MET office",
+                "EMA SAN RAFAEL, OMA/OVM MENDOZA",
+                "2",
+                "Horas de servicio / Hours of service",
+                "H24",
+                "Oficina MET fuera de horario / MET office out of service hours",
+                "OMA/OVM CÓRDOBA",
+                "3",
+                "Oficina responsable de la preparación TAF /\nOffice responsible for preparation of TAFs",
+                "OMA MENDOZA (00/00, 12/12, 18/18) y / and OMA CÓRDOBA\n(06/06)",
+                "Períodos de validez / Periods of validity",
+                "24 HR: 00/00, 06/06, 12/12, 18/18",
+                "4",
+                "Disponibilidad de pronósticos de tendencias para el AD /\nAvailability of the trend forecasts for the AD",
+                "No",
+                "Intervalos de expedición de pronósticos /\nInterval of issuance of the forecasts",
+                "No",
+                "5",
+                "Información sobre cómo se hacen las exposiciones verbales y\nlas consultas /\nInformation on how briefing and/or consultation is provided",
+                "No",
+                "6",
+                "Documentación de vuelo suministrada /\nFlight documentation supplied",
+                "No",
+                "Idioma(s) utilizado(s) / Language(s) used",
+                "No",
+                "7",
+                "Las cartas y otra información expuesta o a disposición para\nexposiciones verbales o consultas /\nCharts and other information displayed or available for briefing\nor consultation",
+                "No",
+                "8",
+                "Equipo suplementario disponible para proporcionar\ninformación /\nSupplementary equipment available for providing information",
+                "CADAS, telefónico / CADAS, by phone",
+                "9",
+                "Dependencias ATS a las cuales se suministra información\nmeteorológica /\nThe ATS units provided with meteorological information",
+                "TWR",
+                "10",
+                "Información adicional (limitación de servicio, etc.) /\nAdditional information (limitation of service, etc.)",
+                "Oficina / Office Mendoza – H09/03 - (+54 261) 4487468\nOficina / Office Córdoba - H24 - (+54 351) 4753882"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            4
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.12",
+      "title": "AD 2.12",
+      "section_title": "CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+      "raw_text": "AD 2.12\nAD 2.12\nCARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS\nAD 2.12 CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS\n| 11 | 108.46° | 109° | 2.102x30 | 430/F/B/X/T | ASPH |  |  | 343505.34S 0682452.04W | 343526.95S 0682333.81W |  | 754.25 m 2.475 ft |  | -0.7% |\n| 29 | 288.46° | 289° | 2.102x30 | 430/F/B/X/T | ASPH |  |  | 343526.95S 0682333.81W | 343505.34S 0682452.04W |  | 739.5 m 2.426 ft |  | +0.7% |\nAD 2.12 RWY supplementary dimensions and remarks\n| 11 | No | No | 2.222x280 (*) | 90x60 | No | No | NIL (*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m |\n| 29 | No | No | 2.222x280 (*) | 90x60 | No | No | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.12 CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+            "columns": [
+              "RWY",
+              "BRG GEO",
+              "BRG MAG",
+              "Dimensions of RWY (m)",
+              "RWY strength (PCN)",
+              "RWY surface",
+              "SWY strength (PCN)",
+              "SWY surface",
+              "THR coordinates",
+              "RWY end coordinates",
+              "THR GUND",
+              "THR elevation",
+              "TDZ elevation",
+              "Slope RWY-SWY"
+            ],
+            "rows": [
+              {
+                "RWY": "11",
+                "BRG GEO": "108.46°",
+                "BRG MAG": "109°",
+                "Dimensions of RWY (m)": "2.102x30",
+                "RWY strength (PCN)": "430/F/B/X/T",
+                "RWY surface": "ASPH",
+                "SWY strength (PCN)": "",
+                "SWY surface": "",
+                "THR coordinates": "343505.34S 0682452.04W",
+                "RWY end coordinates": "343526.95S 0682333.81W",
+                "THR GUND": "",
+                "THR elevation": "754.25 m 2.475 ft",
+                "TDZ elevation": "",
+                "Slope RWY-SWY": "-0.7%"
+              },
+              {
+                "RWY": "29",
+                "BRG GEO": "288.46°",
+                "BRG MAG": "289°",
+                "Dimensions of RWY (m)": "2.102x30",
+                "RWY strength (PCN)": "430/F/B/X/T",
+                "RWY surface": "ASPH",
+                "SWY strength (PCN)": "",
+                "SWY surface": "",
+                "THR coordinates": "343526.95S 0682333.81W",
+                "RWY end coordinates": "343505.34S 0682452.04W",
+                "THR GUND": "",
+                "THR elevation": "739.5 m 2.426 ft",
+                "TDZ elevation": "",
+                "Slope RWY-SWY": "+0.7%"
+              }
+            ],
+            "page": 5,
+            "bbox": [
+              42.599998474121094,
+              61.04998779296875,
+              546.093994140625,
+              373.6999816894531
+            ]
+          },
+          {
+            "name": "table_2",
+            "label": "AD 2.12 RWY supplementary dimensions and remarks",
+            "columns": [
+              "RWY",
+              "SWY (m)",
+              "CWY (m)",
+              "Strip dimensions (m)",
+              "RESA (m)",
+              "Arresting system",
+              "OFZ",
+              "Remarks"
+            ],
+            "rows": [
+              {
+                "RWY": "11",
+                "SWY (m)": "No",
+                "CWY (m)": "No",
+                "Strip dimensions (m)": "2.222x280 (*)",
+                "RESA (m)": "90x60",
+                "Arresting system": "No",
+                "OFZ": "No",
+                "Remarks": "NIL (*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m"
+              },
+              {
+                "RWY": "29",
+                "SWY (m)": "No",
+                "CWY (m)": "No",
+                "Strip dimensions (m)": "2.222x280 (*)",
+                "RESA (m)": "90x60",
+                "Arresting system": "No",
+                "OFZ": "No",
+                "Remarks": "NIL"
+              }
+            ],
+            "page": 5,
+            "bbox": [
+              42.599998474121094,
+              61.04998779296875,
+              546.093994140625,
+              373.6999816894531
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.12\nCARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+            "page": 5,
+            "bbox": [
+              47.880001068115234,
+              61.04998779296875,
+              392.10400390625,
+              70.04998779296875
+            ],
+            "order": 1
+          },
+          {
+            "type": "table",
+            "text": "AD 2.12 CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+            "page": 5,
+            "bbox": [
+              42.599998474121094,
+              61.04998779296875,
+              546.093994140625,
+              373.6999816894531
+            ],
+            "order": 2,
+            "table": {
+              "label": "AD 2.12 CARACTERÍSTICAS FÍSICAS DE LAS PISTAS / RUNWAY PHYSICAL CHARACTERISTICS",
+              "columns": [
+                "RWY",
+                "BRG GEO",
+                "BRG MAG",
+                "Dimensions of RWY (m)",
+                "RWY strength (PCN)",
+                "RWY surface",
+                "SWY strength (PCN)",
+                "SWY surface",
+                "THR coordinates",
+                "RWY end coordinates",
+                "THR GUND",
+                "THR elevation",
+                "TDZ elevation",
+                "Slope RWY-SWY"
+              ],
+              "rows": [
+                {
+                  "RWY": "11",
+                  "BRG GEO": "108.46°",
+                  "BRG MAG": "109°",
+                  "Dimensions of RWY (m)": "2.102x30",
+                  "RWY strength (PCN)": "430/F/B/X/T",
+                  "RWY surface": "ASPH",
+                  "SWY strength (PCN)": "",
+                  "SWY surface": "",
+                  "THR coordinates": "343505.34S 0682452.04W",
+                  "RWY end coordinates": "343526.95S 0682333.81W",
+                  "THR GUND": "",
+                  "THR elevation": "754.25 m 2.475 ft",
+                  "TDZ elevation": "",
+                  "Slope RWY-SWY": "-0.7%"
+                },
+                {
+                  "RWY": "29",
+                  "BRG GEO": "288.46°",
+                  "BRG MAG": "289°",
+                  "Dimensions of RWY (m)": "2.102x30",
+                  "RWY strength (PCN)": "430/F/B/X/T",
+                  "RWY surface": "ASPH",
+                  "SWY strength (PCN)": "",
+                  "SWY surface": "",
+                  "THR coordinates": "343526.95S 0682333.81W",
+                  "RWY end coordinates": "343505.34S 0682452.04W",
+                  "THR GUND": "",
+                  "THR elevation": "739.5 m 2.426 ft",
+                  "TDZ elevation": "",
+                  "Slope RWY-SWY": "+0.7%"
+                }
+              ],
+              "cells": [
+                "11",
+                "108.46°",
+                "109°",
+                "2.102x30",
+                "430/F/B/X/T",
+                "ASPH",
+                "",
+                "",
+                "343505.34S 0682452.04W",
+                "343526.95S 0682333.81W",
+                "",
+                "754.25 m 2.475 ft",
+                "",
+                "-0.7%",
+                "29",
+                "288.46°",
+                "289°",
+                "2.102x30",
+                "430/F/B/X/T",
+                "ASPH",
+                "",
+                "",
+                "343526.95S 0682333.81W",
+                "343505.34S 0682452.04W",
+                "",
+                "739.5 m 2.426 ft",
+                "",
+                "+0.7%"
+              ]
+            }
+          },
+          {
+            "type": "table",
+            "text": "AD 2.12 RWY supplementary dimensions and remarks",
+            "page": 5,
+            "bbox": [
+              42.599998474121094,
+              61.04998779296875,
+              546.093994140625,
+              373.6999816894531
+            ],
+            "order": 3,
+            "table": {
+              "label": "AD 2.12 RWY supplementary dimensions and remarks",
+              "columns": [
+                "RWY",
+                "SWY (m)",
+                "CWY (m)",
+                "Strip dimensions (m)",
+                "RESA (m)",
+                "Arresting system",
+                "OFZ",
+                "Remarks"
+              ],
+              "rows": [
+                {
+                  "RWY": "11",
+                  "SWY (m)": "No",
+                  "CWY (m)": "No",
+                  "Strip dimensions (m)": "2.222x280 (*)",
+                  "RESA (m)": "90x60",
+                  "Arresting system": "No",
+                  "OFZ": "No",
+                  "Remarks": "NIL (*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m"
+                },
+                {
+                  "RWY": "29",
+                  "SWY (m)": "No",
+                  "CWY (m)": "No",
+                  "Strip dimensions (m)": "2.222x280 (*)",
+                  "RESA (m)": "90x60",
+                  "Arresting system": "No",
+                  "OFZ": "No",
+                  "Remarks": "NIL"
+                }
+              ],
+              "cells": [
+                "11",
+                "No",
+                "No",
+                "2.222x280 (*)",
+                "90x60",
+                "No",
+                "No",
+                "NIL (*) Sector derecho reducida 75 m entre THR 29 y progresiva 200 m / (*) Right sector reduced 75 m between THR 29 and progressive 200 m",
+                "29",
+                "No",
+                "No",
+                "2.222x280 (*)",
+                "90x60",
+                "No",
+                "No",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            5
+          ],
+          "blocks_count": 3,
+          "tables_count": 2
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.13",
+      "title": "AD 2.13",
+      "section_title": "DISTANCIAS DECLARADAS / DECLARED DISTANCES",
+      "raw_text": "AD 2.13\nAD 2.13 DISTANCIAS DECLARADAS / DECLARED DISTANCES\n| 11 | 2.102 | 2.102 | 2.102 | 2.102 | NIL |\n| 29 | 2.102 | 2.102 | 2.102 | 2.102 | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.13 DISTANCIAS DECLARADAS / DECLARED DISTANCES",
+            "columns": [
+              "Designador RWY / RWY designator",
+              "TORA (m)",
+              "TODA (m)",
+              "ASDA (m)",
+              "LDA (m)",
+              "Observaciones / Remarks"
+            ],
+            "rows": [
+              {
+                "Designador RWY / RWY designator": "11",
+                "TORA (m)": "2.102",
+                "TODA (m)": "2.102",
+                "ASDA (m)": "2.102",
+                "LDA (m)": "2.102",
+                "Observaciones / Remarks": "NIL"
+              },
+              {
+                "Designador RWY / RWY designator": "29",
+                "TORA (m)": "2.102",
+                "TODA (m)": "2.102",
+                "ASDA (m)": "2.102",
+                "LDA (m)": "2.102",
+                "Observaciones / Remarks": "NIL"
+              }
+            ],
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              374.1499824523926,
+              552.9550216674804,
+              448.66424560546875
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.13 DISTANCIAS DECLARADAS / DECLARED DISTANCES",
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              374.1499824523926,
+              552.9550216674804,
+              448.66424560546875
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.13 DISTANCIAS DECLARADAS / DECLARED DISTANCES",
+              "columns": [
+                "Designador RWY / RWY designator",
+                "TORA (m)",
+                "TODA (m)",
+                "ASDA (m)",
+                "LDA (m)",
+                "Observaciones / Remarks"
+              ],
+              "rows": [
+                {
+                  "Designador RWY / RWY designator": "11",
+                  "TORA (m)": "2.102",
+                  "TODA (m)": "2.102",
+                  "ASDA (m)": "2.102",
+                  "LDA (m)": "2.102",
+                  "Observaciones / Remarks": "NIL"
+                },
+                {
+                  "Designador RWY / RWY designator": "29",
+                  "TORA (m)": "2.102",
+                  "TODA (m)": "2.102",
+                  "ASDA (m)": "2.102",
+                  "LDA (m)": "2.102",
+                  "Observaciones / Remarks": "NIL"
+                }
+              ],
+              "cells": [
+                "11",
+                "2.102",
+                "2.102",
+                "2.102",
+                "2.102",
+                "NIL",
+                "29",
+                "2.102",
+                "2.102",
+                "2.102",
+                "2.102",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            5
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.14",
+      "title": "AD 2.14",
+      "section_title": "APPROACH AND RUNWAY LIGHTING - APCH/THR/PAPI/TDZ",
+      "raw_text": "AD 2.14\nAD 2.14 APPROACH AND RUNWAY LIGHTING - APCH/THR/PAPI/TDZ\n| 11 | No | Verde, No / Green, No | Sí 3° - HGT de cruce en THR 16.75 m / Yes 3° - Crossing HGT at THR 16,75 m | No |\n| 29 | No | Verde, No / Green, No | Sí, 3° / Yes, 3° | No |\nAD 2.14 APPROACH AND RUNWAY LIGHTING - RCLL/REDL/RENL/STWL\n| 11 | No | 2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow | Rojo, No / Red, No | No | NIL |\n| 29 | No | 2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow | Rojo, No / Red, No | No | NIL |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.14 APPROACH AND RUNWAY LIGHTING - APCH/THR/PAPI/TDZ",
+            "columns": [
+              "Designador RWY / RWY designator",
+              "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST",
+              "LGT THR Color WBAR / THR LGT Color WBAR",
+              "PAPI, VASIS",
+              "LEN LGT TDZ"
+            ],
+            "rows": [
+              {
+                "Designador RWY / RWY designator": "11",
+                "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST": "No",
+                "LGT THR Color WBAR / THR LGT Color WBAR": "Verde, No / Green, No",
+                "PAPI, VASIS": "Sí 3° - HGT de cruce en THR 16.75 m / Yes 3° - Crossing HGT at THR 16,75 m",
+                "LEN LGT TDZ": "No"
+              },
+              {
+                "Designador RWY / RWY designator": "29",
+                "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST": "No",
+                "LGT THR Color WBAR / THR LGT Color WBAR": "Verde, No / Green, No",
+                "PAPI, VASIS": "Sí, 3° / Yes, 3°",
+                "LEN LGT TDZ": "No"
+              }
+            ],
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              460.0899848937988,
+              552.9550216674804,
+              734.2999827067057
+            ]
+          },
+          {
+            "name": "table_2",
+            "label": "AD 2.14 APPROACH AND RUNWAY LIGHTING - RCLL/REDL/RENL/STWL",
+            "columns": [
+              "Designador RWY / RWY designator",
+              "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST",
+              "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST",
+              "Color RENL y WBAR / RENL Color and WBAR",
+              "LEN y Color STWL / STWL LEN and Color",
+              "Observaciones / Remarks"
+            ],
+            "rows": [
+              {
+                "Designador RWY / RWY designator": "11",
+                "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST": "No",
+                "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST": "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                "Color RENL y WBAR / RENL Color and WBAR": "Rojo, No / Red, No",
+                "LEN y Color STWL / STWL LEN and Color": "No",
+                "Observaciones / Remarks": "NIL"
+              },
+              {
+                "Designador RWY / RWY designator": "29",
+                "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST": "No",
+                "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST": "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                "Color RENL y WBAR / RENL Color and WBAR": "Rojo, No / Red, No",
+                "LEN y Color STWL / STWL LEN and Color": "No",
+                "Observaciones / Remarks": "NIL"
+              }
+            ],
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              460.0899848937988,
+              552.9550216674804,
+              734.2999827067057
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.14 APPROACH AND RUNWAY LIGHTING - APCH/THR/PAPI/TDZ",
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              460.0899848937988,
+              552.9550216674804,
+              734.2999827067057
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.14 APPROACH AND RUNWAY LIGHTING - APCH/THR/PAPI/TDZ",
+              "columns": [
+                "Designador RWY / RWY designator",
+                "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST",
+                "LGT THR Color WBAR / THR LGT Color WBAR",
+                "PAPI, VASIS",
+                "LEN LGT TDZ"
+              ],
+              "rows": [
+                {
+                  "Designador RWY / RWY designator": "11",
+                  "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST": "No",
+                  "LGT THR Color WBAR / THR LGT Color WBAR": "Verde, No / Green, No",
+                  "PAPI, VASIS": "Sí 3° - HGT de cruce en THR 16.75 m / Yes 3° - Crossing HGT at THR 16,75 m",
+                  "LEN LGT TDZ": "No"
+                },
+                {
+                  "Designador RWY / RWY designator": "29",
+                  "Tipo, LEN e INTST del sistema de LGT de APCH / APCH LGT system type, LEN and INTST": "No",
+                  "LGT THR Color WBAR / THR LGT Color WBAR": "Verde, No / Green, No",
+                  "PAPI, VASIS": "Sí, 3° / Yes, 3°",
+                  "LEN LGT TDZ": "No"
+                }
+              ],
+              "cells": [
+                "11",
+                "No",
+                "Verde, No / Green, No",
+                "Sí 3° - HGT de cruce en THR 16.75 m / Yes 3° - Crossing HGT at THR 16,75 m",
+                "No",
+                "29",
+                "No",
+                "Verde, No / Green, No",
+                "Sí, 3° / Yes, 3°",
+                "No"
+              ]
+            }
+          },
+          {
+            "type": "table",
+            "text": "AD 2.14 APPROACH AND RUNWAY LIGHTING - RCLL/REDL/RENL/STWL",
+            "page": 5,
+            "bbox": [
+              42.46800031661987,
+              460.0899848937988,
+              552.9550216674804,
+              734.2999827067057
+            ],
+            "order": 2,
+            "table": {
+              "label": "AD 2.14 APPROACH AND RUNWAY LIGHTING - RCLL/REDL/RENL/STWL",
+              "columns": [
+                "Designador RWY / RWY designator",
+                "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST",
+                "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST",
+                "Color RENL y WBAR / RENL Color and WBAR",
+                "LEN y Color STWL / STWL LEN and Color",
+                "Observaciones / Remarks"
+              ],
+              "rows": [
+                {
+                  "Designador RWY / RWY designator": "11",
+                  "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST": "No",
+                  "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST": "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                  "Color RENL y WBAR / RENL Color and WBAR": "Rojo, No / Red, No",
+                  "LEN y Color STWL / STWL LEN and Color": "No",
+                  "Observaciones / Remarks": "NIL"
+                },
+                {
+                  "Designador RWY / RWY designator": "29",
+                  "LEN, Separacion, Color, INTST RCLL / RCLL LEN, Spacing, Color, INTST": "No",
+                  "LEN, Separacion, Color, INTST REDL / REDL LEN, Spacing, Color, INTST": "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                  "Color RENL y WBAR / RENL Color and WBAR": "Rojo, No / Red, No",
+                  "LEN y Color STWL / STWL LEN and Color": "No",
+                  "Observaciones / Remarks": "NIL"
+                }
+              ],
+              "cells": [
+                "11",
+                "No",
+                "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                "Rojo, No / Red, No",
+                "No",
+                "NIL",
+                "29",
+                "No",
+                "2.102 m, 60 m, blanco, LIH Últimos 600 m amarillas / 2,102 m, 60 m, white, LIH Last 600 m yellow",
+                "Rojo, No / Red, No",
+                "No",
+                "NIL"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            5
+          ],
+          "blocks_count": 2,
+          "tables_count": 2
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.15",
+      "title": "AD 2.15",
+      "section_title": null,
+      "raw_text": "AD 2.15\nAD 2.15\nOTROS SISTEMAS DE ILUMINACIÓN Y FUENTE SECUNDARIA DE ENERGÍA ELÉCTRICA /\nOTHER LIGHTING AND SECONDARY POWER SUPPLY\nEmplazamiento, características y horas de funcionamiento ABN /\nABN location, characteristics and hours of operation\nSí, verde, blanco / No / Yes, green, white / No\n1\nEmplazamiento, características y horas de funcionamiento IBN /\nIBN location, characteristics and hours of operation\nNo\n2\nEmplazamiento y LGT en LDI / LDI location and LGT\nNo\n3\nLuces de borde y eje de TWY /\nTWY edge and centre line lighting\nSí, No / Yes, No\nFuente secundaria de energía eléctrica /\nSecondary power supply\nSí / Yes\n4\nTiempo de conmutación / Switch-over time\n6 (seis/six) SEC\n5\nObservaciones / Remarks\nPosee LGT WDI (2), TWY y APN /\nIt has LGT WDI (2), TWY and APN",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.15\nOTROS SISTEMAS DE ILUMINACIÓN Y FUENTE SECUNDARIA DE ENERGÍA ELÉCTRICA /\nOTHER LIGHTING AND SECONDARY POWER SUPPLY",
+            "page": 6,
+            "bbox": [
+              48.0,
+              61.04998779296875,
+              406.3840026855469,
+              83.00994873046875
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "Emplazamiento, características y horas de funcionamiento ABN /\nABN location, characteristics and hours of operation",
+            "page": 6,
+            "bbox": [
+              62.06399917602539,
+              87.469970703125,
+              306.52398681640625,
+              107.50994873046875
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "Sí, verde, blanco / No / Yes, green, white / No",
+            "page": 6,
+            "bbox": [
+              313.1300048828125,
+              87.469970703125,
+              480.9339904785156,
+              96.469970703125
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "1",
+            "page": 6,
+            "bbox": [
+              48.0,
+              105.8299560546875,
+              54.59400177001953,
+              114.8299560546875
+            ],
+            "order": 4
+          },
+          {
+            "type": "paragraph",
+            "text": "Emplazamiento, características y horas de funcionamiento IBN /\nIBN location, characteristics and hours of operation",
+            "page": 6,
+            "bbox": [
+              62.06399917602539,
+              113.02996826171875,
+              303.40399169921875,
+              133.07000732421875
+            ],
+            "order": 5
+          },
+          {
+            "type": "paragraph",
+            "text": "No",
+            "page": 6,
+            "bbox": [
+              313.1300048828125,
+              113.02996826171875,
+              325.7439880371094,
+              122.02996826171875
+            ],
+            "order": 6
+          },
+          {
+            "type": "paragraph",
+            "text": "2\nEmplazamiento y LGT en LDI / LDI location and LGT\nNo",
+            "page": 6,
+            "bbox": [
+              48.0,
+              138.469970703125,
+              325.7439880371094,
+              147.469970703125
+            ],
+            "order": 7
+          },
+          {
+            "type": "paragraph",
+            "text": "3\nLuces de borde y eje de TWY /\nTWY edge and centre line lighting",
+            "page": 6,
+            "bbox": [
+              48.0,
+              152.989990234375,
+              190.093994140625,
+              173.02996826171875
+            ],
+            "order": 8
+          },
+          {
+            "type": "paragraph",
+            "text": "Sí, No / Yes, No",
+            "page": 6,
+            "bbox": [
+              313.1300048828125,
+              152.989990234375,
+              370.6239929199219,
+              161.989990234375
+            ],
+            "order": 9
+          },
+          {
+            "type": "paragraph",
+            "text": "Fuente secundaria de energía eléctrica /\nSecondary power supply",
+            "page": 6,
+            "bbox": [
+              62.06399917602539,
+              178.42999267578125,
+              214.00399780273438,
+              198.469970703125
+            ],
+            "order": 10
+          },
+          {
+            "type": "paragraph",
+            "text": "Sí / Yes",
+            "page": 6,
+            "bbox": [
+              313.1300048828125,
+              178.42999267578125,
+              341.10400390625,
+              187.42999267578125
+            ],
+            "order": 11
+          },
+          {
+            "type": "paragraph",
+            "text": "4",
+            "page": 6,
+            "bbox": [
+              48.0,
+              191.26995849609375,
+              54.59400177001953,
+              200.26995849609375
+            ],
+            "order": 12
+          },
+          {
+            "type": "paragraph",
+            "text": "Tiempo de conmutación / Switch-over time\n6 (seis/six) SEC",
+            "page": 6,
+            "bbox": [
+              62.06399917602539,
+              203.989990234375,
+              369.1839904785156,
+              212.989990234375
+            ],
+            "order": 13
+          },
+          {
+            "type": "paragraph",
+            "text": "5\nObservaciones / Remarks\nPosee LGT WDI (2), TWY y APN /\nIt has LGT WDI (2), TWY and APN",
+            "page": 6,
+            "bbox": [
+              42.599998474121094,
+              218.38995361328125,
+              435.78399658203125,
+              249.8299560546875
+            ],
+            "order": 14
+          }
+        ],
+        "source": {
+          "pages": [
+            6
+          ],
+          "blocks_count": 14,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.16",
+      "title": "AD 2.16",
+      "section_title": "ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA",
+      "raw_text": "AD 2.16\nAD 2.16 ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA\n| 1 | COORD GEO y GUND del centro geométrico de la TLOF /\nTLOF geometric center GEO COORD and GUND | No |\n|  | COORD GEO y GUND THR de cada FATO /\nEach FATO GEO COORD and GUND | No |\n| 2 | Elevación del área TLOF / TLOF elevation area | No |\n|  | Elevación del área FATO / FATO elevation area | No |\n| 3 | Dimensiones de las áreas TLOF y FATO, su tipo de superficie,\ncarga admisible y señales /\nTLOF and FATO area dimensions, Surface type, bearing strength\nand markings | No |\n| 4 | BRG GEO de la FATO / BRG GEO of the FATO | No |\n| 5 | Distancias declaradas disponibles /\nDeclared distances available | No |\n| 6 | LGT de aproximación / Approach LGT | No |\n|  | LGT de la FATO / FATO LGT | No |\n| 7 | Observaciones / Remarks | Los helicópteros operan según instrucciones del ATS /\nHelicopters operate according to ATS instructions |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.16 ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "COORD GEO y GUND del centro geométrico de la TLOF /\nTLOF geometric center GEO COORD and GUND",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "COORD GEO y GUND THR de cada FATO /\nEach FATO GEO COORD and GUND",
+                "value": "No"
+              },
+              {
+                "item": "2",
+                "label": "Elevación del área TLOF / TLOF elevation area",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "Elevación del área FATO / FATO elevation area",
+                "value": "No"
+              },
+              {
+                "item": "3",
+                "label": "Dimensiones de las áreas TLOF y FATO, su tipo de superficie,\ncarga admisible y señales /\nTLOF and FATO area dimensions, Surface type, bearing strength\nand markings",
+                "value": "No"
+              },
+              {
+                "item": "4",
+                "label": "BRG GEO de la FATO / BRG GEO of the FATO",
+                "value": "No"
+              },
+              {
+                "item": "5",
+                "label": "Distancias declaradas disponibles /\nDeclared distances available",
+                "value": "No"
+              },
+              {
+                "item": "6",
+                "label": "LGT de aproximación / Approach LGT",
+                "value": "No"
+              },
+              {
+                "item": "",
+                "label": "LGT de la FATO / FATO LGT",
+                "value": "No"
+              },
+              {
+                "item": "7",
+                "label": "Observaciones / Remarks",
+                "value": "Los helicópteros operan según instrucciones del ATS /\nHelicopters operate according to ATS instructions"
+              }
+            ],
+            "page": 6,
+            "bbox": [
+              42.52615483601888,
+              250.28298950195312,
+              552.9283194193026,
+              477.6099853515625
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.16 ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA\n1 | COORD GEO y GUND del centro geométrico de la TLOF /\nTLOF geometric center GEO COORD and GUND | No\nCOORD GEO y GUND THR de cada FATO /\nEach FATO GEO COORD and GUND | No\n2 | Elevación del área TLOF / TLOF elevation area | No\nElevación del área FATO / FATO elevation area | No\n3 | Dimensiones de las áreas TLOF y FATO, su tipo de superficie,\ncarga admisible y señales /\nTLOF and FATO area dimensions, Surface type, bearing strength\nand markings | No\n4 | BRG GEO de la FATO / BRG GEO of the FATO | No\n5 | Distancias declaradas disponibles /\nDeclared distances available | No\n6 | LGT de aproximación / Approach LGT | No\nLGT de la FATO / FATO LGT | No\n7 | Observaciones / Remarks | Los helicópteros operan según instrucciones del ATS /\nHelicopters operate according to ATS instructions",
+            "page": 6,
+            "bbox": [
+              42.52615483601888,
+              250.28298950195312,
+              552.9283194193026,
+              477.6099853515625
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.16 ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "COORD GEO y GUND del centro geométrico de la TLOF /\nTLOF geometric center GEO COORD and GUND",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "COORD GEO y GUND THR de cada FATO /\nEach FATO GEO COORD and GUND",
+                  "value": "No"
+                },
+                {
+                  "item": "2",
+                  "label": "Elevación del área TLOF / TLOF elevation area",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "Elevación del área FATO / FATO elevation area",
+                  "value": "No"
+                },
+                {
+                  "item": "3",
+                  "label": "Dimensiones de las áreas TLOF y FATO, su tipo de superficie,\ncarga admisible y señales /\nTLOF and FATO area dimensions, Surface type, bearing strength\nand markings",
+                  "value": "No"
+                },
+                {
+                  "item": "4",
+                  "label": "BRG GEO de la FATO / BRG GEO of the FATO",
+                  "value": "No"
+                },
+                {
+                  "item": "5",
+                  "label": "Distancias declaradas disponibles /\nDeclared distances available",
+                  "value": "No"
+                },
+                {
+                  "item": "6",
+                  "label": "LGT de aproximación / Approach LGT",
+                  "value": "No"
+                },
+                {
+                  "item": "",
+                  "label": "LGT de la FATO / FATO LGT",
+                  "value": "No"
+                },
+                {
+                  "item": "7",
+                  "label": "Observaciones / Remarks",
+                  "value": "Los helicópteros operan según instrucciones del ATS /\nHelicopters operate according to ATS instructions"
+                }
+              ],
+              "cells": [
+                "AD 2.16 ZONA DE ATERRIZAJE PARA HELICÓPTEROS / HELICOPTER LANDING AREA",
+                "1",
+                "COORD GEO y GUND del centro geométrico de la TLOF /\nTLOF geometric center GEO COORD and GUND",
+                "No",
+                "COORD GEO y GUND THR de cada FATO /\nEach FATO GEO COORD and GUND",
+                "No",
+                "2",
+                "Elevación del área TLOF / TLOF elevation area",
+                "No",
+                "Elevación del área FATO / FATO elevation area",
+                "No",
+                "3",
+                "Dimensiones de las áreas TLOF y FATO, su tipo de superficie,\ncarga admisible y señales /\nTLOF and FATO area dimensions, Surface type, bearing strength\nand markings",
+                "No",
+                "4",
+                "BRG GEO de la FATO / BRG GEO of the FATO",
+                "No",
+                "5",
+                "Distancias declaradas disponibles /\nDeclared distances available",
+                "No",
+                "6",
+                "LGT de aproximación / Approach LGT",
+                "No",
+                "LGT de la FATO / FATO LGT",
+                "No",
+                "7",
+                "Observaciones / Remarks",
+                "Los helicópteros operan según instrucciones del ATS /\nHelicopters operate according to ATS instructions"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            6
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.17",
+      "title": "AD 2.17",
+      "section_title": "ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE",
+      "raw_text": "AD 2.17\nAD 2.17 ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE\n| 1 | Designación y límites laterales /\nDesignation and lateral limits | CTR SAN RAFAEL\nCírculo de 10 NM de RDO con centro en VOR SRA (343522S -\n0682341W) /\nSAN RAFAEL CTR\n10 NM circle of RDO with center at SRA VOR (343522S -\n0682341W) |\n| 2 | Límites verticales / Vertical limits | FL 55\nGND |\n| 3 | Clasificación del espacio aéreo / Airspace classification | C |\n| 4 | Distintivo de llamada de la dependencia ATS /\nATS unit callsign | SAN RAFAEL TORRE / SAN RAFAEL TOWER |\n|  | Idioma(s) / language(s) | Español / Spanish |\n| 5 | Altitud de transición / Transition altitude | 5.000 ft |\n| 6 | Horas de aplicación / Hours of applicability | LUN – VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC |\n| 7 | Observaciones / Remarks | Se adoptará la clasificación “G” en las circunstancias que se\ndetallan en ENR 1.4 /\nThe \"G\" classification shall be adopted in the circumstances\ndetailed in ENR 1.4 |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.17 ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "1",
+                "label": "Designación y límites laterales /\nDesignation and lateral limits",
+                "value": "CTR SAN RAFAEL\nCírculo de 10 NM de RDO con centro en VOR SRA (343522S -\n0682341W) /\nSAN RAFAEL CTR\n10 NM circle of RDO with center at SRA VOR (343522S -\n0682341W)"
+              },
+              {
+                "item": "2",
+                "label": "Límites verticales / Vertical limits",
+                "value": "FL 55\nGND"
+              },
+              {
+                "item": "3",
+                "label": "Clasificación del espacio aéreo / Airspace classification",
+                "value": "C"
+              },
+              {
+                "item": "4",
+                "label": "Distintivo de llamada de la dependencia ATS /\nATS unit callsign",
+                "value": "SAN RAFAEL TORRE / SAN RAFAEL TOWER"
+              },
+              {
+                "item": "",
+                "label": "Idioma(s) / language(s)",
+                "value": "Español / Spanish"
+              },
+              {
+                "item": "5",
+                "label": "Altitud de transición / Transition altitude",
+                "value": "5.000 ft"
+              },
+              {
+                "item": "6",
+                "label": "Horas de aplicación / Hours of applicability",
+                "value": "LUN – VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC"
+              },
+              {
+                "item": "7",
+                "label": "Observaciones / Remarks",
+                "value": "Se adoptará la clasificación “G” en las circunstancias que se\ndetallan en ENR 1.4 /\nThe \"G\" classification shall be adopted in the circumstances\ndetailed in ENR 1.4"
+              }
+            ],
+            "page": 6,
+            "bbox": [
+              42.52615483601888,
+              489.1299629211426,
+              552.9283194193026,
+              730.3599853515625
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.17 ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE\n1 | Designación y límites laterales /\nDesignation and lateral limits | CTR SAN RAFAEL\nCírculo de 10 NM de RDO con centro en VOR SRA (343522S -\n0682341W) /\nSAN RAFAEL CTR\n10 NM circle of RDO with center at SRA VOR (343522S -\n0682341W)\n2 | Límites verticales / Vertical limits | FL 55\nGND\n3 | Clasificación del espacio aéreo / Airspace classification | C\n4 | Distintivo de llamada de la dependencia ATS /\nATS unit callsign | SAN RAFAEL TORRE / SAN RAFAEL TOWER\nIdioma(s) / language(s) | Español / Spanish\n5 | Altitud de transición / Transition altitude | 5.000 ft\n6 | Horas de aplicación / Hours of applicability | LUN – VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC\n7 | Observaciones / Remarks | Se adoptará la clasificación “G” en las circunstancias que se\ndetallan en ENR 1.4 /\nThe \"G\" classification shall be adopted in the circumstances\ndetailed in ENR 1.4",
+            "page": 6,
+            "bbox": [
+              42.52615483601888,
+              489.1299629211426,
+              552.9283194193026,
+              730.3599853515625
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.17 ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "1",
+                  "label": "Designación y límites laterales /\nDesignation and lateral limits",
+                  "value": "CTR SAN RAFAEL\nCírculo de 10 NM de RDO con centro en VOR SRA (343522S -\n0682341W) /\nSAN RAFAEL CTR\n10 NM circle of RDO with center at SRA VOR (343522S -\n0682341W)"
+                },
+                {
+                  "item": "2",
+                  "label": "Límites verticales / Vertical limits",
+                  "value": "FL 55\nGND"
+                },
+                {
+                  "item": "3",
+                  "label": "Clasificación del espacio aéreo / Airspace classification",
+                  "value": "C"
+                },
+                {
+                  "item": "4",
+                  "label": "Distintivo de llamada de la dependencia ATS /\nATS unit callsign",
+                  "value": "SAN RAFAEL TORRE / SAN RAFAEL TOWER"
+                },
+                {
+                  "item": "",
+                  "label": "Idioma(s) / language(s)",
+                  "value": "Español / Spanish"
+                },
+                {
+                  "item": "5",
+                  "label": "Altitud de transición / Transition altitude",
+                  "value": "5.000 ft"
+                },
+                {
+                  "item": "6",
+                  "label": "Horas de aplicación / Hours of applicability",
+                  "value": "LUN – VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC"
+                },
+                {
+                  "item": "7",
+                  "label": "Observaciones / Remarks",
+                  "value": "Se adoptará la clasificación “G” en las circunstancias que se\ndetallan en ENR 1.4 /\nThe \"G\" classification shall be adopted in the circumstances\ndetailed in ENR 1.4"
+                }
+              ],
+              "cells": [
+                "AD 2.17 ESPACIO AÉREO DE LOS ATS / ATS AIRSPACE",
+                "1",
+                "Designación y límites laterales /\nDesignation and lateral limits",
+                "CTR SAN RAFAEL\nCírculo de 10 NM de RDO con centro en VOR SRA (343522S -\n0682341W) /\nSAN RAFAEL CTR\n10 NM circle of RDO with center at SRA VOR (343522S -\n0682341W)",
+                "2",
+                "Límites verticales / Vertical limits",
+                "FL 55\nGND",
+                "3",
+                "Clasificación del espacio aéreo / Airspace classification",
+                "C",
+                "4",
+                "Distintivo de llamada de la dependencia ATS /\nATS unit callsign",
+                "SAN RAFAEL TORRE / SAN RAFAEL TOWER",
+                "Idioma(s) / language(s)",
+                "Español / Spanish",
+                "5",
+                "Altitud de transición / Transition altitude",
+                "5.000 ft",
+                "6",
+                "Horas de aplicación / Hours of applicability",
+                "LUN – VIE 10:00-23:59 UTC / MON and FRI 10:00-23:59 UTC",
+                "7",
+                "Observaciones / Remarks",
+                "Se adoptará la clasificación “G” en las circunstancias que se\ndetallan en ENR 1.4 /\nThe \"G\" classification shall be adopted in the circumstances\ndetailed in ENR 1.4"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            6
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.18",
+      "title": "AD 2.18",
+      "section_title": "INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+      "raw_text": "AD 2.18\nAD 2.18\nINSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES\nAD 2.18 INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES\n| TMA/APP/TWR | San Rafael Torre / San Rafael Tower CAUX |  | 119.15 MHz |  | CPPL 118.10 MHz LUN – VIE 10:00-23:59 UTC resto |\n| SMC | San Rafael GND | CPPL | 118.10 MHz | resto / rest O/R | CAUX 119.15 MHz EMERG 121.50 MHz Ver / See GEN 3.4 LUN – VIE 10:00-23:59 UTC resto rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.18 INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+            "columns": [
+              "Designacion del Servicio / Service designation",
+              "Distintivo de llamada / Call sign",
+              "Canales / Channels",
+              "Frecuencia / Frequency",
+              "Horas de funcionamiento / Hours of operation",
+              "Observaciones / Remarks"
+            ],
+            "rows": [
+              {
+                "Designacion del Servicio / Service designation": "TMA/APP/TWR",
+                "Distintivo de llamada / Call sign": "San Rafael Torre / San Rafael Tower CAUX",
+                "Canales / Channels": "",
+                "Frecuencia / Frequency": "119.15 MHz",
+                "Horas de funcionamiento / Hours of operation": "",
+                "Observaciones / Remarks": "CPPL 118.10 MHz LUN – VIE 10:00-23:59 UTC resto"
+              },
+              {
+                "Designacion del Servicio / Service designation": "SMC",
+                "Distintivo de llamada / Call sign": "San Rafael GND",
+                "Canales / Channels": "CPPL",
+                "Frecuencia / Frequency": "118.10 MHz",
+                "Horas de funcionamiento / Hours of operation": "resto / rest O/R",
+                "Observaciones / Remarks": "CAUX 119.15 MHz EMERG 121.50 MHz Ver / See GEN 3.4 LUN – VIE 10:00-23:59 UTC resto rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R"
+              }
+            ],
+            "page": 7,
+            "bbox": [
+              45.36000061035156,
+              61.40997314453125,
+              540.2139892578125,
+              209.02996826171875
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.18\nINSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+            "page": 7,
+            "bbox": [
+              45.36000061035156,
+              61.40997314453125,
+              410.2239990234375,
+              70.40997314453125
+            ],
+            "order": 1
+          },
+          {
+            "type": "table",
+            "text": "AD 2.18 INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+            "page": 7,
+            "bbox": [
+              45.36000061035156,
+              61.40997314453125,
+              540.2139892578125,
+              209.02996826171875
+            ],
+            "order": 2,
+            "table": {
+              "label": "AD 2.18 INSTALACIONES DE COMUNICACIONES DE LOS ATS / ATS COMMUNICATION FACILITIES",
+              "columns": [
+                "Designacion del Servicio / Service designation",
+                "Distintivo de llamada / Call sign",
+                "Canales / Channels",
+                "Frecuencia / Frequency",
+                "Horas de funcionamiento / Hours of operation",
+                "Observaciones / Remarks"
+              ],
+              "rows": [
+                {
+                  "Designacion del Servicio / Service designation": "TMA/APP/TWR",
+                  "Distintivo de llamada / Call sign": "San Rafael Torre / San Rafael Tower CAUX",
+                  "Canales / Channels": "",
+                  "Frecuencia / Frequency": "119.15 MHz",
+                  "Horas de funcionamiento / Hours of operation": "",
+                  "Observaciones / Remarks": "CPPL 118.10 MHz LUN – VIE 10:00-23:59 UTC resto"
+                },
+                {
+                  "Designacion del Servicio / Service designation": "SMC",
+                  "Distintivo de llamada / Call sign": "San Rafael GND",
+                  "Canales / Channels": "CPPL",
+                  "Frecuencia / Frequency": "118.10 MHz",
+                  "Horas de funcionamiento / Hours of operation": "resto / rest O/R",
+                  "Observaciones / Remarks": "CAUX 119.15 MHz EMERG 121.50 MHz Ver / See GEN 3.4 LUN – VIE 10:00-23:59 UTC resto rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R"
+                }
+              ],
+              "cells": [
+                "TMA/APP/TWR",
+                "San Rafael Torre / San Rafael Tower CAUX",
+                "",
+                "119.15 MHz",
+                "",
+                "CPPL 118.10 MHz LUN – VIE 10:00-23:59 UTC resto",
+                "SMC",
+                "San Rafael GND",
+                "CPPL",
+                "118.10 MHz",
+                "resto / rest O/R",
+                "CAUX 119.15 MHz EMERG 121.50 MHz Ver / See GEN 3.4 LUN – VIE 10:00-23:59 UTC resto rest O/R / MON and FRI 10:00-23:59 UTC resto / rest O/R"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 2,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.19",
+      "title": "AD 2.19",
+      "section_title": "RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS",
+      "raw_text": "AD 2.19\nAD 2.19 RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS\n|  | Tipo de ayuda, MAG VAR, | ID Frecuencia\ny Canal /\nFrequency\nand\nchannel Horas de\noperación /\nHours of\noperation COORD GEO del\nemplazamiento de\nla antena\ntransmisora /\nPosition of\ntransmitting\nantenna coordinates Elevación de la Observaciones /\nRemarks\n(*) |\n|  | Tipo de operación apoyada | antena |\n|  | para ILS/GNSS, CAT ILS, | transmisora del |\n|  | declinación para VOR/ILS / | DME / |\n|  | Type of aid, MAG VAR, Type | Elevation of |\n|  | of supported operation for | DME |\n|  | ILS / GNSS, ILS CAT,\ndeclination for VOL/ILS | transmitting\nantenna |\n| 1 | 2 | 3 4 5 6 7 |\n|  | VOR/DME | SRA 116.9 MHz H24 343522.00S\n0682341.00W 747.50 m\n2.452 ft DME CH 116X (330 km).\nRestricciones: Ver ENR\n4.1. /\nRestrictions: See ENR 4.1. |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.19 RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "",
+                "label": "Tipo de ayuda, MAG VAR,",
+                "value": "ID Frecuencia\ny Canal /\nFrequency\nand\nchannel Horas de\noperación /\nHours of\noperation COORD GEO del\nemplazamiento de\nla antena\ntransmisora /\nPosition of\ntransmitting\nantenna coordinates Elevación de la Observaciones /\nRemarks\n(*)"
+              },
+              {
+                "item": "",
+                "label": "Tipo de operación apoyada",
+                "value": "antena"
+              },
+              {
+                "item": "",
+                "label": "para ILS/GNSS, CAT ILS,",
+                "value": "transmisora del"
+              },
+              {
+                "item": "",
+                "label": "declinación para VOR/ILS /",
+                "value": "DME /"
+              },
+              {
+                "item": "",
+                "label": "Type of aid, MAG VAR, Type",
+                "value": "Elevation of"
+              },
+              {
+                "item": "",
+                "label": "of supported operation for",
+                "value": "DME"
+              },
+              {
+                "item": "",
+                "label": "ILS / GNSS, ILS CAT,\ndeclination for VOL/ILS",
+                "value": "transmitting\nantenna"
+              },
+              {
+                "item": "1",
+                "label": "2",
+                "value": "3 4 5 6 7"
+              },
+              {
+                "item": "",
+                "label": "VOR/DME",
+                "value": "SRA 116.9 MHz H24 343522.00S\n0682341.00W 747.50 m\n2.452 ft DME CH 116X (330 km).\nRestricciones: Ver ENR\n4.1. /\nRestrictions: See ENR 4.1."
+              }
+            ],
+            "page": 7,
+            "bbox": [
+              44.000690164237184,
+              276.40997314453125,
+              551.8812213134765,
+              445.4199695587158
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.19 RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS\nTipo de ayuda, MAG VAR, | ID Frecuencia\ny Canal /\nFrequency\nand\nchannel Horas de\noperación /\nHours of\noperation COORD GEO del\nemplazamiento de\nla antena\ntransmisora /\nPosition of\ntransmitting\nantenna coordinates Elevación de la Observaciones /\nRemarks\n(*)\nTipo de operación apoyada | antena\npara ILS/GNSS, CAT ILS, | transmisora del\ndeclinación para VOR/ILS / | DME /\nType of aid, MAG VAR, Type | Elevation of\nof supported operation for | DME\nILS / GNSS, ILS CAT,\ndeclination for VOL/ILS | transmitting\nantenna\n1 | 2 | 3 4 5 6 7\nVOR/DME | SRA 116.9 MHz H24 343522.00S\n0682341.00W 747.50 m\n2.452 ft DME CH 116X (330 km).\nRestricciones: Ver ENR\n4.1. /\nRestrictions: See ENR 4.1.",
+            "page": 7,
+            "bbox": [
+              44.000690164237184,
+              276.40997314453125,
+              551.8812213134765,
+              445.4199695587158
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.19 RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "",
+                  "label": "Tipo de ayuda, MAG VAR,",
+                  "value": "ID Frecuencia\ny Canal /\nFrequency\nand\nchannel Horas de\noperación /\nHours of\noperation COORD GEO del\nemplazamiento de\nla antena\ntransmisora /\nPosition of\ntransmitting\nantenna coordinates Elevación de la Observaciones /\nRemarks\n(*)"
+                },
+                {
+                  "item": "",
+                  "label": "Tipo de operación apoyada",
+                  "value": "antena"
+                },
+                {
+                  "item": "",
+                  "label": "para ILS/GNSS, CAT ILS,",
+                  "value": "transmisora del"
+                },
+                {
+                  "item": "",
+                  "label": "declinación para VOR/ILS /",
+                  "value": "DME /"
+                },
+                {
+                  "item": "",
+                  "label": "Type of aid, MAG VAR, Type",
+                  "value": "Elevation of"
+                },
+                {
+                  "item": "",
+                  "label": "of supported operation for",
+                  "value": "DME"
+                },
+                {
+                  "item": "",
+                  "label": "ILS / GNSS, ILS CAT,\ndeclination for VOL/ILS",
+                  "value": "transmitting\nantenna"
+                },
+                {
+                  "item": "1",
+                  "label": "2",
+                  "value": "3 4 5 6 7"
+                },
+                {
+                  "item": "",
+                  "label": "VOR/DME",
+                  "value": "SRA 116.9 MHz H24 343522.00S\n0682341.00W 747.50 m\n2.452 ft DME CH 116X (330 km).\nRestricciones: Ver ENR\n4.1. /\nRestrictions: See ENR 4.1."
+                }
+              ],
+              "cells": [
+                "AD 2.19 RADIOAYUDAS PARA LA NAVEGACIÓN Y EL ATERRIZAJE / NAVIGATIONAL AND LANDING AIDS",
+                "Tipo de ayuda, MAG VAR,",
+                "ID",
+                "Frecuencia\ny Canal /\nFrequency\nand\nchannel",
+                "Horas de\noperación /\nHours of\noperation",
+                "COORD GEO del\nemplazamiento de\nla antena\ntransmisora /\nPosition of\ntransmitting\nantenna coordinates",
+                "Elevación de la",
+                "Observaciones /\nRemarks\n(*)",
+                "Tipo de operación apoyada",
+                "antena",
+                "para ILS/GNSS, CAT ILS,",
+                "transmisora del",
+                "declinación para VOR/ILS /",
+                "DME /",
+                "Type of aid, MAG VAR, Type",
+                "Elevation of",
+                "of supported operation for",
+                "DME",
+                "ILS / GNSS, ILS CAT,\ndeclination for VOL/ILS",
+                "transmitting\nantenna",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "VOR/DME",
+                "SRA",
+                "116.9 MHz",
+                "H24",
+                "343522.00S\n0682341.00W",
+                "747.50 m\n2.452 ft",
+                "DME CH 116X (330 km).\nRestricciones: Ver ENR\n4.1. /\nRestrictions: See ENR 4.1."
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.20",
+      "title": "AD 2.20",
+      "section_title": null,
+      "raw_text": "AD 2.20\nAD 2.20\nREGLAMENTO LOCAL DEL AERÓDROMO / LOCAL AERODROME REGULATIONS\n- Las OPS VFR deberán ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft.\n- En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, deberá coordinar previamente con el Jefe de\nAeródromo y/o Explotador de Aeródromo la asignación de PSN para estacionamiento, también con el Proveedor de Combustible (en\ncaso de necesitarlo) y otras coordinaciones operativas necesarias. /\n- VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.\n- In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome\nHead and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary\noperational coordination",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.20\nREGLAMENTO LOCAL DEL AERÓDROMO / LOCAL AERODROME REGULATIONS\n- Las OPS VFR deberán ajustarse a lo establecido en el ANEXO BRAVO, excepto el inciso c) donde debe reemplazarse el valor por 1.000 ft.\n- En las circunstancias detalladas en el ENR 1.4, el piloto que decida realizar vuelos VFR, deberá coordinar previamente con el Jefe de",
+            "page": 7,
+            "bbox": [
+              45.720001220703125,
+              460.9599914550781,
+              549.573974609375,
+              498.66998291015625
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "Aeródromo y/o Explotador de Aeródromo la asignación de PSN para estacionamiento, también con el Proveedor de Combustible (en\ncaso de necesitarlo) y otras coordinaciones operativas necesarias. /",
+            "page": 7,
+            "bbox": [
+              54.2400016784668,
+              500.1999816894531,
+              549.0059204101562,
+              520.239990234375
+            ],
+            "order": 2
+          },
+          {
+            "type": "paragraph",
+            "text": "- VFR OPS shall conform to BRAVO ANNEX, except c) where the value should be replaced by 1,000 ft.\n- In the circumstances detailed in ENR 1.4, the pilot who decides to perform VFR flights must previously coordinate with the Aerodrome",
+            "page": 7,
+            "bbox": [
+              45.720001220703125,
+              524.7987670898438,
+              549.158447265625,
+              550.510009765625
+            ],
+            "order": 3
+          },
+          {
+            "type": "paragraph",
+            "text": "Head and/or Aerodrome Operator the assignment of PSN for parking, also with the Fuel Supplier (in case of need) and other necessary\noperational coordination",
+            "page": 7,
+            "bbox": [
+              54.2400016784668,
+              552.0399780273438,
+              549.16455078125,
+              572.0799560546875
+            ],
+            "order": 4
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 4,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.21",
+      "title": "AD 2.21",
+      "section_title": null,
+      "raw_text": "AD 2.21\nAD 2.21\nPROCEDIMIENTOS DE ATENUACIÓN DEL RUIDO / NOISE ABATEMENT PROCEDURES\n- Se aplicarán los procedimientos generales de atenuación de ruido establecidos en la Parte 2 – ENR 1.5 /\n- The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.21\nPROCEDIMIENTOS DE ATENUACIÓN DEL RUIDO / NOISE ABATEMENT PROCEDURES",
+            "page": 7,
+            "bbox": [
+              48.0,
+              227.8699951171875,
+              398.8240051269531,
+              236.8699951171875
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "- Se aplicarán los procedimientos generales de atenuación de ruido establecidos en la Parte 2 – ENR 1.5 /\n- The general noise abatement procedures set forth in Part 2 - ENR 1.5 shall apply",
+            "page": 7,
+            "bbox": [
+              48.0,
+              241.42999267578125,
+              433.14398193359375,
+              261.469970703125
+            ],
+            "order": 2
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 2,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.22",
+      "title": "AD 2.22",
+      "section_title": null,
+      "raw_text": "AD 2.22\nAD 2.22\nPROCEDIMIENTOS DE VUELO / FLIGHT PROCEDURES\nNIL",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.22\nPROCEDIMIENTOS DE VUELO / FLIGHT PROCEDURES",
+            "page": 7,
+            "bbox": [
+              48.0,
+              593.9199829101562,
+              284.3240051269531,
+              602.9199829101562
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "NIL",
+            "page": 7,
+            "bbox": [
+              48.0,
+              610.3900146484375,
+              61.91400146484375,
+              619.3900146484375
+            ],
+            "order": 2
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 2,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.23",
+      "title": "AD 2.23",
+      "section_title": null,
+      "raw_text": "AD 2.23\nAD 2.23\nINFORMACIÓN SUPLEMENTARIA / ADDITIONAL INFORMATION\nPertenece al SNA / It belongs to the SNA",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": [
+            "no_tables_detected"
+          ]
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.23\nINFORMACIÓN SUPLEMENTARIA / ADDITIONAL INFORMATION",
+            "page": 7,
+            "bbox": [
+              48.2400016784668,
+              637.6300048828125,
+              325.14398193359375,
+              646.6300048828125
+            ],
+            "order": 1
+          },
+          {
+            "type": "paragraph",
+            "text": "Pertenece al SNA / It belongs to the SNA",
+            "page": 7,
+            "bbox": [
+              48.2400016784668,
+              654.0699462890625,
+              197.20399475097656,
+              663.0699462890625
+            ],
+            "order": 2
+          }
+        ],
+        "source": {
+          "pages": [
+            7
+          ],
+          "blocks_count": 2,
+          "tables_count": 0
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.24",
+      "title": "AD 2.24",
+      "section_title": "CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+      "raw_text": "AD 2.24\nAD 2.24\nCARTAS RELATIVAS AL AERÓDROMO / CHARTS RELATED TO THE AERODROME\nAD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME\n|  | Plano de aeródromo – OACI / Aerodrome Chart - ICAO |  | SAMR AD 2.A1 |\n|  | Plano de estacionamiento y atraque de aeronaves – OACI / Aircraft Parking/Docking Chart – ICAO |  | SAMR AD 2.B1-B2-B3-B4 |\n| Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO | VOR Z | PISTA/RWY 29 | SAMR AD 2.M1 |\n| Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO | VOR | PISTA/RWY 11 | SAMR AD 2.M2 |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+            "columns": [
+              "Categoria / Category",
+              "Carta / Chart",
+              "Pista / RWY",
+              "Codigo / Code"
+            ],
+            "rows": [
+              {
+                "Categoria / Category": "",
+                "Carta / Chart": "Plano de aeródromo – OACI / Aerodrome Chart - ICAO",
+                "Pista / RWY": "",
+                "Codigo / Code": "SAMR AD 2.A1"
+              },
+              {
+                "Categoria / Category": "",
+                "Carta / Chart": "Plano de estacionamiento y atraque de aeronaves – OACI / Aircraft Parking/Docking Chart – ICAO",
+                "Pista / RWY": "",
+                "Codigo / Code": "SAMR AD 2.B1-B2-B3-B4"
+              },
+              {
+                "Categoria / Category": "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                "Carta / Chart": "VOR Z",
+                "Pista / RWY": "PISTA/RWY 29",
+                "Codigo / Code": "SAMR AD 2.M1"
+              },
+              {
+                "Categoria / Category": "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                "Carta / Chart": "VOR",
+                "Pista / RWY": "PISTA/RWY 11",
+                "Codigo / Code": "SAMR AD 2.M2"
+              }
+            ],
+            "page": 8,
+            "bbox": [
+              47.880001068115234,
+              61.04998779296875,
+              536.614013671875,
+              133.54998779296875
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "heading",
+            "text": "AD 2.24\nCARTAS RELATIVAS AL AERÓDROMO / CHARTS RELATED TO THE AERODROME",
+            "page": 8,
+            "bbox": [
+              47.880001068115234,
+              61.04998779296875,
+              380.583984375,
+              70.04998779296875
+            ],
+            "order": 1
+          },
+          {
+            "type": "table",
+            "text": "AD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+            "page": 8,
+            "bbox": [
+              47.880001068115234,
+              61.04998779296875,
+              536.614013671875,
+              133.54998779296875
+            ],
+            "order": 2,
+            "table": {
+              "label": "AD 2.24 CARTAS RELATIVAS AL AERODROMO / CHARTS RELATED TO THE AERODROME",
+              "columns": [
+                "Categoria / Category",
+                "Carta / Chart",
+                "Pista / RWY",
+                "Codigo / Code"
+              ],
+              "rows": [
+                {
+                  "Categoria / Category": "",
+                  "Carta / Chart": "Plano de aeródromo – OACI / Aerodrome Chart - ICAO",
+                  "Pista / RWY": "",
+                  "Codigo / Code": "SAMR AD 2.A1"
+                },
+                {
+                  "Categoria / Category": "",
+                  "Carta / Chart": "Plano de estacionamiento y atraque de aeronaves – OACI / Aircraft Parking/Docking Chart – ICAO",
+                  "Pista / RWY": "",
+                  "Codigo / Code": "SAMR AD 2.B1-B2-B3-B4"
+                },
+                {
+                  "Categoria / Category": "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                  "Carta / Chart": "VOR Z",
+                  "Pista / RWY": "PISTA/RWY 29",
+                  "Codigo / Code": "SAMR AD 2.M1"
+                },
+                {
+                  "Categoria / Category": "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                  "Carta / Chart": "VOR",
+                  "Pista / RWY": "PISTA/RWY 11",
+                  "Codigo / Code": "SAMR AD 2.M2"
+                }
+              ],
+              "cells": [
+                "",
+                "Plano de aeródromo – OACI / Aerodrome Chart - ICAO",
+                "",
+                "SAMR AD 2.A1",
+                "",
+                "Plano de estacionamiento y atraque de aeronaves – OACI / Aircraft Parking/Docking Chart – ICAO",
+                "",
+                "SAMR AD 2.B1-B2-B3-B4",
+                "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                "VOR Z",
+                "PISTA/RWY 29",
+                "SAMR AD 2.M1",
+                "Cartas de aproximación por instrumentos – OACI / Instrument Approach Chart - ICAO",
+                "VOR",
+                "PISTA/RWY 11",
+                "SAMR AD 2.M2"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            8
+          ],
+          "blocks_count": 2,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    },
+    {
+      "section_id": "AD 2.25",
+      "title": "AD 2.25",
+      "section_title": "PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION",
+      "raw_text": "AD 2.25\nAD 2.25 PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION\n|  |  | No |",
+      "data": {
+        "schema_hint": "generic_ad2",
+        "tables": [
+          {
+            "name": "table_1",
+            "label": "AD 2.25 PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION",
+            "columns": [
+              "item",
+              "label",
+              "value"
+            ],
+            "rows": [
+              {
+                "item": "",
+                "label": "",
+                "value": "No"
+              }
+            ],
+            "page": 8,
+            "bbox": [
+              42.4984612098107,
+              142.8600056966146,
+              552.892329289363,
+              171.739990234375
+            ]
+          }
+        ],
+        "quality": {
+          "confidence": 0.9,
+          "warnings": []
+        }
+      },
+      "anchors": {
+        "section_blocks": [
+          {
+            "type": "table",
+            "text": "AD 2.25 PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION\nNo",
+            "page": 8,
+            "bbox": [
+              42.4984612098107,
+              142.8600056966146,
+              552.892329289363,
+              171.739990234375
+            ],
+            "order": 1,
+            "table": {
+              "label": "AD 2.25 PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION",
+              "columns": [
+                "item",
+                "label",
+                "value"
+              ],
+              "rows": [
+                {
+                  "item": "",
+                  "label": "",
+                  "value": "No"
+                }
+              ],
+              "cells": [
+                "AD 2.25 PENETRACIÓN DE LA SUPERFICIE DEL TRAMO VISUAL (VSS) / VISUAL SEGMENT SURFACE (VSS) PENETRATION",
+                "No"
+              ]
+            }
+          }
+        ],
+        "source": {
+          "pages": [
+            8
+          ],
+          "blocks_count": 1,
+          "tables_count": 1
+        }
+      },
+      "section_meta": null
+    }
+  ]
+}

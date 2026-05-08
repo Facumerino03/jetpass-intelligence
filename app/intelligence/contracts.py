@@ -39,10 +39,6 @@ class AerodromeIntent(BaseModel):
 
     icao: str
     force_refresh: bool = False
-    section_ids: list[str] | None = Field(
-        default=None,
-        description="Subset of AD 2.x section IDs to enrich. None means all.",
-    )
 
 
 class OrchestratorRequest(BaseModel):
