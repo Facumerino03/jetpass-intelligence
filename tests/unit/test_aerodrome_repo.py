@@ -4,19 +4,19 @@ import pytest
 
 from app.repositories import aerodrome_repo
 from app.models.aerodrome import AerodromeDocument
+from app.schemas.ad_sections import OPERATIONAL_AD_SECTION_IDS
 from app.schemas.aerodrome import AerodromeCreate, SectionMetaSchema, SectionSchema
 
 
 def _sections(cycle: str) -> list[SectionSchema]:
     return [
         SectionSchema(
-            section_id=f"AD 2.{idx}",
-            title=f"Section {idx}",
-            raw_text=f"Raw bilingual text {idx}",
-            data={"value": idx},
+            section_id=section_id,
+            title=section_id,
+            data={"value": section_id},
             section_meta=SectionMetaSchema(airac_cycle=cycle, source_page=idx),
         )
-        for idx in range(1, 26)
+        for idx, section_id in enumerate(OPERATIONAL_AD_SECTION_IDS, start=1)
     ]
 
 
@@ -33,11 +33,12 @@ def _create_payload(cycle: str = "2026-01") -> AerodromeCreate:
 
 
 @pytest.mark.asyncio
-async def test_upsert_creates_aerodrome_with_25_sections() -> None:
+async def test_upsert_creates_aerodrome_with_operational_sections() -> None:
     doc = await aerodrome_repo.upsert(_create_payload())
 
     assert doc.id == "SAMR"
-    assert len(doc.current.ad_sections) == 25
+    assert len(doc.current.ad_sections) == len(OPERATIONAL_AD_SECTION_IDS)
+    assert [section.section_id for section in doc.current.ad_sections] == list(OPERATIONAL_AD_SECTION_IDS)
     assert doc.current.meta.airac_cycle == "2026-01"
     assert doc.history == []
 
@@ -54,11 +55,27 @@ async def test_upsert_rotates_current_to_history_when_airac_changes() -> None:
 
 
 @pytest.mark.asyncio
-async def test_upsert_validates_section_count() -> None:
+async def test_upsert_validates_missing_operational_section() -> None:
     payload = _create_payload()
-    payload.ad_sections = payload.ad_sections[:-1]
+    payload.ad_sections = [
+        section for section in payload.ad_sections if section.section_id != "AD 2.19"
+    ]
 
-    with pytest.raises(ValueError, match="Expected 25"):
+    with pytest.raises(ValueError, match=r"Missing required operational AD 2\.x sections: \['AD 2\.19'\]"):
+        await aerodrome_repo.upsert(payload)
+
+
+@pytest.mark.asyncio
+async def test_upsert_rejects_non_operational_section() -> None:
+    payload = _create_payload()
+    payload.ad_sections.append(
+        SectionSchema(
+            section_id="AD 2.24",
+            title="AD 2.24",
+        )
+    )
+
+    with pytest.raises(ValueError, match=r"Unexpected non-operational AD 2\.x sections: \['AD 2\.24'\]"):
         await aerodrome_repo.upsert(payload)
 
 
@@ -88,4 +105,4 @@ async def test_upsert_replaces_legacy_document_without_current() -> None:
     result = await aerodrome_repo.upsert(_create_payload("2026-03"))
 
     assert result.current.meta.airac_cycle == "2026-03"
-    assert len(result.current.ad_sections) == 25
+    assert len(result.current.ad_sections) == len(OPERATIONAL_AD_SECTION_IDS)

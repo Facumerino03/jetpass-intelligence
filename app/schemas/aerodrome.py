@@ -20,18 +20,10 @@ class SectionSchema(BaseModel):
     section_id: str
     title: str
     section_title: str | None = None
-    raw_text: str
     data: dict[str, Any] = Field(default_factory=dict)
+    raw_text: str | None = None
     anchors: dict[str, Any] | None = None
     section_meta: SectionMetaSchema | None = None
-
-    @field_validator("raw_text")
-    @classmethod
-    def raw_text_must_not_be_empty(cls, v: str) -> str:
-        text = v.strip()
-        if not text:
-            raise ValueError("raw_text must not be empty")
-        return text
 
 
 class AerodromeCreate(BaseModel):
@@ -70,8 +62,8 @@ class SnapshotResponse(BaseModel):
                 section_id=s.section_id,
                 title=s.title,
                 section_title=s.section_title,
-                raw_text=s.raw_text,
                 data=s.data,
+                raw_text=s.raw_text,
                 anchors=s.anchors,
                 section_meta=SectionMetaSchema(
                     airac_cycle=s.section_meta.airac_cycle if s.section_meta else None,
@@ -108,8 +100,8 @@ class SectionResponse(SectionSchema):
             section_id=section.section_id,
             title=section.title,
             section_title=section.section_title,
-            raw_text=section.raw_text,
             data=section.data,
+            raw_text=section.raw_text,
             anchors=section.anchors,
             section_meta=SectionMetaSchema(
                 airac_cycle=section.section_meta.airac_cycle if section.section_meta else None,

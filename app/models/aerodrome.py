@@ -17,13 +17,13 @@ class SectionMeta(BaseModel):
 
 
 class AdSection(BaseModel):
-    """One AD 2.x section with literal text and flexible structured data."""
+    """One AD 2.x section with flexible structured data."""
 
     section_id: str
     title: str
     section_title: str | None = None
-    raw_text: str
     data: dict[str, Any] = Field(default_factory=dict)
+    raw_text: str | None = None
     anchors: dict[str, Any] | None = None
     section_meta: SectionMeta | None = None
 

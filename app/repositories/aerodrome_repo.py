@@ -7,6 +7,7 @@ from pydantic import ValidationError
 
 from app.models.aerodrome import AdSection, AerodromeDocument, AerodromeSnapshot, SectionMeta
 from app.models.meta import ChangeLogEntry, DocumentMeta, MetaSource
+from app.schemas.ad_sections import normalize_ad_section_id, validate_operational_section_ids
 from app.schemas.aerodrome import AerodromeCreate, SectionSchema
 
 
@@ -14,16 +15,8 @@ def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _normalize_section_id(section_id: str) -> str:
-    return " ".join(section_id.upper().split())
-
-
 def _validate_sections(sections: list[SectionSchema]) -> None:
-    if len(sections) != 25:
-        raise ValueError(f"Expected 25 AD 2.x sections, got {len(sections)}")
-    for section in sections:
-        if not section.raw_text.strip():
-            raise ValueError(f"Section '{section.section_id}' has empty raw_text")
+    validate_operational_section_ids(section.section_id for section in sections)
 
 
 def _to_model_section(section: SectionSchema) -> AdSection:
@@ -31,8 +24,8 @@ def _to_model_section(section: SectionSchema) -> AdSection:
         section_id=section.section_id,
         title=section.title,
         section_title=section.section_title,
-        raw_text=section.raw_text,
         data=section.data,
+        raw_text=section.raw_text,
         anchors=section.anchors,
         section_meta=SectionMeta(
             airac_cycle=section.section_meta.airac_cycle,
@@ -65,7 +58,7 @@ def _build_meta(data: AerodromeCreate, version: int, replaces: str | None) -> Do
         change_log=[
             ChangeLogEntry(
                 airac_cycle=data.airac_cycle,
-                changed_by=data.downloaded_by or "aip-parser",
+                changed_by=data.downloaded_by or "documentai",
                 changed_fields=["current.ad_sections", "current._meta"],
                 notes="Upsert AD 2.0 snapshot",
             )
@@ -153,9 +146,9 @@ async def get_section_by_icao(icao: str, section_id: str) -> AdSection | None:
     aerodrome = await get_by_icao(icao)
     if aerodrome is None:
         return None
-    normalized = _normalize_section_id(section_id)
+    normalized = normalize_ad_section_id(section_id)
     for section in aerodrome.current.ad_sections:
-        if _normalize_section_id(section.section_id) == normalized:
+        if normalize_ad_section_id(section.section_id) == normalized:
             return section
     return None
 
