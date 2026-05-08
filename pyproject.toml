@@ -15,15 +15,14 @@ dependencies = [
     "ollama>=0.6.1",
     "openai>=1.65.2",
     "playwright>=1.58.0",
-    "pymupdf>=1.27.2",
     "pymongo>=4.12.0",
     "pydantic>=2.13.3",
     "pydantic-settings>=2.14.0",
     "redis>=7.4.0",
     "uvicorn[standard]>=0.45.0",
     "google-auth>=2.0.0",
+    "google-cloud-documentai>=3.0.0",
     "apscheduler<4",
-    "docling>=2.92.0",
 ]
 
 [dependency-groups]
