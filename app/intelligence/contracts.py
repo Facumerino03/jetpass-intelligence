@@ -46,8 +46,7 @@ class OrchestratorRequest(BaseModel):
 
     aerodrome: AerodromeIntent | None = None
     notam: NotamIntent | None = None
-    # Future intents can be added here:
-    # weather: WeatherIntent | None = None
+    weather: WeatherIntent | None = None
 
 
 class NotamIntent(BaseModel):
@@ -55,6 +54,14 @@ class NotamIntent(BaseModel):
 
     icao: str
     force_refresh: bool = False
+
+
+class WeatherIntent(BaseModel):
+    """Intent to fetch or refresh aviation weather for a given ICAO."""
+
+    icao: str
+    force_refresh: bool = False
+    metar_hours_back: float | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -74,12 +81,70 @@ class AerodromeIntelResult(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class WeatherStation(BaseModel):
+    icao: str
+    name: str | None = None
+    lat: float | None = None
+    lon: float | None = None
+    elev: float | None = None
+
+
+class WeatherMetar(BaseModel):
+    raw: str | None = None
+    observed_at: datetime | None = None
+    flight_category: str | None = None
+    wind_dir_degrees: int | str | None = None
+    wind_speed_kt: int | None = None
+    wind_gust_kt: int | None = None
+    visibility: float | str | None = None
+    altimeter_hpa: float | None = None
+    temperature_c: float | None = None
+    dewpoint_c: float | None = None
+    present_weather: str | None = None
+    raw_payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class WeatherTaf(BaseModel):
+    raw: str | None = None
+    issued_at: datetime | None = None
+    valid_from: datetime | None = None
+    valid_to: datetime | None = None
+    forecast_periods: list[dict[str, Any]] = Field(default_factory=list)
+    raw_payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class WeatherSigmet(BaseModel):
+    raw: str | None = None
+    hazard: str | None = None
+    fir_id: str | None = None
+    valid_from: datetime | None = None
+    valid_to: datetime | None = None
+    geometry: dict[str, Any] | None = None
+    raw_payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class WeatherIntelResult(BaseModel):
+    """Result produced by WeatherIntelligenceService."""
+
+    icao: str
+    station: WeatherStation | None = None
+    metar: WeatherMetar | None = None
+    taf: WeatherTaf | None = None
+    sigmets: list[WeatherSigmet] = Field(default_factory=list)
+    fetched_at: datetime | None = None
+    source: Literal["cache", "fresh_fetch", "mixed"]
+    alerts: list[Alert] = Field(default_factory=list)
+    messages: list[str] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
 class OrchestratorResponse(BaseModel):
     """Consolidated response returned to the backend core."""
 
     intent: str
     aerodrome: AerodromeIntelResult | None = None
     notam: NotamIntelResult | None = None
+    weather: WeatherIntelResult | None = None
     alerts: list[Alert] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 
