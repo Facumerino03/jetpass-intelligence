@@ -15,9 +15,12 @@ logger = logging.getLogger(__name__)
 
 
 def _is_stale(doc: NotamDocument) -> bool:
+    fetched_at = doc.fetched_at
+    if fetched_at.tzinfo is None:
+        fetched_at = fetched_at.replace(tzinfo=timezone.utc)
     ttl_hours = get_settings().notam_cache_ttl_hours
     cutoff = datetime.now(timezone.utc) - timedelta(hours=ttl_hours)
-    return doc.fetched_at < cutoff
+    return fetched_at < cutoff
 
 
 async def get_notam_intelligence(icao: str, *, force_refresh: bool = False) -> NotamIntelResult:
