@@ -13,6 +13,7 @@ FLIGHT_PLANNING_AD_SECTION_IDS = (
     "AD 2.4",
     "AD 2.12",
     "AD 2.13",
+    "AD 2.18",
     "AD 2.19",
 )
 

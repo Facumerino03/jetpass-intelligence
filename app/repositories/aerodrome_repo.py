@@ -58,7 +58,7 @@ def _build_meta(data: AerodromeCreate, version: int, replaces: str | None) -> Do
         change_log=[
             ChangeLogEntry(
                 airac_cycle=data.airac_cycle,
-                changed_by=data.downloaded_by or "documentai",
+                changed_by=data.downloaded_by or "ad_extractor",
                 changed_fields=["current.ad_sections", "current._meta"],
                 notes="Upsert AD 2.0 snapshot",
             )

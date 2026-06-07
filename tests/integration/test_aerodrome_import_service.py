@@ -10,7 +10,7 @@ from app.models.meta import DocumentMeta
 from app.schemas.ad_sections import OPERATIONAL_AD_SECTION_IDS
 from app.schemas.aerodrome import AerodromeCreate, SectionSchema
 from app.services.aerodrome_import_service import AipImportError, import_aerodrome_from_aip
-from app.services.documentai.aip_documentai import DocumentAiAipError
+from app.services.aip_extractor import AipExtractorError
 from app.services.scraper.aip_scraper import AipScraperError
 
 
@@ -28,7 +28,7 @@ def _aerodrome_create() -> AerodromeCreate:
         full_name="S. A. Santiago Germano",
         airac_cycle="unknown",
         source_document="SAMR_AD-2.0.pdf",
-        downloaded_by="documentai",
+        downloaded_by="ad_extractor",
         ad_sections=_operational_sections(),
     )
 
@@ -54,7 +54,7 @@ def _aerodrome_doc() -> AerodromeDocument:
 
 
 @pytest.mark.asyncio
-async def test_import_aerodrome_documentai_pipeline(tmp_path: Path) -> None:
+async def test_import_aerodrome_extractor_pipeline(tmp_path: Path) -> None:
     ad20_path = tmp_path / "SAMR_AD-2.0.pdf"
     ad2a_path = tmp_path / "SAMR_AD-2.A.pdf"
     ad20_path.touch()
@@ -68,7 +68,7 @@ async def test_import_aerodrome_documentai_pipeline(tmp_path: Path) -> None:
             AsyncMock(return_value=[ad20_path, ad2a_path]),
         ),
         patch(
-            "app.services.aerodrome_import_service.parse_aerodrome_from_documentai",
+            "app.services.aerodrome_import_service.parse_aerodrome_from_ad_extractor",
             return_value=_aerodrome_create(),
         ) as parse_call,
         patch(
@@ -96,7 +96,7 @@ async def test_import_raises_when_scraper_fails(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
-async def test_import_raises_when_documentai_fails(tmp_path: Path) -> None:
+async def test_import_raises_when_extractor_fails(tmp_path: Path) -> None:
     ad20_path = tmp_path / "SAMR_AD-2.0.pdf"
     ad20_path.touch()
 
@@ -106,11 +106,11 @@ async def test_import_raises_when_documentai_fails(tmp_path: Path) -> None:
             AsyncMock(return_value=[ad20_path]),
         ),
         patch(
-            "app.services.aerodrome_import_service.parse_aerodrome_from_documentai",
-            side_effect=DocumentAiAipError("missing AD 2.19"),
+            "app.services.aerodrome_import_service.parse_aerodrome_from_ad_extractor",
+            side_effect=AipExtractorError("missing AD 2.19"),
         ),
     ):
-        with pytest.raises(AipImportError, match="Document AI extraction failed"):
+        with pytest.raises(AipImportError, match="AIP extraction failed"):
             await import_aerodrome_from_aip("SAMR", output_dir=tmp_path)
 
 
@@ -125,7 +125,7 @@ async def test_import_raises_when_db_fails(tmp_path: Path) -> None:
             AsyncMock(return_value=[ad20_path]),
         ),
         patch(
-            "app.services.aerodrome_import_service.parse_aerodrome_from_documentai",
+            "app.services.aerodrome_import_service.parse_aerodrome_from_ad_extractor",
             return_value=_aerodrome_create(),
         ),
         patch(

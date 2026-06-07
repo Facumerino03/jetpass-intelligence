@@ -14,17 +14,6 @@ class Settings(BaseSettings):
     mongodb_url: str | None = Field(default=None, alias="MONGODB_URL")
     mongodb_db_name: str = Field(default="jetpass_aeronautical", alias="MONGODB_DB_NAME")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
-    documentai_project_id: str = Field(default="655673003934", alias="DOCUMENTAI_PROJECT_ID")
-    documentai_location: str = Field(default="us", alias="DOCUMENTAI_LOCATION")
-    documentai_processor_id: str = Field(
-        default="c57cf2f52aedbbe3", alias="DOCUMENTAI_PROCESSOR_ID"
-    )
-    documentai_processor_version_id: str | None = Field(
-        default=None, alias="DOCUMENTAI_PROCESSOR_VERSION_ID"
-    )
-    documentai_imageless_mode: bool = Field(
-        default=False, alias="DOCUMENTAI_IMAGELESS_MODE"
-    )
     notam_cache_ttl_hours: int = Field(default=4, alias="NOTAM_CACHE_TTL_HOURS")
     aviation_weather_base_url: str = Field(
         default="https://aviationweather.gov/api/data",
@@ -97,9 +86,6 @@ class Settings(BaseSettings):
     ollama_host: str = Field(default="http://localhost:11434", alias="OLLAMA_HOST")
     ollama_model: str = Field(default="llama3.1:8b", alias="OLLAMA_MODEL")
     ollama_temperature: float = Field(default=0.0, alias="OLLAMA_TEMPERATURE")
-    aip_parser_engine: Literal["docling", "pymupdf"] = Field(
-        default="docling", alias="AIP_PARSER_ENGINE"
-    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

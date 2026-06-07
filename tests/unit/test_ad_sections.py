@@ -29,6 +29,7 @@ def test_operational_section_ids_are_product_scope() -> None:
         "AD 2.4",
         "AD 2.12",
         "AD 2.13",
+        "AD 2.18",
         "AD 2.19",
     )
 

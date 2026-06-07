@@ -1,4 +1,4 @@
-"""Orchestrates scraper + Document AI + repository to import aerodrome data from AIP."""
+"""Orchestrates scraper + AIP extractor + repository to import aerodrome data from AIP."""
 
 from __future__ import annotations
 
@@ -7,14 +7,14 @@ from pathlib import Path
 
 from app.repositories import aerodrome_repo
 from app.schemas.aerodrome import AerodromeResponse
-from app.services.documentai import DocumentAiAipError, parse_aerodrome_from_documentai
+from app.services.aip_extractor import AipExtractorError, parse_aerodrome_from_ad_extractor
 from app.services.scraper.aip_scraper import AipScraperError, download_aip_pdfs
 
 logger = logging.getLogger(__name__)
 
 
 class AipImportError(Exception):
-    """Pipeline failure: scraper, Document AI or persistence raised an error."""
+    """Pipeline failure: scraper, AIP extractor or persistence raised an error."""
 
 
 def _select_ad20_documents(pdf_paths: list[Path], icao: str) -> list[Path]:
@@ -30,7 +30,7 @@ async def import_aerodrome_from_aip(
     icao: str,
     output_dir: Path | None = None,
 ) -> AerodromeResponse:
-    """Download AIP PDFs, extract AD-2.0 with Document AI, and upsert MongoDB."""
+    """Download AIP PDFs, extract AD-2.0 with the AIP extractor, and upsert MongoDB."""
     icao = icao.strip().upper()
 
     try:
@@ -40,9 +40,9 @@ async def import_aerodrome_from_aip(
 
     try:
         ad20_paths = _select_ad20_documents(pdf_paths, icao)
-        aerodrome_data = parse_aerodrome_from_documentai(ad20_paths[0], icao=icao)
-    except DocumentAiAipError as exc:
-        raise AipImportError(f"[{icao}] Document AI extraction failed: {exc}") from exc
+        aerodrome_data = parse_aerodrome_from_ad_extractor(ad20_paths[0], icao=icao)
+    except AipExtractorError as exc:
+        raise AipImportError(f"[{icao}] AIP extraction failed: {exc}") from exc
 
     try:
         aerodrome_doc = await aerodrome_repo.upsert(aerodrome_data)
