@@ -47,12 +47,21 @@ class OrchestratorRequest(BaseModel):
     aerodrome: AerodromeIntent | None = None
     notam: NotamIntent | None = None
     weather: WeatherIntent | None = None
+    aerodrome_geo: AerodromeGeoIntent | None = None
 
 
 class NotamIntent(BaseModel):
     """Intent to fetch or refresh NOTAM intelligence for a given ICAO."""
 
     icao: str
+    force_refresh: bool = False
+
+
+class AerodromeGeoIntent(BaseModel):
+    """Lightweight intent to resolve aerodrome coordinates from OurAirports CSV."""
+
+    icao: str | None = None
+    icaos: list[str] | None = None
     force_refresh: bool = False
 
 
@@ -138,6 +147,17 @@ class WeatherIntelResult(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class GeoCoords(BaseModel):
+    """Coordinates and elevation for a single aerodrome."""
+
+    icao: str
+    lat: float | None = None
+    lon: float | None = None
+    elev_ft: int | None = None
+    elev_m: float | None = None
+    source: str = "not_found"
+
+
 class OrchestratorResponse(BaseModel):
     """Consolidated response returned to the backend core."""
 
@@ -145,6 +165,7 @@ class OrchestratorResponse(BaseModel):
     aerodrome: AerodromeIntelResult | None = None
     notam: NotamIntelResult | None = None
     weather: WeatherIntelResult | None = None
+    aerodrome_geo: dict[str, GeoCoords] | None = None
     alerts: list[Alert] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 
@@ -183,3 +204,19 @@ class NotamSyncStatusResponse(BaseModel):
     last_missing_count: int | None = None
     last_site_labels_count: int | None = None
     last_aerodromes_count: int | None = None
+
+
+class AirportsSyncStatusResponse(BaseModel):
+    """Operational status of the OurAirports CSV sync scheduler."""
+
+    enabled: bool
+    scheduler_running: bool
+    interval_hours: int | None = None
+    startup_sync_enabled: bool | None = None
+    in_progress: bool = False
+    next_run_at: datetime | None = None
+    last_run_started_at: datetime | None = None
+    last_run_finished_at: datetime | None = None
+    last_success_at: datetime | None = None
+    last_error: str | None = None
+    last_downloaded_rows: int | None = None

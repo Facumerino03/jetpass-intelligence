@@ -11,10 +11,12 @@ from app.intelligence.aerodrome_intel_service import get_aerodrome_intelligence
 from app.intelligence.contracts import (
     AerodromeIntelResult,
     Alert,
+    GeoCoords,
     NotamIntelResult,
     OrchestratorRequest,
     WeatherIntelResult,
 )
+from app.intelligence.geo.geo_service import get_aerodrome_geo_intelligence
 from app.intelligence.notam_intel_service import get_notam_intelligence
 from app.intelligence.weather_intel_service import get_weather_intelligence
 
@@ -24,6 +26,7 @@ class IntelligenceState(TypedDict, total=False):
     aerodrome_result: AerodromeIntelResult
     notam_result: NotamIntelResult
     weather_result: WeatherIntelResult
+    aerodrome_geo_result: dict[str, GeoCoords]
     alerts: list[Alert]
     intent: str
 
@@ -54,6 +57,11 @@ async def _run_requested_capabilities(state: IntelligenceState) -> IntelligenceS
                 metar_hours_back=wx.metar_hours_back,
             ),
         ))
+    if request.aerodrome_geo is not None:
+        calls.append((
+            "aerodrome_geo_result",
+            get_aerodrome_geo_intelligence(request.aerodrome_geo),
+        ))
 
     if not calls:
         return {}
@@ -78,6 +86,8 @@ def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
         parts.append("notam_context")
     if request.weather is not None:
         parts.append("weather_context")
+    if request.aerodrome_geo is not None:
+        parts.append("aerodrome_geo")
 
     return {"alerts": alerts, "intent": "+".join(parts) if parts else "noop"}
 

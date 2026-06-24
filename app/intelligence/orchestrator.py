@@ -21,5 +21,6 @@ async def run(request: OrchestratorRequest) -> OrchestratorResponse:
         aerodrome=state.get("aerodrome_result"),
         notam=state.get("notam_result"),
         weather=state.get("weather_result"),
+        aerodrome_geo=state.get("aerodrome_geo_result"),
         alerts=state.get("alerts", []),
     )

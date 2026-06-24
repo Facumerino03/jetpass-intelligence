@@ -59,6 +59,15 @@ class Settings(BaseSettings):
     notam_location_sync_headless: bool = Field(
         default=True, alias="NOTAM_LOCATION_SYNC_HEADLESS"
     )
+    airports_csv_sync_enabled: bool = Field(
+        default=True, alias="AIRPORTS_CSV_SYNC_ENABLED"
+    )
+    airports_csv_sync_interval_hours: int = Field(
+        default=24, alias="AIRPORTS_CSV_SYNC_INTERVAL_HOURS"
+    )
+    airports_csv_sync_on_startup: bool = Field(
+        default=True, alias="AIRPORTS_CSV_SYNC_ON_STARTUP"
+    )
     openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(
         default="openai/gpt-4o-mini", alias="OPENROUTER_MODEL"

@@ -1,5 +1,6 @@
 """Flexible aerodrome document model for AD 2.0 storage."""
 
+from datetime import datetime
 from typing import Any
 
 from beanie import Document
@@ -37,6 +38,17 @@ class AerodromeSnapshot(BaseModel):
     meta: DocumentMeta = Field(alias="_meta", default_factory=DocumentMeta)
 
 
+class GeoCache(BaseModel):
+    """Lightweight geo cache populated by the aerodrome_geo service (not AIP)."""
+
+    lat: float | None = None
+    lon: float | None = None
+    elev_ft: int | None = None
+    elev_m: float | None = None
+    source: str = ""
+    cached_at: datetime | None = None
+
+
 class AerodromeDocument(Document):
     """Single-document AD 2.0 store with current + history snapshots."""
 
@@ -49,6 +61,7 @@ class AerodromeDocument(Document):
 
     current: AerodromeSnapshot
     history: list[AerodromeSnapshot] = Field(default_factory=list)
+    geo: GeoCache | None = None
 
     class Settings:
         name = "aerodromes"
