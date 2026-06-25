@@ -8,14 +8,18 @@ from typing import Any, TypedDict
 from langgraph.graph import END, START, StateGraph
 
 from app.intelligence.aerodrome_intel_service import get_aerodrome_intelligence
+from app.intelligence.aerodromes_catalog_service import get_aerodrome_catalog_sync
 from app.intelligence.contracts import (
+    AerodromeCatalogSyncResult,
     AerodromeIntelResult,
     Alert,
+    Field18IntelResult,
     GeoCoords,
     NotamIntelResult,
     OrchestratorRequest,
     WeatherIntelResult,
 )
+from app.intelligence.fpl_field18_intel_service import get_field18_intelligence
 from app.intelligence.geo.geo_service import get_aerodrome_geo_intelligence
 from app.intelligence.notam_intel_service import get_notam_intelligence
 from app.intelligence.weather_intel_service import get_weather_intelligence
@@ -27,6 +31,8 @@ class IntelligenceState(TypedDict, total=False):
     notam_result: NotamIntelResult
     weather_result: WeatherIntelResult
     aerodrome_geo_result: dict[str, GeoCoords]
+    aerodrome_catalog_sync_result: AerodromeCatalogSyncResult
+    fpl_field18_result: Field18IntelResult
     alerts: list[Alert]
     intent: str
 
@@ -62,6 +68,16 @@ async def _run_requested_capabilities(state: IntelligenceState) -> IntelligenceS
             "aerodrome_geo_result",
             get_aerodrome_geo_intelligence(request.aerodrome_geo),
         ))
+    if request.aerodrome_catalog_sync is not None:
+        calls.append((
+            "aerodrome_catalog_sync_result",
+            get_aerodrome_catalog_sync(request.aerodrome_catalog_sync),
+        ))
+    if request.fpl_field18 is not None:
+        calls.append((
+            "fpl_field18_result",
+            get_field18_intelligence(request.fpl_field18),
+        ))
 
     if not calls:
         return {}
@@ -74,7 +90,13 @@ def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
     request = state["request"]
     alerts: list[Alert] = []
 
-    for key in ("aerodrome_result", "notam_result", "weather_result"):
+    for key in (
+        "aerodrome_result",
+        "notam_result",
+        "weather_result",
+        "aerodrome_catalog_sync_result",
+        "fpl_field18_result",
+    ):
         result = state.get(key)
         if result is not None:
             alerts.extend(result.alerts)
@@ -88,6 +110,10 @@ def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
         parts.append("weather_context")
     if request.aerodrome_geo is not None:
         parts.append("aerodrome_geo")
+    if request.aerodrome_catalog_sync is not None:
+        parts.append("aerodrome_catalog_sync")
+    if request.fpl_field18 is not None:
+        parts.append("fpl_field18")
 
     return {"alerts": alerts, "intent": "+".join(parts) if parts else "noop"}
 

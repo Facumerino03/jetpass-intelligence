@@ -7,13 +7,17 @@ import logging
 from fastapi import APIRouter, HTTPException, status
 
 from app.intelligence.contracts import (
+    AnacCatalogSyncStatusResponse,
     AirportsSyncStatusResponse,
     NotamSyncStatusResponse,
     OrchestratorRequest,
     OrchestratorResponse,
 )
 from app.intelligence.orchestrator import run
-from app.services.airports_sync_runtime import get_airports_sync_status
+from app.services.airports_sync_runtime import (
+    get_airports_sync_status,
+    get_anac_catalog_sync_status,
+)
 from app.services.notam_location_sync_runtime import get_notam_sync_status
 
 logger = logging.getLogger(__name__)
@@ -38,10 +42,16 @@ async def run_intelligence(request: OrchestratorRequest) -> OrchestratorResponse
         request.notam,
         request.weather,
         request.aerodrome_geo,
+        request.aerodrome_catalog_sync,
+        request.fpl_field18,
     ]):
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="At least one intent must be specified (e.g. 'aerodrome', 'notam', 'weather', or 'aerodrome_geo').",
+            detail=(
+                "At least one intent must be specified "
+                "(e.g. 'aerodrome', 'notam', 'weather', 'aerodrome_geo', "
+                "'aerodrome_catalog_sync', or 'fpl_field18')."
+            ),
         )
     logger.info("Intelligence request received: %s", request.model_dump(exclude_none=True))
     return await run(request)
@@ -61,13 +71,27 @@ async def get_notam_sync_operational_status() -> NotamSyncStatusResponse:
 
 
 @router.get(
-    "/airports-sync/status",
-    response_model=AirportsSyncStatusResponse,
-    summary="Get OurAirports CSV sync operational status",
+    "/anac-catalog-sync/status",
+    response_model=AnacCatalogSyncStatusResponse,
+    summary="Get ANAC catalog sync operational status",
     description=(
         "Returns scheduler and last-run metadata for the periodic synchronisation "
-        "of the OurAirports airports.csv file."
+        "of the ANAC MADHEL aerodrome catalog."
     ),
+)
+async def get_anac_catalog_sync_operational_status() -> AnacCatalogSyncStatusResponse:
+    return get_anac_catalog_sync_status()
+
+
+@router.get(
+    "/airports-sync/status",
+    response_model=AirportsSyncStatusResponse,
+    summary="Get ANAC catalog sync operational status (deprecated)",
+    description=(
+        "Deprecated alias for /anac-catalog-sync/status. "
+        "Returns scheduler and last-run metadata for the ANAC MADHEL catalog sync."
+    ),
+    deprecated=True,
 )
 async def get_airports_sync_operational_status() -> AirportsSyncStatusResponse:
     return get_airports_sync_status()

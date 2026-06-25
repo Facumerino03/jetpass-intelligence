@@ -1,0 +1,12 @@
+{
+  "local_identifier": "SVO",
+  "human_readable_identifier": "SANTA FE / SAUCE VIEJO - (SVO / SAAV) - DRCE - PÚBLICO CONTROLADO",
+  "the_geom": {
+    "geometry": {
+      "coordinates": [-60.8113888888889, -31.7108333333333],
+      "type": "Point"
+    }
+  },
+  "updated_at": "2024-02-06T12:39:00Z",
+  "uri": "/madhel/api/v2/airports/SVO/?format=json"
+}

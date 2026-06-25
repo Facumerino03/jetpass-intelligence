@@ -1,4 +1,4 @@
-"""Lightweight aerodrome geo-resolution service (no AIP/NOTAM scraping)."""
+"""Lightweight aerodrome geo-resolution service backed by the ANAC catalog."""
 
 from __future__ import annotations
 
@@ -6,67 +6,80 @@ import asyncio
 import logging
 from datetime import datetime, timezone
 
-from app.intelligence.contracts import AerodromeGeoIntent, GeoCoords
-from app.intelligence.geo.airports_index import (
-    AirportCsvIndex,
-    get_global_index,
-)
+import httpx
+
+from app.intelligence.contracts import AerodromeCatalogEntry, AerodromeGeoIntent, GeoCoords
+from app.intelligence.geo.anac_catalog_cache import get_global_catalog_cache
+from app.intelligence.geo.anac_client import AnacClient
+from app.intelligence.geo.anac_mapper import map_detail_to_entry
 from app.models.aerodrome import AerodromeDocument, GeoCache
 
 logger = logging.getLogger(__name__)
 
-_FT_TO_M = 0.3048
+_M_TO_FT = 3.28084
 
 
-def _get_index() -> AirportCsvIndex:
-    return get_global_index()
+def _get_cache():
+    return get_global_catalog_cache()
 
 
-def _ft_to_m(ft: int | None) -> float | None:
-    if ft is None:
+def _m_to_ft(m: float | None) -> int | None:
+    if m is None:
         return None
-    return round(ft * _FT_TO_M, 1)
+    return int(round(m * _M_TO_FT))
+
+
+def _entry_to_coords(code: str, entry: AerodromeCatalogEntry, *, source: str) -> GeoCoords:
+    return GeoCoords(
+        icao=code,
+        lat=entry.latitude,
+        lon=entry.longitude,
+        elev_ft=_m_to_ft(entry.elevation_m),
+        elev_m=entry.elevation_m,
+        source=source,
+    )
 
 
 async def get_aerodrome_geo_intelligence(
     intent: AerodromeGeoIntent,
 ) -> dict[str, GeoCoords]:
-    """Resolve coordinates for one or more ICAO codes.
+    """Resolve coordinates for one or more ICAO or local identifiers.
 
-    Cache-first (MongoDB ``geo`` field), fallback to CSV index.
-    Never scrapes AIP or NOTAM.
+    Cache-first (MongoDB ``geo`` field), then local ANAC catalog, then live ANAC detail.
     """
-    index = _get_index()
-    await index.ensure_loaded()
+    cache = _get_cache()
+    await cache.ensure_loaded()
 
-    icaos = _normalize_icaos(intent)
-    tasks = [_resolve_single(icao, intent.force_refresh, index) for icao in icaos]
+    codes = _normalize_codes(intent)
+    tasks = [_resolve_single(code, intent.force_refresh, cache) for code in codes]
     results = await asyncio.gather(*tasks)
     return {r.icao: r for r in results}
 
 
-def _normalize_icaos(intent: AerodromeGeoIntent) -> list[str]:
+def _normalize_codes(intent: AerodromeGeoIntent) -> list[str]:
     if intent.icao is not None:
         return [intent.icao.strip().upper()]
     if intent.icaos is not None:
-        return [icao.strip().upper() for icao in intent.icaos]
+        return [code.strip().upper() for code in intent.icaos]
     return []
 
 
 async def _resolve_single(
-    icao: str,
+    code: str,
     force_refresh: bool,
-    index: AirportCsvIndex,
+    cache,
 ) -> GeoCoords:
-    if not icao:
-        return GeoCoords(icao=icao, source="not_found")
+    if not code:
+        return GeoCoords(icao=code, source="not_found")
 
-    if not force_refresh:
-        doc = await AerodromeDocument.get(icao)
+    lookup_icao = code if len(code) == 4 else None
+
+    if not force_refresh and lookup_icao:
+        doc = await AerodromeDocument.get(lookup_icao)
         if doc is not None and doc.geo is not None:
-            logger.debug("[%s] Serving geo from cache.", icao)
+            logger.debug("[%s] Serving geo from Mongo cache.", code)
             return GeoCoords(
-                icao=icao,
+                icao=code,
                 lat=doc.geo.lat,
                 lon=doc.geo.lon,
                 elev_ft=doc.geo.elev_ft,
@@ -74,32 +87,50 @@ async def _resolve_single(
                 source="cache",
             )
 
-    row = index.lookup(icao)
-    if row is not None and row.lat is not None and row.lon is not None:
+    entry = cache.lookup_code(code)
+    if entry is not None:
+        return _entry_to_coords(code, entry, source="anac_catalog")
+
+    entry = await _fetch_live_entry(code)
+    if entry is None:
+        logger.debug("[%s] No coordinates found in ANAC catalog.", code)
+        return GeoCoords(icao=code, source="not_found")
+
+    if lookup_icao:
         geo = GeoCache(
-            lat=row.lat,
-            lon=row.lon,
-            elev_ft=row.elev_ft,
-            elev_m=_ft_to_m(row.elev_ft),
-            source="csv",
+            lat=entry.latitude,
+            lon=entry.longitude,
+            elev_ft=_m_to_ft(entry.elevation_m),
+            elev_m=entry.elevation_m,
+            source="anac",
             cached_at=datetime.now(timezone.utc),
         )
         try:
-            doc = await AerodromeDocument.get(icao)
+            doc = await AerodromeDocument.get(lookup_icao)
             if doc is not None:
                 doc.geo = geo
                 await doc.save()
         except Exception:
-            logger.warning("[%s] Failed to persist geo cache to MongoDB.", icao)
+            logger.warning("[%s] Failed to persist geo cache to MongoDB.", code)
 
-        return GeoCoords(
-            icao=icao,
-            lat=row.lat,
-            lon=row.lon,
-            elev_ft=row.elev_ft,
-            elev_m=_ft_to_m(row.elev_ft),
-            source="csv",
-        )
+    return _entry_to_coords(code, entry, source="anac")
 
-    logger.debug("[%s] No coordinates found in CSV.", icao)
-    return GeoCoords(icao=icao, source="not_found")
+
+async def _fetch_live_entry(code: str) -> AerodromeCatalogEntry | None:
+    client = AnacClient()
+    local = code if len(code) == 3 else None
+    if local is None:
+        cached = _get_cache().lookup_by_icao(code)
+        if cached is not None:
+            local = cached.local_identifier
+        else:
+            return None
+
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as http_client:
+            detail = await client.fetch_airport_detail(local, client=http_client)
+    except Exception as exc:
+        logger.warning("Live ANAC detail fetch failed for %s: %s", code, exc)
+        return None
+
+    return map_detail_to_entry(detail)

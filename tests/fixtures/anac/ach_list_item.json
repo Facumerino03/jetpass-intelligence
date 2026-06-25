@@ -1,0 +1,12 @@
+{
+  "local_identifier": "ACH",
+  "human_readable_identifier": "GENERAL ACHA - (ACH / SAEA) - DRCE - PÚBLICO NO CONTROLADO",
+  "the_geom": {
+    "geometry": {
+      "coordinates": [-64.61351, -37.40164],
+      "type": "Point"
+    }
+  },
+  "updated_at": "2026-06-01T16:04:20Z",
+  "uri": "/madhel/api/v2/airports/ACH/?format=json"
+}

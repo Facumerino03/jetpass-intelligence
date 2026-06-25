@@ -59,14 +59,24 @@ class Settings(BaseSettings):
     notam_location_sync_headless: bool = Field(
         default=True, alias="NOTAM_LOCATION_SYNC_HEADLESS"
     )
-    airports_csv_sync_enabled: bool = Field(
-        default=True, alias="AIRPORTS_CSV_SYNC_ENABLED"
+    anac_madhel_base_url: str = Field(
+        default="https://datos.anac.gob.ar/madhel/api/v2",
+        alias="ANAC_MADHEL_BASE_URL",
     )
-    airports_csv_sync_interval_hours: int = Field(
-        default=24, alias="AIRPORTS_CSV_SYNC_INTERVAL_HOURS"
+    anac_catalog_sync_enabled: bool = Field(
+        default=True, alias="ANAC_CATALOG_SYNC_ENABLED"
     )
-    airports_csv_sync_on_startup: bool = Field(
-        default=True, alias="AIRPORTS_CSV_SYNC_ON_STARTUP"
+    anac_catalog_sync_interval_hours: int = Field(
+        default=24, alias="ANAC_CATALOG_SYNC_INTERVAL_HOURS"
+    )
+    anac_catalog_sync_on_startup: bool = Field(
+        default=False, alias="ANAC_CATALOG_SYNC_ON_STARTUP"
+    )
+    anac_catalog_sync_concurrency: int = Field(
+        default=20, alias="ANAC_CATALOG_SYNC_CONCURRENCY"
+    )
+    anac_catalog_cache_ttl_hours: int = Field(
+        default=24, alias="ANAC_CATALOG_CACHE_TTL_HOURS"
     )
     openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(

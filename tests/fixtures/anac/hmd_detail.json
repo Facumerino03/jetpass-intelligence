@@ -1,0 +1,37 @@
+{
+  "the_geom": {
+    "type": "Feature",
+    "geometry": {
+      "coordinates": [-58.4, -34.6],
+      "type": "Point"
+    },
+    "properties": {
+      "gg_point_coordinates": [-34.6, -58.4],
+      "name": "HELIPUERTO ELEVADO BUENOS AIRES / HELIPUERTO SWISS MEDICAL - (HMD) - DRCE - PRIVADO"
+    }
+  },
+  "type": "HEL",
+  "human_readable_identifier": "HELIPUERTO ELEVADO BUENOS AIRES / HELIPUERTO SWISS MEDICAL - (HMD) - DRCE - PRIVADO",
+  "metadata": {
+    "control": "NON-CONTROLLED",
+    "traffic": "NTL",
+    "status": "OK",
+    "condition": "PRIVADO",
+    "identifiers": {
+      "icao": null,
+      "iata": null,
+      "local": "HMD"
+    },
+    "localization": {
+      "coordinates": {
+        "lat": -34.6,
+        "lng": -58.4
+      },
+      "elevation": 50,
+      "fir": "SAEF",
+      "state": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    }
+  },
+  "updated_at": "2025-01-01T00:00:00Z",
+  "uri": "/madhel/api/v2/airports/HMD/?format=json"
+}

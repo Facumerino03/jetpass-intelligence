@@ -1,0 +1,39 @@
+{
+  "the_geom": {
+    "type": "Feature",
+    "geometry": {
+      "coordinates": [-64.61351, -37.40164],
+      "type": "Point"
+    },
+    "properties": {
+      "gg_point_coordinates": [-37.40164, -64.61351],
+      "name": "GENERAL ACHA - (ACH / SAEA) - DRCE - PÚBLICO NO CONTROLADO"
+    }
+  },
+  "type": "AD",
+  "human_readable_identifier": "GENERAL ACHA - (ACH / SAEA) - DRCE - PÚBLICO NO CONTROLADO",
+  "metadata": {
+    "control": "NON-CONTROLLED",
+    "traffic": "NTL",
+    "status": "OK",
+    "condition": "PUBLICO",
+    "sna": false,
+    "ansp": null,
+    "identifiers": {
+      "icao": null,
+      "iata": null,
+      "local": "ACH"
+    },
+    "localization": {
+      "coordinates": {
+        "lat": -37.40164,
+        "lng": -64.61351
+      },
+      "elevation": 277,
+      "fir": "SAEF",
+      "state": "LA PAMPA"
+    }
+  },
+  "updated_at": "2026-06-01T16:04:20Z",
+  "uri": "/madhel/api/v2/airports/ACH/?format=json"
+}

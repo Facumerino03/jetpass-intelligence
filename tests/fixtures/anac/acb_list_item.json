@@ -1,0 +1,12 @@
+{
+  "local_identifier": "ACB",
+  "human_readable_identifier": "CORONEL BOGADO / AGROSERVICIOS - (ACB) - DRCE - PRIVADO NO CONTROLADO",
+  "the_geom": {
+    "geometry": {
+      "coordinates": [-60.57066, -33.27226],
+      "type": "Point"
+    }
+  },
+  "updated_at": "2026-06-01T09:41:51Z",
+  "uri": "/madhel/api/v2/airports/ACB/?format=json"
+}

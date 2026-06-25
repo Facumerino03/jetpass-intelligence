@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-from playwright.async_api import Locator, Page, async_playwright
+from playwright.sync_api import Locator, Page, sync_playwright
 
 from app.models.notam import RawNotam
 
@@ -42,22 +43,39 @@ async def scrape_notams_for_aerodrome(
     headless: bool = True,
 ) -> NotamScrapeResult:
     """Scrape NOTAMs for one aerodrome plus the global FIR advisories."""
+    return await asyncio.to_thread(
+        _scrape_notams_for_aerodrome_sync,
+        aerodrome_name,
+        headless=headless,
+    )
+
+
+async def list_notam_locations(*, headless: bool = True) -> list[str]:
+    """Return all visible location labels from the NOTAM selector."""
+    return await asyncio.to_thread(_list_notam_locations_sync, headless=headless)
+
+
+def _scrape_notams_for_aerodrome_sync(
+    aerodrome_name: str,
+    *,
+    headless: bool = True,
+) -> NotamScrapeResult:
     try:
-        async with async_playwright() as pw:
-            browser = await pw.chromium.launch(headless=headless)
-            context = await browser.new_context()
-            page = await context.new_page()
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=headless)
+            context = browser.new_context()
+            page = context.new_page()
             try:
-                await page.goto(NOTAM_BASE_URL, wait_until="networkidle")
-                site_last_updated_text = await _extract_site_last_updated_text(page)
+                page.goto(NOTAM_BASE_URL, wait_until="networkidle")
+                site_last_updated_text = _extract_site_last_updated_text(page)
                 site_last_updated_at = _parse_last_updated_from_text(site_last_updated_text)
-                fir_notams_by_location = await _scrape_fir_locations(page)
+                fir_notams_by_location = _scrape_fir_locations(page)
                 fir_notams = [
                     notam
                     for location_notams in fir_notams_by_location.values()
                     for notam in location_notams
                 ]
-                aerodrome_notams = await _scrape_location(page, aerodrome_name)
+                aerodrome_notams = _scrape_location(page, aerodrome_name)
                 return NotamScrapeResult(
                     site_last_updated_at=site_last_updated_at,
                     site_last_updated_text=site_last_updated_text,
@@ -66,56 +84,54 @@ async def scrape_notams_for_aerodrome(
                     fir_notams_by_location=fir_notams_by_location,
                 )
             finally:
-                await browser.close()
+                browser.close()
     except NotamScraperError:
         raise
     except Exception as exc:  # pragma: no cover - defensive wrapper
         raise NotamScraperError(f"Unexpected NOTAM scrape error: {exc}") from exc
 
 
-async def list_notam_locations(*, headless: bool = True) -> list[str]:
-    """Return all visible location labels from the NOTAM selector."""
+def _list_notam_locations_sync(*, headless: bool = True) -> list[str]:
     try:
-        async with async_playwright() as pw:
-            browser = await pw.chromium.launch(headless=headless)
-            context = await browser.new_context()
-            page = await context.new_page()
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=headless)
+            context = browser.new_context()
+            page = context.new_page()
             try:
-                await page.goto(NOTAM_BASE_URL, wait_until="networkidle")
-                select = await _find_location_select(page)
-                options = await select.locator("option").all_inner_texts()
+                page.goto(NOTAM_BASE_URL, wait_until="networkidle")
+                select = _find_location_select(page)
+                options = select.locator("option").all_inner_texts()
                 return [opt.strip() for opt in options if opt.strip()]
             finally:
-                await browser.close()
+                browser.close()
     except Exception as exc:
         raise NotamScraperError(f"Could not list NOTAM locations: {exc}") from exc
 
 
-async def _scrape_location(page: Page, location_name: str) -> list[RawNotam]:
-    select = await _find_location_select(page)
+def _scrape_location(page: Page, location_name: str) -> list[RawNotam]:
+    select = _find_location_select(page)
     try:
-        await select.select_option(label=location_name)
+        select.select_option(label=location_name)
     except Exception as exc:
         raise NotamLocationNotFoundError(
             f"Location '{location_name}' not found in NOTAM selector."
         ) from exc
-    await page.wait_for_timeout(800)
-    return await _extract_notam_rows(page, location_name)
+    page.wait_for_timeout(800)
+    return _extract_notam_rows(page, location_name)
 
 
-async def _scrape_fir_locations(page: Page) -> dict[str, list[RawNotam]]:
-    options = await _list_select_options(page)
+def _scrape_fir_locations(page: Page) -> dict[str, list[RawNotam]]:
+    options = _list_select_options(page)
     fir_labels = [label for label in options if label.startswith("AVISOS FIR")]
 
-    # Always include global FIR advisories as baseline context.
     ordered_labels = [ALL_FIRS_OPTION, *sorted(fir_labels)]
     by_location: dict[str, list[RawNotam]] = {}
     for label in ordered_labels:
-        by_location[label] = await _scrape_location(page, label)
+        by_location[label] = _scrape_location(page, label)
     return by_location
 
 
-async def _find_location_select(page: Page) -> Locator:
+def _find_location_select(page: Page) -> Locator:
     selectors = [
         "select",
         "select.form-control",
@@ -124,28 +140,26 @@ async def _find_location_select(page: Page) -> Locator:
     for selector in selectors:
         locator = page.locator(selector).first
         try:
-            await locator.wait_for(state="visible", timeout=4_000)
+            locator.wait_for(state="visible", timeout=4_000)
             return locator
         except Exception:
             continue
     raise NotamScraperError("Could not locate NOTAM location selector.")
 
 
-async def _list_select_options(page: Page) -> list[str]:
-    select = await _find_location_select(page)
-    options = await select.locator("option").all_inner_texts()
+def _list_select_options(page: Page) -> list[str]:
+    select = _find_location_select(page)
+    options = select.locator("option").all_inner_texts()
     return [opt.strip() for opt in options if opt.strip()]
 
 
-async def _extract_site_last_updated_text(page: Page) -> str | None:
-    # Match footer banner ("Última actualización: 05 May 2026 17:27"), not the bullet
-    # that says "...la última actualización..." (timezone disclaimer).
+def _extract_site_last_updated_text(page: Page) -> str | None:
     locator = page.locator(r"text=/Última actualización:\s*\d{2}/i").first
     try:
-        await locator.wait_for(state="visible", timeout=10_000)
+        locator.wait_for(state="visible", timeout=10_000)
     except Exception:
         return None
-    text = await locator.inner_text()
+    text = locator.inner_text()
     if not text:
         return None
     return re.sub(r"\s+", " ", text).strip()
@@ -170,13 +184,13 @@ def _parse_last_updated_from_text(text: str | None) -> datetime | None:
     return None
 
 
-async def _extract_notam_rows(page: Page, default_location: str) -> list[RawNotam]:
+def _extract_notam_rows(page: Page, default_location: str) -> list[RawNotam]:
     rows = page.locator("table tbody tr")
-    count = await rows.count()
+    count = rows.count()
     notams: list[RawNotam] = []
 
     for idx in range(count):
-        row_text = (await rows.nth(idx).inner_text()).strip()
+        row_text = rows.nth(idx).inner_text().strip()
         if not row_text:
             continue
         parsed = _parse_row_text(row_text, default_location)
@@ -241,7 +255,6 @@ def _is_metadata_line(line: str, notam_id: str, default_location: str) -> bool:
         return True
     if line == default_location:
         return True
-    # Rows include a repeated location block; avoid polluting NOTAM text.
     if line.startswith("AVISOS ") or line.startswith("("):
         return True
     return False

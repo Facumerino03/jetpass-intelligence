@@ -1,0 +1,12 @@
+{
+  "local_identifier": "HMD",
+  "human_readable_identifier": "HELIPUERTO ELEVADO BUENOS AIRES / HELIPUERTO SWISS MEDICAL - (HMD) - DRCE - PRIVADO",
+  "the_geom": {
+    "geometry": {
+      "coordinates": [-58.4, -34.6],
+      "type": "Point"
+    }
+  },
+  "updated_at": "2025-01-01T00:00:00Z",
+  "uri": "/madhel/api/v2/airports/HMD/?format=json"
+}

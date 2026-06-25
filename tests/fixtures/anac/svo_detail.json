@@ -1,0 +1,39 @@
+{
+  "the_geom": {
+    "type": "Feature",
+    "geometry": {
+      "coordinates": [-60.8113888888889, -31.7108333333333],
+      "type": "Point"
+    },
+    "properties": {
+      "gg_point_coordinates": [-31.7108333333333, -60.8113888888889],
+      "name": "SANTA FE / SAUCE VIEJO - (SVO / SAAV) - DRCE - PÚBLICO CONTROLADO"
+    }
+  },
+  "type": "AD",
+  "human_readable_identifier": "SANTA FE / SAUCE VIEJO - (SVO / SAAV) - DRCE - PÚBLICO CONTROLADO",
+  "metadata": {
+    "control": "CONTROLLED",
+    "traffic": "NTL",
+    "status": "OK",
+    "condition": "PUBLICO",
+    "sna": true,
+    "ansp": "DNCTA",
+    "identifiers": {
+      "icao": "SAAV",
+      "iata": "SFN",
+      "local": "SVO"
+    },
+    "localization": {
+      "coordinates": {
+        "lat": -31.7108333333333,
+        "lng": -60.8113888888889
+      },
+      "elevation": 17,
+      "fir": "SAEF",
+      "state": "SANTA FÉ"
+    }
+  },
+  "updated_at": "2024-02-06T12:39:00Z",
+  "uri": "/madhel/api/v2/airports/SVO/?format=json"
+}
