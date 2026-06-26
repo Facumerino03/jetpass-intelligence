@@ -46,6 +46,7 @@ class FlightPlanFields(BaseModel):
 
     aircraft_identification: str | None = None
     aircraft_type: str | None = None
+    aircraft_type_is_valid: bool | None = None
     typ_detail: str | None = None
     com_nav_equipment: str | None = None
     surveillance_equipment: str | None = None
@@ -85,6 +86,7 @@ class FplFieldUpdate(BaseModel):
     """Suggested FPL field change for the backend core to apply."""
 
     field: Literal[
+        "aircraft_type",
         "departure_aerodrome",
         "destination_aerodrome",
         "alternate_aerodrome_1",
@@ -109,6 +111,13 @@ class AerodromeCatalogSyncIntent(BaseModel):
     force_refresh: bool = False
 
 
+class AircraftTypeValidateIntent(BaseModel):
+    """Intent to validate an ICAO Doc 8643 aircraft type designator."""
+
+    designator: str
+    force_refresh: bool = False
+
+
 class OrchestratorRequest(BaseModel):
     """Top-level request received by the orchestrator from the backend core."""
 
@@ -118,6 +127,7 @@ class OrchestratorRequest(BaseModel):
     aerodrome_geo: AerodromeGeoIntent | None = None
     aerodrome_catalog_sync: AerodromeCatalogSyncIntent | None = None
     fpl_field18: Field18Intent | None = None
+    aircraft_type_validate: AircraftTypeValidateIntent | None = None
 
 
 class NotamIntent(BaseModel):
@@ -286,6 +296,40 @@ class Field18IntelResult(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class AircraftTypeDesignator(BaseModel):
+    """Metadata for a validated ICAO Doc 8643 aircraft type designator."""
+
+    designator: str
+    manufacturer: str | None = None
+    model: str | None = None
+    engine_count: int | None = None
+    engine_type: str | None = None
+    wtc: str | None = None
+    aircraft_description: str | None = None
+
+
+class AircraftTypeValidationResult(BaseModel):
+    """Result of validating a designator against the ICAO Doc 8643 search UI."""
+
+    designator: str
+    is_valid: bool
+    entry: AircraftTypeDesignator | None = None
+    source: Literal["cache", "fresh_fetch"]
+    alerts: list[Alert] = Field(default_factory=list)
+    messages: list[str] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class AircraftTypeValidateSyncStatusResponse(BaseModel):
+    """Operational status of the ICAO Doc 8643 live validation cache."""
+
+    enabled: bool
+    scheduler_running: bool
+    last_validated_at: datetime | None = None
+    last_error: str | None = None
+    cache_size: int = 0
+
+
 class OrchestratorResponse(BaseModel):
     """Consolidated response returned to the backend core."""
 
@@ -296,6 +340,7 @@ class OrchestratorResponse(BaseModel):
     aerodrome_geo: dict[str, GeoCoords] | None = None
     aerodrome_catalog_sync: AerodromeCatalogSyncResult | None = None
     fpl_field18: Field18IntelResult | None = None
+    aircraft_type_validate: AircraftTypeValidationResult | None = None
     alerts: list[Alert] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 

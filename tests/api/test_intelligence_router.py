@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from app.intelligence.contracts import (
     AerodromeCatalogEntry,
     AerodromeCatalogSyncResult,
+    AircraftTypeValidationResult,
     GeoCoords,
     OrchestratorResponse,
     WeatherIntelResult,
@@ -146,3 +147,55 @@ def test_airports_sync_status_endpoint(client, monkeypatch):
     payload = response.json()
     assert payload["enabled"] is True
     assert payload["scheduler_running"] is True
+
+
+def test_validate_aircraft_type_endpoint(client, monkeypatch):
+    async def fake_validate(designator: str, *, force_refresh: bool = False):
+        return AircraftTypeValidationResult(
+            designator=designator.upper(),
+            is_valid=True,
+            source="fresh_fetch",
+        )
+
+    monkeypatch.setattr(
+        "app.routers.intelligence_router.validate_aircraft_type",
+        fake_validate,
+    )
+
+    response = client.get("/intelligence/aircraft-types/C172")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["designator"] == "C172"
+    assert payload["is_valid"] is True
+
+
+def test_intelligence_router_accepts_aircraft_type_validate(client, monkeypatch):
+    async def fake_run(request):
+        return OrchestratorResponse(
+            intent="aircraft_type_validate",
+            aircraft_type_validate=AircraftTypeValidationResult(
+                designator=request.aircraft_type_validate.designator.upper(),
+                is_valid=True,
+                source="fresh_fetch",
+            ),
+        )
+
+    monkeypatch.setattr("app.routers.intelligence_router.run", fake_run)
+
+    response = client.post(
+        "/intelligence/run",
+        json={"aircraft_type_validate": {"designator": "C172"}},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["intent"] == "aircraft_type_validate"
+    assert payload["aircraft_type_validate"]["designator"] == "C172"
+
+
+def test_aircraft_type_validation_status_endpoint(client) -> None:
+    response = client.get("/intelligence/aircraft-types-validation/status")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["enabled"] is True
+    assert "cache_size" in payload

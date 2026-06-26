@@ -72,6 +72,72 @@ def test_typ_not_generated_when_aircraft_type_is_known() -> None:
     assert result.fpl_updates == []
 
 
+def test_typ_not_generated_when_type_is_valid() -> None:
+    fields = FlightPlanFields(aircraft_type="C172", aircraft_type_is_valid=True)
+    result = compute_mandatory_indicators(fields)
+
+    assert result.suggestions == []
+    assert result.fpl_updates == []
+
+
+def test_typ_generated_when_type_is_invalid() -> None:
+    fields = FlightPlanFields(aircraft_type="C172", aircraft_type_is_valid=False)
+    result = compute_mandatory_indicators(fields)
+
+    assert len(result.suggestions) == 1
+    assert result.suggestions[0].indicator == "TYP/"
+    assert result.suggestions[0].full_field == "TYP/C172"
+    assert len(result.fpl_updates) == 1
+    assert result.fpl_updates[0].field == "aircraft_type"
+    assert result.fpl_updates[0].from_value == "C172"
+    assert result.fpl_updates[0].to_value == "ZZZZ"
+
+
+def test_typ_not_generated_when_is_valid_is_none() -> None:
+    fields = FlightPlanFields(aircraft_type="C172", aircraft_type_is_valid=None)
+    result = compute_mandatory_indicators(fields)
+
+    assert result.suggestions == []
+    assert result.fpl_updates == []
+
+
+def test_typ_legacy_zzzz_still_uses_typ_detail_when_is_valid_false() -> None:
+    fields = FlightPlanFields(
+        aircraft_type="ZZZZ",
+        typ_detail="C172",
+        aircraft_type_is_valid=False,
+    )
+    result = compute_mandatory_indicators(fields)
+
+    assert len(result.suggestions) == 1
+    assert result.suggestions[0].indicator == "TYP/"
+    assert result.suggestions[0].full_field == "TYP/C172"
+    assert result.fpl_updates == []
+
+
+def test_typ_invalid_and_dep_non_controlled_combined() -> None:
+    fields = FlightPlanFields(
+        aircraft_type="C172",
+        aircraft_type_is_valid=False,
+        departure_aerodrome="MZA",
+    )
+    aerodromes = Field18AerodromeContexts(
+        departure=_mza_context(),
+    )
+    expected_coords = format_oaci_coordinates(MZA_LAT, MZA_LON)
+
+    result = compute_mandatory_indicators(fields, aerodromes)
+
+    assert [item.indicator for item in result.suggestions] == ["DEP/", "TYP/"]
+    assert result.suggestions[0].full_field == f"DEP/MZA{expected_coords}"
+    assert result.suggestions[1].full_field == "TYP/C172"
+    assert len(result.fpl_updates) == 2
+    assert {update.field for update in result.fpl_updates} == {
+        "departure_aerodrome",
+        "aircraft_type",
+    }
+
+
 def test_dep_required_when_departure_is_zzzz() -> None:
     fields = FlightPlanFields(departure_aerodrome="ZZZZ", dep_detail="4620S06630W")
     result = compute_mandatory_indicators(fields)

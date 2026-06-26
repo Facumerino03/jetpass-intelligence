@@ -78,6 +78,25 @@ class Settings(BaseSettings):
     anac_catalog_cache_ttl_hours: int = Field(
         default=24, alias="ANAC_CATALOG_CACHE_TTL_HOURS"
     )
+    icao_doc8643_base_url: str = Field(
+        default=(
+            "https://www.icao.int/operational-safety/"
+            "doc-8643-aircraft-type-designators/search"
+        ),
+        alias="ICAO_DOC8643_BASE_URL",
+    )
+    icao_doc8643_validation_cache_ttl_seconds: int = Field(
+        default=604800,
+        alias="ICAO_DOC8643_VALIDATION_CACHE_TTL_SECONDS",
+    )
+    icao_doc8643_validation_headless: bool = Field(
+        default=True,
+        alias="ICAO_DOC8643_VALIDATION_HEADLESS",
+    )
+    icao_doc8643_load_timeout_seconds: int = Field(
+        default=120,
+        alias="ICAO_DOC8643_LOAD_TIMEOUT_SECONDS",
+    )
     openrouter_api_key: str | None = Field(default=None, alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(
         default="openai/gpt-4o-mini", alias="OPENROUTER_MODEL"

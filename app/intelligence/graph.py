@@ -9,9 +9,11 @@ from langgraph.graph import END, START, StateGraph
 
 from app.intelligence.aerodrome_intel_service import get_aerodrome_intelligence
 from app.intelligence.aerodromes_catalog_service import get_aerodrome_catalog_sync
+from app.intelligence.aircraft_types.aircraft_type_service import get_aircraft_type_validation
 from app.intelligence.contracts import (
     AerodromeCatalogSyncResult,
     AerodromeIntelResult,
+    AircraftTypeValidationResult,
     Alert,
     Field18IntelResult,
     GeoCoords,
@@ -33,6 +35,7 @@ class IntelligenceState(TypedDict, total=False):
     aerodrome_geo_result: dict[str, GeoCoords]
     aerodrome_catalog_sync_result: AerodromeCatalogSyncResult
     fpl_field18_result: Field18IntelResult
+    aircraft_type_validate_result: AircraftTypeValidationResult
     alerts: list[Alert]
     intent: str
 
@@ -78,6 +81,12 @@ async def _run_requested_capabilities(state: IntelligenceState) -> IntelligenceS
             "fpl_field18_result",
             get_field18_intelligence(request.fpl_field18),
         ))
+    if request.aircraft_type_validate is not None:
+        intent = request.aircraft_type_validate
+        calls.append((
+            "aircraft_type_validate_result",
+            get_aircraft_type_validation(intent),
+        ))
 
     if not calls:
         return {}
@@ -96,6 +105,7 @@ def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
         "weather_result",
         "aerodrome_catalog_sync_result",
         "fpl_field18_result",
+        "aircraft_type_validate_result",
     ):
         result = state.get(key)
         if result is not None:
@@ -114,6 +124,8 @@ def _aggregate_results(state: IntelligenceState) -> IntelligenceState:
         parts.append("aerodrome_catalog_sync")
     if request.fpl_field18 is not None:
         parts.append("fpl_field18")
+    if request.aircraft_type_validate is not None:
+        parts.append("aircraft_type_validate")
 
     return {"alerts": alerts, "intent": "+".join(parts) if parts else "noop"}
 

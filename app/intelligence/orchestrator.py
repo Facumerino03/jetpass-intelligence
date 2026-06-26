@@ -24,5 +24,6 @@ async def run(request: OrchestratorRequest) -> OrchestratorResponse:
         aerodrome_geo=state.get("aerodrome_geo_result"),
         aerodrome_catalog_sync=state.get("aerodrome_catalog_sync_result"),
         fpl_field18=state.get("fpl_field18_result"),
+        aircraft_type_validate=state.get("aircraft_type_validate_result"),
         alerts=state.get("alerts", []),
     )

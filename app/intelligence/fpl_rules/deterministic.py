@@ -218,6 +218,37 @@ def _non_controlled_indicators(
     return result
 
 
+def _non_validated_type_indicator(fields: FlightPlanFields) -> Field18DeterministicResult:
+    """Indicators and FPL patches for aircraft types not registered in ICAO Doc 8643."""
+    result = Field18DeterministicResult()
+    aircraft_type = _normalize_code(fields.aircraft_type)
+    if not aircraft_type or aircraft_type == "ZZZZ":
+        return result
+
+    if fields.aircraft_type_is_valid is False:
+        _add_suggestion(
+            result.suggestions,
+            indicator="TYP/",
+            value=aircraft_type,
+            reason=(
+                f"Casilla 9 contiene tipo no registrado en ICAO Doc 8643 ({aircraft_type}): "
+                f"se debe indicar en TYP/ y reemplazar la casilla por ZZZZ."
+            ),
+        )
+        result.fpl_updates.append(
+            FplFieldUpdate(
+                field="aircraft_type",
+                from_value=aircraft_type,
+                to_value="ZZZZ",
+                reason=(
+                    "Tipo no verificado en ICAO Doc 8643: el designador va en TYP/ de Casilla 18."
+                ),
+            )
+        )
+
+    return result
+
+
 def compute_mandatory_indicators(
     fields: FlightPlanFields,
     aerodromes: Field18AerodromeContexts | None = None,
@@ -225,10 +256,13 @@ def compute_mandatory_indicators(
     """Return mandatory Field 18 entries and suggested FPL updates for current field values."""
     legacy = _legacy_zzzz_indicators(fields)
     non_controlled = _non_controlled_indicators(fields, aerodromes)
+    non_validated_type = _non_validated_type_indicator(fields)
 
-    combined_suggestions = _sort_suggestions(legacy + non_controlled.suggestions)
+    combined_suggestions = _sort_suggestions(
+        legacy + non_controlled.suggestions + non_validated_type.suggestions
+    )
     return Field18DeterministicResult(
         suggestions=combined_suggestions,
-        fpl_updates=non_controlled.fpl_updates,
-        alerts=non_controlled.alerts,
+        fpl_updates=non_controlled.fpl_updates + non_validated_type.fpl_updates,
+        alerts=non_controlled.alerts + non_validated_type.alerts,
     )
